@@ -4,4 +4,4 @@
 
 # AI4EOSC - AI4Compose
 
-A solution to perform workflow-based composition of AI models
+Low-code composition of AI inference pipelines.
