@@ -1,0 +1,538 @@
+[
+    {
+        "id": "600363bb07e040c9",
+        "type": "subflow",
+        "name": "Deploy OSCAR Service",
+        "info": "",
+        "category": "OSCAR",
+        "in": [
+            {
+                "x": 90,
+                "y": 156,
+                "wires": [
+                    {
+                        "id": "26b12796c1f51095"
+                    },
+                    {
+                        "id": "f8e3818864c1f51e"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 1683.1113204956055,
+                "y": 129.3333339691162,
+                "wires": [
+                    {
+                        "id": "2568a1546940671e",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "Server",
+                "type": "str",
+                "value": ""
+            },
+            {
+                "name": "User",
+                "type": "str",
+                "value": ""
+            },
+            {
+                "name": "Password",
+                "type": "cred"
+            },
+            {
+                "name": "Name_Service",
+                "type": "str",
+                "value": ""
+            },
+            {
+                "name": "Memory",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "type": "input",
+                    "opts": {
+                        "types": [
+                            "str",
+                            "num",
+                            "bool",
+                            "json",
+                            "bin"
+                        ]
+                    }
+                }
+            },
+            {
+                "name": "CPU",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "type": "input",
+                    "opts": {
+                        "types": [
+                            "str",
+                            "num",
+                            "bool",
+                            "json",
+                            "bin"
+                        ]
+                    }
+                }
+            },
+            {
+                "name": "Image_Service",
+                "type": "str",
+                "value": ""
+            },
+            {
+                "name": "Script",
+                "type": "str",
+                "value": ""
+            },
+            {
+                "name": "URL",
+                "type": "bool",
+                "value": "true",
+                "ui": {
+                    "type": "checkbox"
+                }
+            }
+        ],
+        "meta": {
+            "module": "Create Service",
+            "license": "Apache-2.0"
+        },
+        "credentials": {
+            "Password": ""
+        },
+        "color": "#3FADB5",
+        "inputLabels": [
+            "Input"
+        ],
+        "outputLabels": [
+            "Output"
+        ],
+        "icon": "font-awesome/fa-cogs",
+        "status": {
+            "x": 1327.6667919158936,
+            "y": 409.0000286102295,
+            "wires": [
+                {
+                    "id": "f8e3818864c1f51e",
+                    "port": 0
+                },
+                {
+                    "id": "5bb6c356423dd70a",
+                    "port": 0
+                },
+                {
+                    "id": "5489f9395f9f5236",
+                    "port": 0
+                }
+            ]
+        }
+    },
+    {
+        "id": "26b12796c1f51095",
+        "type": "change",
+        "z": "600363bb07e040c9",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "oscar_server",
+                "pt": "msg",
+                "to": "Server",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "username",
+                "pt": "msg",
+                "to": "User",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "pass",
+                "pt": "msg",
+                "to": "Password",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "name_service",
+                "pt": "msg",
+                "to": "Name_Service",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "memory_service",
+                "pt": "msg",
+                "to": "Memory",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "cpu_service",
+                "pt": "msg",
+                "to": "CPU",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "image_service",
+                "pt": "msg",
+                "to": "Image_Service",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "script",
+                "pt": "msg",
+                "to": "Script",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "pos_script",
+                "pt": "msg",
+                "to": "URL",
+                "tot": "env"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 224.55556106567383,
+        "y": 157.33334922790527,
+        "wires": [
+            [
+                "949a4b2f7174bee3"
+            ]
+        ]
+    },
+    {
+        "id": "a0d1d4727681797c",
+        "type": "function",
+        "z": "600363bb07e040c9",
+        "name": "load data",
+        "func": "var memory = msg.memory_service;\nvar image_service=msg.image_service;\n\n//var script = \"#!/bin/bash \\necho \\\"SCRIPT: Invoked classify_image.py. File available in $INPUT_FILE_PATH\\\" \\nFILE_NAME=`basename \\\"$INPUT_FILE_PATH\\\"` \\nOUTPUT_FILE=\\\"$TMP_OUTPUT_DIR/$FILE_NAME\\\" \\npython2 /opt/plant-classification-theano/classify_image.py \\\"$INPUT_FILE_PATH\\\" -o \\\"$OUTPUT_FILE\\\"\"\n//var script = \"#!/bin/sh \\nif [ \\\"$INPUT_TYPE\\\" = \\\"json\\\" ] \\nthen\\njq \\'.message\\' \\\"$INPUT_FILE_PATH\\\" -r | /usr/games/cowsay \\nelse \\n cat \\\"$INPUT_FILE_PATH\\\" | /usr/games/cowsay \\nfi \"\nvar script=msg.payload;\n\nvar cpu = msg.cpu_service;\n\nif (image_service.includes(\"cowsay\")==true){\n    msg.create_service = {\n        \"name\": msg.name_service,\n        \"cluster_id\": \"string\",\n        \"memory\": String(msg.memory_service) + \"Gi\",\n        \"cpu\": String(msg.cpu_service),\n        \"log_level\": \"CRITICAL\",\n        \"image\": image_service,\n        \"script\": script,\n        \"environment\":{\n            \"Variables\":{\n                \"INPUT_TYPE\": \"json\"\n            }\n        }\n    }\n}\nelse if (image_service.includes(\"oscar-theano-plants\") == true){\n\n    var input = {\n        \"storage_provider\": \"minio\",\n        \"path\": msg.name_service + \"/in\"\n    }\n    var output = {\n        \"storage_provider\": \"minio\",\n        \"path\": msg.name_service + \"/out\"\n    }\n    msg.create_service = {\n        \"name\": msg.name_service,\n        \"memory\": String(msg.memory_service) + \"Gi\",\n        \"cpu\": String(msg.cpu_service),\n        \"log_level\": \"CRITICAL\",\n        \"image\": image_service,\n        \"script\": script,\n        //\"input\": input,\n        //\"output\":output\n        }\n    }\nelse if (image_service.includes(\"imagemagick\") == true){\n    var input = {\n        \"storage_provider\": \"minio\",\n        \"path\": msg.name_service + \"/in\"\n    }\n    var output = {\n        \"storage_provider\": \"minio\",\n        \"path\": msg.name_service + \"/out\"\n    }\n    msg.create_service = {\n        \"name\": msg.name_service,\n        //\"cluster_id\": \"string\",\n        \"memory\": String(msg.memory_service) + \"Gi\",\n        \"cpu\": String(msg.cpu_service),\n        \"log_level\": \"CRITICAL\",\n        \"image\": image_service,\n        \"script\": script\n      //  \"input\": input,\n       // \"output\": output\n    }\n}\nelse if (image_service.includes(\"deep-oc-plants-classification-tf\") == true){\n    msg.create_service = {\n        \"name\": msg.name_service,\n        \"memory\": String(msg.memory_service) + \"Gi\",\n        \"cpu\": String(msg.cpu_service),\n        \"log_level\": \"CRITICAL\",\n        \"image\": image_service,\n        \"script\": script\n    }\n}\n\nmsg.payload = {\n    \"username\": msg.username,\n    \"password\": msg.pass\n}\nmsg.url = msg.oscar_server+\"/system/services\";\nreturn msg;\n\n//NDA3OWFk\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 869.2222328186035,
+        "y": 134.4444694519043,
+        "wires": [
+            [
+                "961ed9da9555f22d"
+            ]
+        ]
+    },
+    {
+        "id": "961ed9da9555f22d",
+        "type": "change",
+        "z": "600363bb07e040c9",
+        "name": "credential load",
+        "rules": [
+            {
+                "t": "set",
+                "p": "headers",
+                "pt": "msg",
+                "to": "{\t   \"Authorization\": 'Basic ' & $base64encode(\t       payload.username & ':' & payload.password\t   ) \t}",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1040.0000247955322,
+        "y": 133.11113357543945,
+        "wires": [
+            [
+                "434030d1e6c5dbab"
+            ]
+        ]
+    },
+    {
+        "id": "434030d1e6c5dbab",
+        "type": "function",
+        "z": "600363bb07e040c9",
+        "name": "Payload json service",
+        "func": "\nmsg.payload = msg.create_service\n\nreturn msg;\n\n//NDA3OWFk\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1243.4444046020508,
+        "y": 132.99999618530273,
+        "wires": [
+            [
+                "2568a1546940671e"
+            ]
+        ]
+    },
+    {
+        "id": "2568a1546940671e",
+        "type": "http request",
+        "z": "600363bb07e040c9",
+        "name": "Create service (post)",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "basic",
+        "senderr": true,
+        "headers": [],
+        "x": 1468.9999618530273,
+        "y": 130.8888921737671,
+        "wires": [
+            [
+                "38940236e89885a6"
+            ]
+        ]
+    },
+    {
+        "id": "f8e3818864c1f51e",
+        "type": "change",
+        "z": "600363bb07e040c9",
+        "name": "init deploy",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Creating services ....",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 376,
+        "y": 414,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "38940236e89885a6",
+        "type": "switch",
+        "z": "600363bb07e040c9",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 954,
+        "y": 275,
+        "wires": [
+            [
+                "5bb6c356423dd70a"
+            ],
+            [
+                "5489f9395f9f5236"
+            ]
+        ]
+    },
+    {
+        "id": "5bb6c356423dd70a",
+        "type": "change",
+        "z": "600363bb07e040c9",
+        "name": "msg create services",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Service created successfully",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1187,
+        "y": 256,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5489f9395f9f5236",
+        "type": "function",
+        "z": "600363bb07e040c9",
+        "name": "msg error",
+        "func": "msg.payload= \"Error ..\"+ msg.payload;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1146,
+        "y": 307,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4f0b0693bd61a462",
+        "type": "file in",
+        "z": "600363bb07e040c9",
+        "name": "directory script",
+        "filename": "payload",
+        "filenameType": "msg",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "ascii",
+        "allProps": false,
+        "x": 661.3333740234375,
+        "y": 138.1111068725586,
+        "wires": [
+            [
+                "a0d1d4727681797c"
+            ]
+        ]
+    },
+    {
+        "id": "1f4b6cf22c6a82f1",
+        "type": "change",
+        "z": "600363bb07e040c9",
+        "name": "directory",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "script",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 503.3333282470703,
+        "y": 145.7777862548828,
+        "wires": [
+            [
+                "4f0b0693bd61a462"
+            ]
+        ]
+    },
+    {
+        "id": "949a4b2f7174bee3",
+        "type": "switch",
+        "z": "600363bb07e040c9",
+        "name": "",
+        "property": "pos_script",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "false"
+            },
+            {
+                "t": "true"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 368.8888854980469,
+        "y": 157.3333511352539,
+        "wires": [
+            [
+                "1f4b6cf22c6a82f1"
+            ],
+            [
+                "87f408f0e3644484"
+            ]
+        ]
+    },
+    {
+        "id": "87f408f0e3644484",
+        "type": "change",
+        "z": "600363bb07e040c9",
+        "name": "url",
+        "rules": [
+            {
+                "t": "set",
+                "p": "url",
+                "pt": "msg",
+                "to": "script",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 495.44449615478516,
+        "y": 200.00000762939453,
+        "wires": [
+            [
+                "f1855f2096884e63"
+            ]
+        ]
+    },
+    {
+        "id": "f1855f2096884e63",
+        "type": "http request",
+        "z": "600363bb07e040c9",
+        "name": "url script",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": true,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 646.4444332122803,
+        "y": 199.22222518920898,
+        "wires": [
+            [
+                "a0d1d4727681797c"
+            ]
+        ]
+    }
+]

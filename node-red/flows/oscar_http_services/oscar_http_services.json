@@ -1,0 +1,887 @@
+[
+    {
+        "id": "9e6abf917474d233",
+        "type": "subflow",
+        "name": "OSCAR Service HTTP",
+        "info": "",
+        "category": "OSCAR",
+        "in": [
+            {
+                "x": 81.42857551574707,
+                "y": 164.2857208251953,
+                "wires": [
+                    {
+                        "id": "8af130a41ed45d29"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 1921.4287462234497,
+                "y": 281.4285659790039,
+                "wires": [
+                    {
+                        "id": "5d939f571dda2e82",
+                        "port": 0
+                    },
+                    {
+                        "id": "a9c49a7c078bdcc3",
+                        "port": 0
+                    }
+                ]
+            },
+            {
+                "x": 1439.2857513427734,
+                "y": 537.1428604125977,
+                "wires": [
+                    {
+                        "id": "2c9297b267a0bdfd",
+                        "port": 0
+                    },
+                    {
+                        "id": "2c9297b267a0bdfd",
+                        "port": 1
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "Server",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "icon": "font-awesome/fa-globe"
+                }
+            },
+            {
+                "name": "Service Name",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "icon": "font-awesome/fa-pencil"
+                }
+            },
+            {
+                "name": "User",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "icon": "font-awesome/fa-user-circle-o"
+                }
+            },
+            {
+                "name": "Pass",
+                "type": "cred",
+                "ui": {
+                    "icon": "font-awesome/fa-key"
+                }
+            },
+            {
+                "name": "Sync",
+                "type": "bool",
+                "value": "true",
+                "ui": {
+                    "type": "checkbox"
+                }
+            }
+        ],
+        "meta": {},
+        "credentials": {
+            "Pass": ""
+        },
+        "color": "#3FADB5",
+        "status": {
+            "x": 1927.1427688598633,
+            "y": 107.14285850524902,
+            "wires": [
+                {
+                    "id": "92166cac8c79a0dc",
+                    "port": 0
+                },
+                {
+                    "id": "bcefadfe9d1da5c6",
+                    "port": 0
+                }
+            ]
+        }
+    },
+    {
+        "id": "8af130a41ed45d29",
+        "type": "change",
+        "z": "9e6abf917474d233",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "oscar_server",
+                "pt": "msg",
+                "to": "Server",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "username",
+                "pt": "msg",
+                "to": "User",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "pass",
+                "pt": "msg",
+                "to": "Pass",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "data",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "service",
+                "pt": "msg",
+                "to": "Service Name",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "sync",
+                "pt": "msg",
+                "to": "Sync",
+                "tot": "env"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 247.1428680419922,
+        "y": 165.7142791748047,
+        "wires": [
+            [
+                "bcefadfe9d1da5c6"
+            ]
+        ]
+    },
+    {
+        "id": "ce8fe8f939e07591",
+        "type": "switch",
+        "z": "9e6abf917474d233",
+        "name": "Switch Service",
+        "property": "service",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "cowsay",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "grayify",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "plants",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "text-to-speech-google",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "plant-classification-sync",
+                "vt": "str"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 5,
+        "x": 397.1428680419922,
+        "y": 305.7142791748047,
+        "wires": [
+            [
+                "ebc7faa9180f5cb8"
+            ],
+            [
+                "8726a8bb4b86dbd5"
+            ],
+            [
+                "8726a8bb4b86dbd5"
+            ],
+            [
+                "8726a8bb4b86dbd5"
+            ],
+            [
+                "8726a8bb4b86dbd5"
+            ]
+        ]
+    },
+    {
+        "id": "88780d0580d2155a",
+        "type": "function",
+        "z": "9e6abf917474d233",
+        "name": "Load Log",
+        "func": "msg.payload={\n\"username\":msg.username,\n\"password\":msg.pass\n\n}\nmsg.url = msg.oscar_server +\"/system/services/\"+msg.service ;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 397.1428680419922,
+        "y": 225.7142791748047,
+        "wires": [
+            [
+                "0ebfc895b14f590d"
+            ]
+        ]
+    },
+    {
+        "id": "0ebfc895b14f590d",
+        "type": "change",
+        "z": "9e6abf917474d233",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "headers",
+                "pt": "msg",
+                "to": "{\t   \"Authorization\": 'Basic ' & $base64encode(\t       payload.username & ':' & payload.password\t   ) \t}",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 567.1428680419922,
+        "y": 225.7142791748047,
+        "wires": [
+            [
+                "a786634381f5c26a"
+            ]
+        ]
+    },
+    {
+        "id": "a786634381f5c26a",
+        "type": "http request",
+        "z": "9e6abf917474d233",
+        "name": " info services",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": true,
+        "authType": "basic",
+        "senderr": true,
+        "headers": [],
+        "x": 737.1428680419922,
+        "y": 225.7142791748047,
+        "wires": [
+            [
+                "9d90122ca85df8ad"
+            ]
+        ]
+    },
+    {
+        "id": "9d90122ca85df8ad",
+        "type": "string",
+        "z": "9e6abf917474d233",
+        "name": "",
+        "methods": [
+            {
+                "name": "between",
+                "params": [
+                    {
+                        "type": "str",
+                        "value": "\"token\":\""
+                    },
+                    {
+                        "type": "str",
+                        "value": "\",\"file_stage_in\""
+                    }
+                ]
+            }
+        ],
+        "prop": "payload",
+        "propout": "payload",
+        "object": "msg",
+        "objectout": "msg",
+        "x": 877.1428680419922,
+        "y": 225.7142791748047,
+        "wires": [
+            [
+                "2544318df5b3f6d8"
+            ]
+        ]
+    },
+    {
+        "id": "2544318df5b3f6d8",
+        "type": "function",
+        "z": "9e6abf917474d233",
+        "name": "Get Token",
+        "func": "var  var1 = msg.payload;\n\nmsg.token= var1;\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\n//flow.set(\"token_cowsay\",\"\");\n",
+        "finalize": "",
+        "libs": [],
+        "x": 1007.1428680419922,
+        "y": 225.7142791748047,
+        "wires": [
+            [
+                "ebc3edd8f5ee0b17"
+            ]
+        ]
+    },
+    {
+        "id": "ebc3edd8f5ee0b17",
+        "type": "function",
+        "z": "9e6abf917474d233",
+        "name": "Send token",
+        "func": "var servicio=msg.service;\nvar token = msg.token;\nvar sync=msg.sync\n\nmsg.headers = {\n    Authorization: \"Bearer \" + token\n}\nif (servicio==\"cowsay\"){\n    msg.payload = {\n        \"message\": msg.data\n    }\n }\nelse if (servicio == \"grayify\"){\n    msg.payload = msg.data;\n }\nelse if (servicio == \"plants\"){\n    msg.payload = msg.data;\n }\nelse if (servicio == \"text-to-speech-google\"){\n    msg.payload = msg.data;\n }\nelse if (servicio == \"plant-classification-sync\") {\n    msg.payload = msg.data;\n}\n \nif (sync==true){\nmsg.url = msg.oscar_server+\"/run/\"+servicio;\n}\nelse{\n    msg.url = msg.oscar_server + \"/job/\" + servicio;   \n}\nreturn msg;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 217.1428680419922,
+        "y": 285.7142791748047,
+        "wires": [
+            [
+                "ce8fe8f939e07591"
+            ]
+        ]
+    },
+    {
+        "id": "8726a8bb4b86dbd5",
+        "type": "base64",
+        "z": "9e6abf917474d233",
+        "name": "",
+        "action": "",
+        "property": "payload",
+        "x": 647.1428680419922,
+        "y": 325.7142791748047,
+        "wires": [
+            [
+                "ebc7faa9180f5cb8"
+            ]
+        ]
+    },
+    {
+        "id": "ebc7faa9180f5cb8",
+        "type": "http request",
+        "z": "9e6abf917474d233",
+        "name": " Services Run",
+        "method": "POST",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": true,
+        "headers": [],
+        "x": 837.1428680419922,
+        "y": 285.7142791748047,
+        "wires": [
+            [
+                "2c9297b267a0bdfd"
+            ]
+        ]
+    },
+    {
+        "id": "7dbc12e2d06b4e42",
+        "type": "switch",
+        "z": "9e6abf917474d233",
+        "name": "Switch Service",
+        "property": "service",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "cowsay",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "text-to-speech-google",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "grayify",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "plants",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "plant-classification-sync",
+                "vt": "str"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 5,
+        "x": 1087.1429138183594,
+        "y": 298.5714302062988,
+        "wires": [
+            [
+                "5d939f571dda2e82"
+            ],
+            [
+                "4c10bd2a60c7f9cd"
+            ],
+            [
+                "c4761ce25604da06"
+            ],
+            [
+                "c4761ce25604da06"
+            ],
+            [
+                "65d3dc9207d4166d"
+            ]
+        ]
+    },
+    {
+        "id": "4c10bd2a60c7f9cd",
+        "type": "base64",
+        "z": "9e6abf917474d233",
+        "name": "",
+        "action": "",
+        "property": "payload",
+        "x": 1487.1428680419922,
+        "y": 325.7142791748047,
+        "wires": [
+            [
+                "5d939f571dda2e82"
+            ]
+        ]
+    },
+    {
+        "id": "c4761ce25604da06",
+        "type": "string",
+        "z": "9e6abf917474d233",
+        "name": "Get Result",
+        "methods": [
+            {
+                "name": "delLeftMost",
+                "params": [
+                    {
+                        "type": "str",
+                        "value": "response"
+                    }
+                ]
+            }
+        ],
+        "prop": "payload",
+        "propout": "payload",
+        "object": "msg",
+        "objectout": "msg",
+        "x": 1317.1428680419922,
+        "y": 365.7142791748047,
+        "wires": [
+            [
+                "4c10bd2a60c7f9cd"
+            ]
+        ]
+    },
+    {
+        "id": "bcefadfe9d1da5c6",
+        "type": "function",
+        "z": "9e6abf917474d233",
+        "name": "Send msg",
+        "func": "var servicio=msg.service;\n\n\nif (servicio==\"cowsay\"){\n     msg.payload = \"Processing Cowsay Service....\";\n    return [null, msg];\n }\nelse if (servicio == \"grayify\"){\n    msg.payload = \"Processing Grayify Service....\";\n    return [null, msg];\n }\nelse if (servicio == \"plants\"){\n    msg.payload = \"Processing Plants Service....\";\n    return [null, msg];\n }\nelse if (servicio == \"text-to-speech-google\"){\n    msg.payload = \"Processing Text-to-Speech Service....\";\n    return [null, msg];\n }\nelse if (servicio == \"plant-classification-sync\") {\n    msg.payload = \"Processing plant-classification-sync....\";\n    return [null, msg];\n}\n\nelse {\n    msg.payload = \"Error with the selected service\";\n    return [msg, null];\n}\n\n\n\n\n",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 427.1428680419922,
+        "y": 145.7142791748047,
+        "wires": [
+            [],
+            [
+                "88780d0580d2155a"
+            ]
+        ]
+    },
+    {
+        "id": "92166cac8c79a0dc",
+        "type": "change",
+        "z": "9e6abf917474d233",
+        "name": "End Service",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Finished",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1797.1428680419922,
+        "y": 205.7142791748047,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5d939f571dda2e82",
+        "type": "change",
+        "z": "9e6abf917474d233",
+        "name": "Clear Data Sync",
+        "rules": [
+            {
+                "t": "set",
+                "p": "pass",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "username",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "oscar_server",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "data",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "token",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "url",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "service",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "filename",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1647.1428680419922,
+        "y": 265.7142791748047,
+        "wires": [
+            [
+                "92166cac8c79a0dc"
+            ]
+        ]
+    },
+    {
+        "id": "65d3dc9207d4166d",
+        "type": "base64",
+        "z": "9e6abf917474d233",
+        "name": "",
+        "action": "b64",
+        "property": "payload",
+        "x": 1267.1428680419922,
+        "y": 405.7142791748047,
+        "wires": [
+            [
+                "7d039011773bfbb1",
+                "243c7e89a3de4d9f"
+            ]
+        ]
+    },
+    {
+        "id": "7d039011773bfbb1",
+        "type": "string",
+        "z": "9e6abf917474d233",
+        "name": "",
+        "methods": [
+            {
+                "name": "between",
+                "params": [
+                    {
+                        "type": "str",
+                        "value": "'labels': ["
+                    },
+                    {
+                        "type": "str",
+                        "value": "], 'probabilities'"
+                    }
+                ]
+            }
+        ],
+        "prop": "payload",
+        "propout": "payload",
+        "object": "msg",
+        "objectout": "msg",
+        "x": 1417.1428680419922,
+        "y": 405.7142791748047,
+        "wires": [
+            [
+                "8ca55722e41960f0"
+            ]
+        ]
+    },
+    {
+        "id": "243c7e89a3de4d9f",
+        "type": "string",
+        "z": "9e6abf917474d233",
+        "name": "",
+        "methods": [
+            {
+                "name": "between",
+                "params": [
+                    {
+                        "type": "str",
+                        "value": "'probabilities': ["
+                    },
+                    {
+                        "type": "str",
+                        "value": "], 'labels_info':"
+                    }
+                ]
+            }
+        ],
+        "prop": "payload",
+        "propout": "payload",
+        "object": "msg",
+        "objectout": "msg",
+        "x": 1417.1428680419922,
+        "y": 445.7142791748047,
+        "wires": [
+            [
+                "2f6e597f162cebb0"
+            ]
+        ]
+    },
+    {
+        "id": "2f6e597f162cebb0",
+        "type": "function",
+        "z": "9e6abf917474d233",
+        "name": "Probabilities",
+        "func": "\nvar array = msg.payload.split(','),\n    a = array[0], b = array[1], c = array[2], d = array[3], e = array[4];\n\nmsg.probabilities=[];\nmsg.probabilities[0] = parseFloat(a);\nmsg.probabilities[1] = parseFloat(b);\nmsg.probabilities[2] = parseFloat(c);\nmsg.probabilities[3] = parseFloat(d);\nmsg.probabilities[4] = parseFloat(e);\nmsg.topic = \"probabilities\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\nglobal.set(\"end2\", 0);",
+        "finalize": "",
+        "libs": [],
+        "x": 1557.1428680419922,
+        "y": 445.7142791748047,
+        "wires": [
+            [
+                "0e9de788e420b1c2"
+            ]
+        ]
+    },
+    {
+        "id": "8ca55722e41960f0",
+        "type": "function",
+        "z": "9e6abf917474d233",
+        "name": "Labels",
+        "func": "\nvar array = msg.payload.split(','),\n    a = array[0], b = array[1], c = array[2], d = array[3], e = array[4];\nmsg.labels=[];\n\nmsg.labels[0] = a;\nmsg.labels[1] = b;\nmsg.labels[2] = c;\nmsg.labels[3] = d;\nmsg.labels[4] = e;\nmsg.topic=\"labels\";\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\n\nglobal.set(\"end1\", 0);",
+        "finalize": "",
+        "libs": [],
+        "x": 1537.1428680419922,
+        "y": 405.7142791748047,
+        "wires": [
+            [
+                "0e9de788e420b1c2"
+            ]
+        ]
+    },
+    {
+        "id": "0e9de788e420b1c2",
+        "type": "join",
+        "z": "9e6abf917474d233",
+        "name": "",
+        "mode": "custom",
+        "build": "object",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": true,
+        "timeout": "",
+        "count": "2",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 1817.1428680419922,
+        "y": 485.7142791748047,
+        "wires": [
+            [
+                "5d939f571dda2e82"
+            ]
+        ]
+    },
+    {
+        "id": "2c9297b267a0bdfd",
+        "type": "switch",
+        "z": "9e6abf917474d233",
+        "name": "Switch Result",
+        "property": "sync",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "true"
+            },
+            {
+                "t": "false"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 2,
+        "x": 968.5714721679688,
+        "y": 408.5714416503906,
+        "wires": [
+            [
+                "7dbc12e2d06b4e42"
+            ],
+            [
+                "a9c49a7c078bdcc3"
+            ]
+        ]
+    },
+    {
+        "id": "a9c49a7c078bdcc3",
+        "type": "change",
+        "z": "9e6abf917474d233",
+        "name": "Clear Data Async",
+        "rules": [
+            {
+                "t": "set",
+                "p": "pass",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "username",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "oscar_server",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "data",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "token",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "url",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "service",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "filename",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "True",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1229.9999313354492,
+        "y": 548.5714988708496,
+        "wires": [
+            [
+                "92166cac8c79a0dc"
+            ]
+        ]
+    }
+]
