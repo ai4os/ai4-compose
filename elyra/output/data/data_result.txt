@@ -1,12 +1,0 @@
- 
-
-Predicted labels:
-
-. Tragopogon pratensis | 26 %
-. Taraxacum officinale | 22 %
-
-Homogyne alpina | 13 %
-
-. Taraxacum campylodes | 9 %
-. Eriophorum vaginatum | 6 %
-
