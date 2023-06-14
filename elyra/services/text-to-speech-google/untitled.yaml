@@ -1,0 +1,18 @@
+functions:
+  oscar:
+  - oscar-cluster:
+      name: text-to-speech-google
+      memory: 1Gi
+      cpu: '1.0'
+      image: ghcr.io/grycap/text-to-speech-google
+      script: script.sh
+      log_level: CRITICAL
+      input:
+      - storage_provider: minio
+        path: text-to-speech-google/input
+      output:
+      - storage_provider: minio
+        path: text-to-speech-google/output
+      environment: 
+        Variables:
+          language: ja
