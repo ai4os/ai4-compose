@@ -20,7 +20,7 @@ RUN apk update && \
     apk add git
 
 # Clone the repository into the current directory
-RUN git clone https://github.com/grycap/oscar_nodered.git
+RUN git clone https://github.com/AI4EOSC/ai4-compose.git
 
 # Copy the custom flows to /data
 COPY flows.json /data/flows.json
