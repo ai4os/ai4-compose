@@ -35,6 +35,8 @@ To build the Docker image, use the following command:
 docker build -t your_image_name .
 ```
 
+To log in to the Node-RED workspace, the username and password are both "admin". To modify it, you can edit the settings.js file. For more information about securing node red, please visit: https://nodered.org/docs/user-guide/runtime/securing-node-red.
+
 ## Workflows and Examples
 
 A dedicated directory is provided where the workflows for each of the OSCAR services are located. This is coupled with examples of workflows where the Node-RED dashboard is used to choreograph OSCAR services. These are an excellent resource if you're new to OSCAR or wish to see some example implementations.
