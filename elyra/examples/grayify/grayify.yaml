@@ -1,0 +1,14 @@
+functions:
+  oscar:
+  - oscar-cluster:
+      name: grayify
+      memory: 1Gi
+      cpu: '1.0'
+      image: ghcr.io/grycap/imagemagick
+      script: script.sh
+      input:
+      - storage_provider: minio
+        path: grayify/in
+      output:
+      - storage_provider: minio
+        path: grayify/out
