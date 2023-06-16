@@ -1,0 +1,2760 @@
+[
+    {
+        "id": "cc05de0083d677ed",
+        "type": "tab",
+        "label": "Oscar Services",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "235f74b6543d806a",
+        "type": "ui_dropdown",
+        "z": "cc05de0083d677ed",
+        "name": "",
+        "label": "Select Service",
+        "tooltip": "",
+        "place": "Select option",
+        "group": "5ddcb3d78ca5fbd6",
+        "order": 5,
+        "width": 7,
+        "height": 2,
+        "passthru": true,
+        "multiple": false,
+        "options": [
+            {
+                "label": "Cowsay",
+                "value": "1",
+                "type": "str"
+            },
+            {
+                "label": "Grayify",
+                "value": "2",
+                "type": "str"
+            },
+            {
+                "label": "Plants",
+                "value": "3",
+                "type": "str"
+            },
+            {
+                "label": "Text-Speech",
+                "value": "4",
+                "type": "str"
+            }
+        ],
+        "payload": "",
+        "topic": "topic",
+        "topicType": "msg",
+        "className": "",
+        "x": 1000,
+        "y": 260,
+        "wires": [
+            [
+                "da91c3ac6541d535",
+                "28ff1992ce1e8bfc"
+            ]
+        ]
+    },
+    {
+        "id": "8cd65e5f10ace425",
+        "type": "debug",
+        "z": "cc05de0083d677ed",
+        "name": "debug 57",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1410,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "da91c3ac6541d535",
+        "type": "switch",
+        "z": "cc05de0083d677ed",
+        "name": "Switch Service",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "2",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "3",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "4",
+                "vt": "str"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 4,
+        "x": 1120,
+        "y": 360,
+        "wires": [
+            [
+                "01fa59f79fa03a51",
+                "7d2f4657a130c315"
+            ],
+            [
+                "42b59fc6ab2188f4",
+                "7d2f4657a130c315"
+            ],
+            [
+                "cbf472ea7b235d58",
+                "7d2f4657a130c315"
+            ],
+            [
+                "7803471d56a86832",
+                "7d2f4657a130c315"
+            ]
+        ]
+    },
+    {
+        "id": "01fa59f79fa03a51",
+        "type": "change",
+        "z": "cc05de0083d677ed",
+        "name": "See Cowsay",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"group\":{\"hide\":[\"OSCAR_SERVICES_Datos_Grayify\",\"OSCAR_SERVICES_Datos_Plants\",\"OSCAR_SERVICES_Visualizacion_Grayify\",\"OSCAR_SERVICES_Visualizacion_Plants\",\"OSCAR_SERVICES_Datos_text-speech\",\"OSCAR_SERVICES_Visualizacion_text-speech\"],\"show\":[\"OSCAR_SERVICES_Datos_Cowsay\",\"OSCAR_SERVICES_Visualizacion_Cowsay\",\"OSCAR_SERVICES_Info_Service\"]}}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1340,
+        "y": 420,
+        "wires": [
+            [
+                "73fe2faf51ed046d"
+            ]
+        ]
+    },
+    {
+        "id": "42b59fc6ab2188f4",
+        "type": "change",
+        "z": "cc05de0083d677ed",
+        "name": "See Grayify",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"group\":{\"hide\":[\"OSCAR_SERVICES_Datos_Cowsay\",\"OSCAR_SERVICES_Datos_Plants\",\"OSCAR_SERVICES_Visualizacion_Cowsay\",\"OSCAR_SERVICES_Visualizacion_Plants\",\"OSCAR_SERVICES_Datos_text-speech\",\"OSCAR_SERVICES_Visualizacion_text-speech\"],\"show\":[\"OSCAR_SERVICES_Datos_Grayify\",\"OSCAR_SERVICES_Visualizacion_Grayify\",\"OSCAR_SERVICES_Info_Service\"]}}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1340,
+        "y": 460,
+        "wires": [
+            [
+                "73fe2faf51ed046d"
+            ]
+        ]
+    },
+    {
+        "id": "73fe2faf51ed046d",
+        "type": "ui_ui_control",
+        "z": "cc05de0083d677ed",
+        "name": "",
+        "events": "all",
+        "x": 1600,
+        "y": 520,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "87870ac4de59e6d5",
+        "type": "ui_text_input",
+        "z": "cc05de0083d677ed",
+        "name": "Cowsay Input",
+        "label": "",
+        "tooltip": "",
+        "group": "a281a93326b5bca3",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "mode": "text",
+        "delay": 300,
+        "topic": "topic",
+        "sendOnBlur": true,
+        "className": "",
+        "topicType": "msg",
+        "x": 3460,
+        "y": 760,
+        "wires": [
+            [
+                "623a65a34e2b04be"
+            ]
+        ]
+    },
+    {
+        "id": "cbf472ea7b235d58",
+        "type": "change",
+        "z": "cc05de0083d677ed",
+        "name": "See  Plant",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"group\":{\"hide\":[\"OSCAR_SERVICES_Datos_Cowsay\",\"OSCAR_SERVICES_Datos_Grayify\",\"OSCAR_SERVICES_Visualizacion_Cowsay\",\"OSCAR_SERVICES_Visualizacion_Grayify\",\"OSCAR_SERVICES_Datos_text-speech\",\"OSCAR_SERVICES_Visualizacion_text-speech\"],\"show\":[\"OSCAR_SERVICES_Datos_Plants\",\"OSCAR_SERVICES_Visualizacion_Plants\",\"OSCAR_SERVICES_Info_Service\"]}}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1330,
+        "y": 500,
+        "wires": [
+            [
+                "73fe2faf51ed046d"
+            ]
+        ]
+    },
+    {
+        "id": "f13d95d1888b53a5",
+        "type": "inject",
+        "z": "cc05de0083d677ed",
+        "name": "Inicialization",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "str",
+        "x": 890,
+        "y": 620,
+        "wires": [
+            [
+                "235f74b6543d806a",
+                "b0207192027da2ad",
+                "6b83e070d2a6faae",
+                "af4a3a1e46e589db",
+                "87870ac4de59e6d5",
+                "d36e3e15293cd051",
+                "bc2f553b339cf1aa",
+                "db2b64dfada436f8",
+                "7d2f4657a130c315"
+            ]
+        ]
+    },
+    {
+        "id": "b0207192027da2ad",
+        "type": "change",
+        "z": "cc05de0083d677ed",
+        "name": "hide Group",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"group\":{\"hide\":[\"OSCAR_SERVICES_Datos_Grayify\",\"OSCAR_SERVICES_Datos_Plants\",\"OSCAR_SERVICES_Datos_Cowsay\",\"OSCAR_SERVICES_Visualizacion_Cowsay\",\"OSCAR_SERVICES_Visualizacion_Grayify\",\"OSCAR_SERVICES_Visualizacion_Plants\",\"OSCAR_SERVICES_Datos_text-speech\",\"OSCAR_SERVICES_Visualizacion_text-speech\",\"OSCAR_SERVICES_Info_Service\"],\"show\":[]}}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1310,
+        "y": 580,
+        "wires": [
+            [
+                "73fe2faf51ed046d"
+            ]
+        ]
+    },
+    {
+        "id": "6b83e070d2a6faae",
+        "type": "ui_text_input",
+        "z": "cc05de0083d677ed",
+        "name": "",
+        "label": "Usuario",
+        "tooltip": "",
+        "group": "5ddcb3d78ca5fbd6",
+        "order": 1,
+        "width": 7,
+        "height": 1,
+        "passthru": true,
+        "mode": "text",
+        "delay": 300,
+        "topic": "topic",
+        "sendOnBlur": true,
+        "className": "",
+        "topicType": "msg",
+        "x": 3480,
+        "y": 640,
+        "wires": [
+            [
+                "26b734127a70897e"
+            ]
+        ]
+    },
+    {
+        "id": "af4a3a1e46e589db",
+        "type": "ui_text_input",
+        "z": "cc05de0083d677ed",
+        "name": "",
+        "label": "Contraseña",
+        "tooltip": "",
+        "group": "5ddcb3d78ca5fbd6",
+        "order": 3,
+        "width": 7,
+        "height": 1,
+        "passthru": true,
+        "mode": "password",
+        "delay": 300,
+        "topic": "topic",
+        "sendOnBlur": false,
+        "className": "",
+        "topicType": "msg",
+        "x": 3450,
+        "y": 700,
+        "wires": [
+            [
+                "d73089bc76c0db09"
+            ]
+        ]
+    },
+    {
+        "id": "26b734127a70897e",
+        "type": "function",
+        "z": "cc05de0083d677ed",
+        "name": "Get User",
+        "func": "var  var1 = msg.payload;\nglobal.set(\"user\", var1);\nmsg = var1;\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\nglobal.set(\"user\",\"\");\n",
+        "finalize": "",
+        "libs": [],
+        "x": 3640,
+        "y": 640,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d73089bc76c0db09",
+        "type": "function",
+        "z": "cc05de0083d677ed",
+        "name": "Get Pass",
+        "func": "var var2=msg.payload;\nglobal.set(\"pass\",var2);\nmsg=var2;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\nglobal.set(\"pass\",\"\");",
+        "finalize": "",
+        "libs": [],
+        "x": 3640,
+        "y": 700,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ea9986503f381143",
+        "type": "ui_button",
+        "z": "cc05de0083d677ed",
+        "name": "",
+        "group": "5ddcb3d78ca5fbd6",
+        "order": 9,
+        "width": 7,
+        "height": 1,
+        "passthru": false,
+        "label": "Conectar",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "Procesando....",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 1420,
+        "y": 320,
+        "wires": [
+            [
+                "d8f7a185add17610",
+                "94115d72b9fa387f"
+            ]
+        ]
+    },
+    {
+        "id": "28ff1992ce1e8bfc",
+        "type": "function",
+        "z": "cc05de0083d677ed",
+        "name": "Get Service",
+        "func": "var  var1 = msg.payload;\nglobal.set(\"service\", var1);\nmsg = var1;\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\nglobal.set(\"service\",\"\");\n",
+        "finalize": "",
+        "libs": [],
+        "x": 1250,
+        "y": 260,
+        "wires": [
+            [
+                "8cd65e5f10ace425"
+            ]
+        ]
+    },
+    {
+        "id": "50c30e36a5531785",
+        "type": "ui_template",
+        "z": "cc05de0083d677ed",
+        "group": "1e8d29a757a8e472",
+        "name": "Get Imagen Grayify",
+        "order": 1,
+        "width": 9,
+        "height": 2,
+        "format": "<div class=\"fileContainer\">\n    <input type=\"file\" name=\"file\" id=\"file\" class=\"inputfile\" />\n    <label for=\"file\">Cargar Imagen</label>\n    <p style=\"margin:auto\" id=\"fileName\"></p>\n \n    \n</div>\n\n<style>\n    .fileContainer {\n        display: flex;\n    }\n    .inputfile {\n\twidth: 0.1px;\n\theight: 0.1px;\n\topacity: 0;\n\toverflow: hidden;\n\tposition: absolute;\n\tz-index: -1;\n}\n\n.inputfile + label {\n    font-size: 1.0em;\n    font-weight: 400;\n    color: black;\n    text-align: center;\n    padding: 10px;\n    width: 150px;\n    background-color: #7db0ee;\n}\n\n.inputfile:focus + label,\n.inputfile + label:hover {\n    background-color: blue;\n}\n\n.inputfile + label {\n\tcursor: pointer; /* \"hand\" cursor */\n}\n\n.inputfile:focus + label {\n\toutline: 1px dotted #000;\n\toutline: -webkit-focus-ring-color auto 5px;\n}\n\n.inputfile + label * {\n\tpointer-events: none;\n}\n\n</style>\n\n<script>\n(function(scope) {\n   var fileInput = $('#file')\n   var fileName = $('#fileName')\n   \n   scope.clear = function() {\n       fileInput.val('').trigger('change')\n   }\n   \n   fileInput.on('change', function(event) {\n        var file = fileInput[0].files[0]; \n        \n        fileName.text(file ? file.name : '')\n        \n        if(file) {\n       \n            var reader = new FileReader();\n            \n            reader.readAsBinaryString(file);\n        \n            reader.onload = function() {\n                /* \"hand\" cursor scope.send({payload: reader.result, file: file.name, valor:file})*/\n                scope.send({payload:file})\n            };\n            reader.onerror = function() {\n                console.log('Error while reading files');\n            };\n        } else\n            scope.send({payload: null})\n   })\n    \n})(scope);\n</script>\n\n",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": false,
+        "templateScope": "local",
+        "className": "",
+        "x": 970,
+        "y": 1120,
+        "wires": [
+            [
+                "4b67d1376872e031",
+                "9dc44cdbacaa4cf7"
+            ]
+        ]
+    },
+    {
+        "id": "d36e3e15293cd051",
+        "type": "ui_text_input",
+        "z": "cc05de0083d677ed",
+        "name": "Input text-speech",
+        "label": "",
+        "tooltip": "",
+        "group": "169f64e6d50866fb",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "mode": "text",
+        "delay": 300,
+        "topic": "topic",
+        "sendOnBlur": true,
+        "className": "",
+        "topicType": "msg",
+        "x": 3450,
+        "y": 800,
+        "wires": [
+            [
+                "6fbefed81afcd20d"
+            ]
+        ]
+    },
+    {
+        "id": "393f8c3a01aee720",
+        "type": "http request",
+        "z": "cc05de0083d677ed",
+        "name": "Grayify Service",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "http://localhost/system/services/grayify",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 2040,
+        "y": 300,
+        "wires": [
+            [
+                "786510d0aa4f9144",
+                "52087f9d15656bde"
+            ]
+        ]
+    },
+    {
+        "id": "d8f7a185add17610",
+        "type": "function",
+        "z": "cc05de0083d677ed",
+        "name": "set user and pass",
+        "func": "var user=global.get(\"user\");\nvar pass = global.get(\"pass\");\nvar service=global.get(\"service\");\n\nif (service==\"2\"){\nmsg.payload={\n    \"username\": user,\n    \"password\": pass\n}\n    return [msg, null, null, null];  \n}\nelse if (service == \"3\"){\nmsg.payload = {\n        \"username\": user,\n        \"password\": pass\n    }\n    return [null,msg, null,null]; \n}\nelse if (service == \"1\") {\n    msg.payload = {\n        \"username\": user,\n        \"password\": pass\n    }\n    return [null,null, msg,null];\n}\nelse if (service == \"4\") {\n    msg.payload = {\n        \"username\": user,\n        \"password\": pass\n    }\n    return [null, null,null, msg];\n}\n",
+        "outputs": 4,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1640,
+        "y": 320,
+        "wires": [
+            [
+                "13462e40e52b64fa"
+            ],
+            [
+                "8c57890ac000c5f4"
+            ],
+            [
+                "5a02c6b656b47535"
+            ],
+            [
+                "5cd9cdf0e64313de",
+                "d461df4867999cc4"
+            ]
+        ]
+    },
+    {
+        "id": "2f78effc1f43d03c",
+        "type": "debug",
+        "z": "cc05de0083d677ed",
+        "name": "debug 59",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2640,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "13462e40e52b64fa",
+        "type": "change",
+        "z": "cc05de0083d677ed",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "headers",
+                "pt": "msg",
+                "to": "{\t   \"Authorization\": 'Basic ' & $base64encode(\t       payload.username & ':' & payload.password\t   ) \t}",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1860,
+        "y": 300,
+        "wires": [
+            [
+                "393f8c3a01aee720"
+            ]
+        ]
+    },
+    {
+        "id": "d3af2c7a415431b7",
+        "type": "function",
+        "z": "cc05de0083d677ed",
+        "name": "Get Token-Grayify",
+        "func": "var  var2 = msg.payload;\nglobal.set(\"token_grayify\", var2);\nmsg.payload = var2;\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\nglobal.set(\"token_grayify\",\"\");\n",
+        "finalize": "",
+        "libs": [],
+        "x": 2370,
+        "y": 300,
+        "wires": [
+            [
+                "1c389b4183515082"
+            ]
+        ]
+    },
+    {
+        "id": "1c389b4183515082",
+        "type": "change",
+        "z": "cc05de0083d677ed",
+        "name": "Load image",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "true",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 2590,
+        "y": 300,
+        "wires": [
+            [
+                "36cd11a266acabc2"
+            ]
+        ]
+    },
+    {
+        "id": "36cd11a266acabc2",
+        "type": "function",
+        "z": "cc05de0083d677ed",
+        "name": "Request Grayify",
+        "func": "var token_grayify = global.get(\"token_grayify\");\nvar imagen_ini = global.get(\"imagen_cargada\");\nmsg.payload = imagen_ini;\nmsg.headers = {\n    Authorization: \"Bearer \" + token_grayify\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2780,
+        "y": 300,
+        "wires": [
+            [
+                "c3104429c80e31fb",
+                "0259d6bb3e3c2733"
+            ]
+        ]
+    },
+    {
+        "id": "c3104429c80e31fb",
+        "type": "http request",
+        "z": "cc05de0083d677ed",
+        "name": "http request grayify",
+        "method": "POST",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "http://localhost/run/grayify",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "bearer",
+        "senderr": true,
+        "headers": [],
+        "x": 2990,
+        "y": 300,
+        "wires": [
+            [
+                "0ce81cf0a22fae3b"
+            ]
+        ]
+    },
+    {
+        "id": "0ce81cf0a22fae3b",
+        "type": "string",
+        "z": "cc05de0083d677ed",
+        "name": "",
+        "methods": [
+            {
+                "name": "delLeftMost",
+                "params": [
+                    {
+                        "type": "str",
+                        "value": "response"
+                    }
+                ]
+            }
+        ],
+        "prop": "payload",
+        "propout": "payload",
+        "object": "msg",
+        "objectout": "msg",
+        "x": 3150,
+        "y": 300,
+        "wires": [
+            [
+                "01f6588462e2f9eb",
+                "b7db96399f01d844"
+            ]
+        ]
+    },
+    {
+        "id": "01f6588462e2f9eb",
+        "type": "base64",
+        "z": "cc05de0083d677ed",
+        "name": "",
+        "action": "",
+        "property": "payload",
+        "x": 3320,
+        "y": 300,
+        "wires": [
+            [
+                "eaf279bfba798969"
+            ]
+        ]
+    },
+    {
+        "id": "eaf279bfba798969",
+        "type": "function",
+        "z": "cc05de0083d677ed",
+        "name": "save imag grayify",
+        "func": "var  var1 = msg.payload;\n\nvar var2 = global.get(\"num_eventos\");\nvar var3 = \"Cursos UPV/OSCAR NODE-RED/Directorio/OSCAR_imag/image-neg_\"+String(var2)+\".jpg\"\nvar2 = parseInt(var2) + 1;\nglobal.set(\"num_eventos\", String(var2));\n\nmsg.filename = var3;\nmsg.payload = var1;\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\nglobal.set(\"imagen_cargada\", \"\");\n\nglobal.set(\"num_eventos\", \"1\");",
+        "finalize": "",
+        "libs": [],
+        "x": 3490,
+        "y": 300,
+        "wires": [
+            [
+                "394af87fc53dd9c8"
+            ]
+        ]
+    },
+    {
+        "id": "394af87fc53dd9c8",
+        "type": "file",
+        "z": "cc05de0083d677ed",
+        "name": "Negativo",
+        "filename": "filename",
+        "filenameType": "msg",
+        "appendNewline": false,
+        "createDir": true,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 3680,
+        "y": 300,
+        "wires": [
+            [
+                "05380bd6b6adb959"
+            ]
+        ]
+    },
+    {
+        "id": "05380bd6b6adb959",
+        "type": "file in",
+        "z": "cc05de0083d677ed",
+        "name": "Show",
+        "filename": "filename",
+        "filenameType": "msg",
+        "format": "",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 3810,
+        "y": 300,
+        "wires": [
+            [
+                "d1bf81ddbf449632"
+            ]
+        ]
+    },
+    {
+        "id": "d1bf81ddbf449632",
+        "type": "base64",
+        "z": "cc05de0083d677ed",
+        "name": "",
+        "action": "str",
+        "property": "payload",
+        "x": 3960,
+        "y": 300,
+        "wires": [
+            [
+                "f7675fe620a943e3",
+                "03aec9da541b359a"
+            ]
+        ]
+    },
+    {
+        "id": "f7675fe620a943e3",
+        "type": "ui_template",
+        "z": "cc05de0083d677ed",
+        "group": "469b286f7694e671",
+        "name": "Display image Grayify",
+        "order": 3,
+        "width": 7,
+        "height": 5,
+        "format": "<!DOCTYPE html>\n<html>\n<style>\n    .img {\n        border: 2px solid #000;\n        border-radius: 4px;\n        padding: 2px;\n        width: 360px;\n    }\n</style>\n\n<center>\n    <table>\n        <tr>\n            <!-- Row 1 -->\n            <td style=\"text-align: center\"><img src=\"data:image/jpg;base64,{{msg.payload}}\" class=img /></td>\n        </tr>\n            </table>\n</center>\n</html>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": false,
+        "templateScope": "local",
+        "className": "",
+        "x": 4160,
+        "y": 300,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "03aec9da541b359a",
+        "type": "image",
+        "z": "cc05de0083d677ed",
+        "name": "",
+        "width": 160,
+        "data": "payload",
+        "dataType": "msg",
+        "thumbnail": false,
+        "active": true,
+        "pass": false,
+        "outputs": 0,
+        "x": 4160,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "786510d0aa4f9144",
+        "type": "string",
+        "z": "cc05de0083d677ed",
+        "name": "",
+        "methods": [
+            {
+                "name": "between",
+                "params": [
+                    {
+                        "type": "str",
+                        "value": "\"token\":\""
+                    },
+                    {
+                        "type": "str",
+                        "value": "\",\"input\""
+                    }
+                ]
+            }
+        ],
+        "prop": "payload",
+        "propout": "payload",
+        "object": "msg",
+        "objectout": "msg",
+        "x": 2190,
+        "y": 300,
+        "wires": [
+            [
+                "d3af2c7a415431b7"
+            ]
+        ]
+    },
+    {
+        "id": "4b67d1376872e031",
+        "type": "function",
+        "z": "cc05de0083d677ed",
+        "name": "Save imag grayify",
+        "func": "var  var1 = msg.payload;\nglobal.set (\"imagen_cargada\",var1);\nvar var2 = global.get(\"num_eventos\");\nvar var3 = \"Cursos UPV/OSCAR NODE-RED/Directorio/OSCAR_imag/image-orig_\"+String(var2)+\".jpg\"\nmsg.filename = var3;\nmsg.payload = var1;\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\nglobal.set(\"imagen_cargada\", \"\");\n\nglobal.set(\"num_eventos\", \"1\");",
+        "finalize": "",
+        "libs": [],
+        "x": 1250,
+        "y": 1220,
+        "wires": [
+            [
+                "6544f32bc9e78625"
+            ]
+        ]
+    },
+    {
+        "id": "6544f32bc9e78625",
+        "type": "file",
+        "z": "cc05de0083d677ed",
+        "name": "Negativo",
+        "filename": "filename",
+        "filenameType": "msg",
+        "appendNewline": true,
+        "createDir": true,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 1440,
+        "y": 1220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "eec27d2b514a0b2b",
+        "type": "function",
+        "z": "cc05de0083d677ed",
+        "name": "Get User",
+        "func": "var  var1 = msg.payload;\nglobal.set (\"imagen_cargada\",var1);\nmsg.payload = var1;\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\nglobal.set(\"imagen_cargada\", \"\");\n",
+        "finalize": "",
+        "libs": [],
+        "x": 1400,
+        "y": 1060,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d336efe36e28b4e9",
+        "type": "ui_template",
+        "z": "cc05de0083d677ed",
+        "group": "1e8d29a757a8e472",
+        "name": "Display image cargada grayify",
+        "order": 2,
+        "width": 9,
+        "height": 6,
+        "format": "<!DOCTYPE html>\n<html>\n<style>\n    .img {\n        border: 2px solid #000;\n        border-radius: 4px;\n        padding: 2px;\n        width: 360px;\n    }\n</style>\n\n<center>\n    <table>\n        <tr>\n            <!-- Row 1 -->\n            <td style=\"text-align: center\"><img src=\"data:image/jpg;base64,{{msg.payload}}\" class=img /></td>\n        </tr>\n            </table>\n</center>\n</html>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": false,
+        "templateScope": "local",
+        "className": "",
+        "x": 1590,
+        "y": 1140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8d225cbbda28496b",
+        "type": "image",
+        "z": "cc05de0083d677ed",
+        "name": "",
+        "width": "250",
+        "data": "payload",
+        "dataType": "msg",
+        "thumbnail": false,
+        "active": true,
+        "pass": false,
+        "outputs": 0,
+        "x": 1600,
+        "y": 1180,
+        "wires": []
+    },
+    {
+        "id": "9dc44cdbacaa4cf7",
+        "type": "base64",
+        "z": "cc05de0083d677ed",
+        "name": "",
+        "action": "str",
+        "property": "payload",
+        "x": 1220,
+        "y": 1140,
+        "wires": [
+            [
+                "8d225cbbda28496b",
+                "d336efe36e28b4e9",
+                "eec27d2b514a0b2b"
+            ]
+        ]
+    },
+    {
+        "id": "b7db96399f01d844",
+        "type": "change",
+        "z": "cc05de0083d677ed",
+        "name": "Clear log",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 3260,
+        "y": 640,
+        "wires": [
+            [
+                "6b83e070d2a6faae",
+                "af4a3a1e46e589db"
+            ]
+        ]
+    },
+    {
+        "id": "f163087a74d8b207",
+        "type": "function",
+        "z": "cc05de0083d677ed",
+        "name": "Save imag plant",
+        "func": "var  var1 = msg.payload;\nglobal.set (\"imagen_cargada\",var1);\nvar var2 = global.get(\"num_eventos_p\");\nvar var3 = \"Cursos UPV/OSCAR NODE-RED/Directorio/OSCAR_imag/image-orig_plants\"+String(var2)+\".jpg\"\nmsg.filename = var3;\nmsg.payload = var1;\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\nglobal.set(\"imagen_cargada\", \"\");\n\nglobal.set(\"num_eventos_p\", \"1\");",
+        "finalize": "",
+        "libs": [],
+        "x": 1180,
+        "y": 1420,
+        "wires": [
+            [
+                "b926a675a86d8592"
+            ]
+        ]
+    },
+    {
+        "id": "b926a675a86d8592",
+        "type": "file",
+        "z": "cc05de0083d677ed",
+        "name": "Plant",
+        "filename": "filename",
+        "filenameType": "msg",
+        "appendNewline": true,
+        "createDir": true,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 1390,
+        "y": 1420,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "cf9c67544286ca12",
+        "type": "function",
+        "z": "cc05de0083d677ed",
+        "name": "Get User",
+        "func": "var  var1 = msg.payload;\nglobal.set (\"imagen_cargada\",var1);\nmsg.payload = var1;\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\nglobal.set(\"imagen_cargada\", \"\");\n",
+        "finalize": "",
+        "libs": [],
+        "x": 1580,
+        "y": 1380,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e93e6b2d53deab35",
+        "type": "ui_template",
+        "z": "cc05de0083d677ed",
+        "group": "0727cf1f6f4c5c78",
+        "name": "Display image cargada plant",
+        "order": 2,
+        "width": 9,
+        "height": 6,
+        "format": "<!DOCTYPE html>\n<html>\n<style>\n    .img {\n        border: 2px solid #000;\n        border-radius: 4px;\n        padding: 2px;\n        width: 360px;\n    }\n</style>\n\n<center>\n    <table>\n        <tr>\n            <!-- Row 1 -->\n            <td style=\"text-align: center\"><img src=\"data:image/jpg;base64,{{msg.payload}}\" class=img /></td>\n        </tr>\n            </table>\n</center>\n</html>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": false,
+        "templateScope": "local",
+        "className": "",
+        "x": 1560,
+        "y": 1340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3baaa561bb145645",
+        "type": "image",
+        "z": "cc05de0083d677ed",
+        "name": "",
+        "width": "250",
+        "data": "payload",
+        "dataType": "msg",
+        "thumbnail": false,
+        "active": true,
+        "pass": false,
+        "outputs": 0,
+        "x": 1580,
+        "y": 1300,
+        "wires": []
+    },
+    {
+        "id": "6b4cea1441d71ae5",
+        "type": "base64",
+        "z": "cc05de0083d677ed",
+        "name": "",
+        "action": "",
+        "property": "payload",
+        "x": 1200,
+        "y": 1340,
+        "wires": [
+            [
+                "3baaa561bb145645",
+                "e93e6b2d53deab35",
+                "cf9c67544286ca12"
+            ]
+        ]
+    },
+    {
+        "id": "657310d78c480397",
+        "type": "function",
+        "z": "cc05de0083d677ed",
+        "name": "Request Plant Class",
+        "func": "var var0=msg.payload;\nvar token_plant = global.get(\"token_plant\");\nvar imagen_ini = global.get(\"imagen_cargada\");\nmsg.payload = imagen_ini;\nmsg.headers = {\n    Authorization: \"Bearer \" + token_plant\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2720,
+        "y": 340,
+        "wires": [
+            [
+                "0f1aa1a0b847d458",
+                "56c376bcd382a969"
+            ]
+        ]
+    },
+    {
+        "id": "0f1aa1a0b847d458",
+        "type": "http request",
+        "z": "cc05de0083d677ed",
+        "name": "http request plant",
+        "method": "POST",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "http://localhost/run/plants",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": true,
+        "headers": [],
+        "x": 2950,
+        "y": 340,
+        "wires": [
+            [
+                "8e4e10b1e809539f"
+            ]
+        ]
+    },
+    {
+        "id": "8e4e10b1e809539f",
+        "type": "string",
+        "z": "cc05de0083d677ed",
+        "name": "",
+        "methods": [
+            {
+                "name": "delLeftMost",
+                "params": [
+                    {
+                        "type": "str",
+                        "value": "response"
+                    }
+                ]
+            }
+        ],
+        "prop": "payload",
+        "propout": "payload",
+        "object": "msg",
+        "objectout": "msg",
+        "x": 3110,
+        "y": 340,
+        "wires": [
+            [
+                "7bc8fbc9ccd093d4",
+                "b7db96399f01d844"
+            ]
+        ]
+    },
+    {
+        "id": "7bc8fbc9ccd093d4",
+        "type": "base64",
+        "z": "cc05de0083d677ed",
+        "name": "",
+        "action": "",
+        "property": "payload",
+        "x": 3300,
+        "y": 340,
+        "wires": [
+            [
+                "7820bd7c4388ca74"
+            ]
+        ]
+    },
+    {
+        "id": "7820bd7c4388ca74",
+        "type": "function",
+        "z": "cc05de0083d677ed",
+        "name": "Save Imag plant",
+        "func": "var  var1 = msg.payload;\nvar var2 = global.get(\"num_eventos_p\");\n\nvar var3 = \"Cursos UPV/OSCAR NODE-RED/Directorio/OSCAR_imag/image-plant-proc_\"+String(var2)+\".jpg\"\nvar2 = parseInt(var2) + 1;\nglobal.set(\"num_eventos_p\", String(var2));\nmsg.filename = var3;\nmsg.payload = var1;\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\nglobal.set(\"imagen_cargada\", \"\");\n\n",
+        "finalize": "",
+        "libs": [],
+        "x": 3460,
+        "y": 340,
+        "wires": [
+            [
+                "27e784a2c42e940a"
+            ]
+        ]
+    },
+    {
+        "id": "27e784a2c42e940a",
+        "type": "file",
+        "z": "cc05de0083d677ed",
+        "name": "Save Imag Plant ",
+        "filename": "filename",
+        "filenameType": "msg",
+        "appendNewline": false,
+        "createDir": true,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 3660,
+        "y": 340,
+        "wires": [
+            [
+                "67ab76e4bb286035"
+            ]
+        ]
+    },
+    {
+        "id": "67ab76e4bb286035",
+        "type": "file in",
+        "z": "cc05de0083d677ed",
+        "name": "Show",
+        "filename": "filename",
+        "filenameType": "msg",
+        "format": "",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 3830,
+        "y": 340,
+        "wires": [
+            [
+                "0badd2f9c5b81b21"
+            ]
+        ]
+    },
+    {
+        "id": "0badd2f9c5b81b21",
+        "type": "base64",
+        "z": "cc05de0083d677ed",
+        "name": "",
+        "action": "str",
+        "property": "payload",
+        "x": 3980,
+        "y": 380,
+        "wires": [
+            [
+                "15c7540c050f7412",
+                "26d4fce2ebced7d9"
+            ]
+        ]
+    },
+    {
+        "id": "15c7540c050f7412",
+        "type": "ui_template",
+        "z": "cc05de0083d677ed",
+        "group": "799851c6161da19f",
+        "name": "Display image plant",
+        "order": 3,
+        "width": 7,
+        "height": 5,
+        "format": "<!DOCTYPE html>\n<html>\n<style>\n    .img {\n        border: 2px solid #000;\n        border-radius: 4px;\n        padding: 2px;\n        width: 360px;\n    }\n</style>\n\n<center>\n    <table>\n        <tr>\n            <!-- Row 1 -->\n            <td style=\"text-align: center\"><img src=\"data:image/jpg;base64,{{msg.payload}}\" class=img /></td>\n        </tr>\n        \n    </table>\n</center>\n</html>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": false,
+        "templateScope": "local",
+        "className": "",
+        "x": 4190,
+        "y": 380,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "26d4fce2ebced7d9",
+        "type": "image",
+        "z": "cc05de0083d677ed",
+        "name": "",
+        "width": "250",
+        "data": "payload",
+        "dataType": "msg",
+        "thumbnail": false,
+        "active": true,
+        "pass": false,
+        "outputs": 0,
+        "x": 4180,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "e561e4b7ff0ee035",
+        "type": "http request",
+        "z": "cc05de0083d677ed",
+        "name": "Plant  Service",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "http://localhost/system/services/plants",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 2030,
+        "y": 340,
+        "wires": [
+            [
+                "026abdb92a758d26",
+                "52087f9d15656bde"
+            ]
+        ]
+    },
+    {
+        "id": "026abdb92a758d26",
+        "type": "string",
+        "z": "cc05de0083d677ed",
+        "name": "",
+        "methods": [
+            {
+                "name": "between",
+                "params": [
+                    {
+                        "type": "str",
+                        "value": "\"token\":\""
+                    },
+                    {
+                        "type": "str",
+                        "value": "\",\"input\""
+                    }
+                ]
+            }
+        ],
+        "prop": "payload",
+        "propout": "payload",
+        "object": "msg",
+        "objectout": "msg",
+        "x": 2190,
+        "y": 340,
+        "wires": [
+            [
+                "904cb088713bbf45"
+            ]
+        ]
+    },
+    {
+        "id": "904cb088713bbf45",
+        "type": "function",
+        "z": "cc05de0083d677ed",
+        "name": "Get Token-plant",
+        "func": "var  var1 = msg.payload;\nglobal.set(\"token_plant\", var1);\nmsg.payload= \"true\";\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\nglobal.set(\"token_plant\",\"\");\n",
+        "finalize": "",
+        "libs": [],
+        "x": 2360,
+        "y": 340,
+        "wires": [
+            [
+                "2872071117ceebb3"
+            ]
+        ]
+    },
+    {
+        "id": "8c57890ac000c5f4",
+        "type": "change",
+        "z": "cc05de0083d677ed",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "headers",
+                "pt": "msg",
+                "to": "{\t   \"Authorization\": 'Basic ' & $base64encode(\t       payload.username & ':' & payload.password\t   ) \t}",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1860,
+        "y": 340,
+        "wires": [
+            [
+                "e561e4b7ff0ee035"
+            ]
+        ]
+    },
+    {
+        "id": "2872071117ceebb3",
+        "type": "change",
+        "z": "cc05de0083d677ed",
+        "name": "Proc",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "true",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 2530,
+        "y": 340,
+        "wires": [
+            [
+                "657310d78c480397"
+            ]
+        ]
+    },
+    {
+        "id": "56c376bcd382a969",
+        "type": "change",
+        "z": "cc05de0083d677ed",
+        "name": "Msg",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Procesando Plant Service ...",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 2950,
+        "y": 400,
+        "wires": [
+            [
+                "f461a58ea4f88a68"
+            ]
+        ]
+    },
+    {
+        "id": "f461a58ea4f88a68",
+        "type": "ui_toast",
+        "z": "cc05de0083d677ed",
+        "position": "top right",
+        "displayTime": "4.5",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "className": "",
+        "topic": "",
+        "name": "",
+        "x": 3120,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "89229f2e58494a80",
+        "type": "ui_toast",
+        "z": "cc05de0083d677ed",
+        "position": "top right",
+        "displayTime": "1.5",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "className": "",
+        "topic": "",
+        "name": "",
+        "x": 3120,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "0259d6bb3e3c2733",
+        "type": "change",
+        "z": "cc05de0083d677ed",
+        "name": "Msg",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Procesando Grayify Service ...",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 2970,
+        "y": 260,
+        "wires": [
+            [
+                "89229f2e58494a80"
+            ]
+        ]
+    },
+    {
+        "id": "aced8beb57309ccd",
+        "type": "ui_template",
+        "z": "cc05de0083d677ed",
+        "group": "0727cf1f6f4c5c78",
+        "name": "Get Imagen Plants",
+        "order": 1,
+        "width": 9,
+        "height": 2,
+        "format": "<div class=\"fileContainer\">\n    <input type=\"file\" name=\"file_plants\" id=\"file_plants\" class=\"inputfile\" />\n    <label for=\"file_plants\">Cargar Imagen</label>\n    <p style=\"margin:auto\" id=\"fileName_plants\"></p>\n \n    \n</div>\n\n<style>\n    .fileContainer {\n        display: flex;\n    }\n    .inputfile {\n\twidth: 0.1px;\n\theight: 0.1px;\n\topacity: 0;\n\toverflow: hidden;\n\tposition: absolute;\n\tz-index: -1;\n}\n\n.inputfile + label {\n    font-size: 1.0em;\n    font-weight: 400;\n    color: black;\n    text-align: center;\n    padding: 10px;\n    width: 150px;\n    background-color: #7db0ee;\n}\n\n.inputfile:focus + label,\n.inputfile + label:hover {\n    background-color: blue;\n}\n\n.inputfile + label {\n\tcursor: pointer; /* \"hand\" cursor */\n}\n\n.inputfile:focus + label {\n\toutline: 1px dotted #000;\n\toutline: -webkit-focus-ring-color auto 5px;\n}\n\n.inputfile + label * {\n\tpointer-events: none;\n}\n\n</style>\n\n<script>\n(function(scope) {\n   var fileInput = $('#file_plants')\n   var fileName = $('#fileName_plants')\n   \n   scope.clear = function() {\n       fileInput.val('').trigger('change')\n   }\n   \n   fileInput.on('change', function(event) {\n        var file = fileInput[0].files[0]; \n        \n        fileName.text(file ? file.name : '')\n        \n        if(file) {\n       \n            var reader = new FileReader();\n            \n            reader.readAsBinaryString(file);\n        \n            reader.onload = function() {\n                /* \"hand\" cursor scope.send({payload: reader.result, file: file.name, valor:file})*/\n                scope.send({payload:file})\n            };\n            reader.onerror = function() {\n                console.log('Error while reading files');\n            };\n        } else\n            scope.send({payload: null})\n   })\n    \n})(scope);\n</script>\n\n",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": false,
+        "templateScope": "local",
+        "className": "",
+        "x": 970,
+        "y": 1340,
+        "wires": [
+            [
+                "f163087a74d8b207",
+                "6b4cea1441d71ae5"
+            ]
+        ]
+    },
+    {
+        "id": "623a65a34e2b04be",
+        "type": "function",
+        "z": "cc05de0083d677ed",
+        "name": "Get Pass",
+        "func": "var var2=msg.payload;\nglobal.set(\"cowsay\",var2);\nmsg=var2;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\nglobal.set(\"cowsay\",\"\");",
+        "finalize": "",
+        "libs": [],
+        "x": 3640,
+        "y": 760,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5a02c6b656b47535",
+        "type": "change",
+        "z": "cc05de0083d677ed",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "headers",
+                "pt": "msg",
+                "to": "{\t   \"Authorization\": 'Basic ' & $base64encode(\t       payload.username & ':' & payload.password\t   ) \t}",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1860,
+        "y": 420,
+        "wires": [
+            [
+                "fa3287b9bf969cfe"
+            ]
+        ]
+    },
+    {
+        "id": "fa3287b9bf969cfe",
+        "type": "http request",
+        "z": "cc05de0083d677ed",
+        "name": "cowsay service",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "http://localhost/system/services/cowsay",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": true,
+        "authType": "basic",
+        "senderr": true,
+        "headers": [],
+        "x": 2040,
+        "y": 420,
+        "wires": [
+            [
+                "52087f9d15656bde",
+                "755ce6f89f2b6a2d"
+            ]
+        ]
+    },
+    {
+        "id": "755ce6f89f2b6a2d",
+        "type": "string",
+        "z": "cc05de0083d677ed",
+        "name": "",
+        "methods": [
+            {
+                "name": "between",
+                "params": [
+                    {
+                        "type": "str",
+                        "value": "\"token\":\""
+                    },
+                    {
+                        "type": "str",
+                        "value": "\",\"input\""
+                    }
+                ]
+            }
+        ],
+        "prop": "payload",
+        "propout": "payload",
+        "object": "msg",
+        "objectout": "msg",
+        "x": 2270,
+        "y": 420,
+        "wires": [
+            [
+                "fa368fb1d3b0beaa"
+            ]
+        ]
+    },
+    {
+        "id": "fa368fb1d3b0beaa",
+        "type": "function",
+        "z": "cc05de0083d677ed",
+        "name": "Get Token-cowsay",
+        "func": "var  var1 = msg.payload;\nglobal.set(\"token_cowsay\", var1);\nmsg.payload= \"true\";\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\nglobal.set(\"token_cowsay\",\"\");\n",
+        "finalize": "",
+        "libs": [],
+        "x": 2430,
+        "y": 420,
+        "wires": [
+            [
+                "16e7730f899df2ce"
+            ]
+        ]
+    },
+    {
+        "id": "49f288108624ad04",
+        "type": "debug",
+        "z": "cc05de0083d677ed",
+        "name": "debug 61",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 3100,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "16e7730f899df2ce",
+        "type": "function",
+        "z": "cc05de0083d677ed",
+        "name": "Send text-token",
+        "func": "var payload = global.get(\"cowsay\");\nvar token_cowsay = global.get(\"token_cowsay\");\n\n\nmsg.headers = {\n    Authorization: \"Bearer \" + token_cowsay\n}\n\nmsg.payload = {\n    \"message\":payload\n\n}\nreturn msg;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2620,
+        "y": 420,
+        "wires": [
+            [
+                "1de3ed9fda4cdb85"
+            ]
+        ]
+    },
+    {
+        "id": "1de3ed9fda4cdb85",
+        "type": "http request",
+        "z": "cc05de0083d677ed",
+        "name": "http request cowsay",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "http://localhost/run/cowsay",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "bearer",
+        "senderr": true,
+        "headers": [],
+        "x": 2840,
+        "y": 460,
+        "wires": [
+            [
+                "49f288108624ad04",
+                "0e781820095c934a"
+            ]
+        ]
+    },
+    {
+        "id": "fd542909309c7be1",
+        "type": "image",
+        "z": "cc05de0083d677ed",
+        "name": "",
+        "width": 160,
+        "data": "payload",
+        "dataType": "msg",
+        "thumbnail": false,
+        "active": true,
+        "pass": false,
+        "outputs": 0,
+        "x": 2880,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "0e781820095c934a",
+        "type": "function",
+        "z": "cc05de0083d677ed",
+        "name": "payload",
+        "func": "var payload = msg.payload;\n//var bol = payload.lastIndexOf('<');\n//var bol1 = payload.lastIndexOf(\"\\n\");\n//payload=payload.substring(bol,bol1);\n \n\n\nreturn msg;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 3060,
+        "y": 460,
+        "wires": [
+            [
+                "49f288108624ad04",
+                "bc2f553b339cf1aa",
+                "c30eb8bc16625959"
+            ]
+        ]
+    },
+    {
+        "id": "bc2f553b339cf1aa",
+        "type": "ui_template",
+        "z": "cc05de0083d677ed",
+        "group": "e272d851c28c5550",
+        "name": "Show Cowsay",
+        "order": 2,
+        "width": 7,
+        "height": 5,
+        "format": "<div class=\"wrap\">\n\t\t<div class=\"progress\" data-percent=\"80\">\n\t\t  <span style=\"white-space: pre;\">{{msg.payload}}</span>\n\t\t</div>\n</div>\n\t",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 3320,
+        "y": 460,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "7803471d56a86832",
+        "type": "change",
+        "z": "cc05de0083d677ed",
+        "name": "See  Text-Speech",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"group\":{\"hide\":[\"OSCAR_SERVICES_Datos_Cowsay\",\"OSCAR_SERVICES_Datos_Grayify\",\"OSCAR_SERVICES_Datos_Plants\",\"OSCAR_SERVICES_Visualizacion_Cowsay\",\"OSCAR_SERVICES_Visualizacion_Grayify\",\"OSCAR_SERVICES_Visualizacion_Plants\"],\"show\":[\"OSCAR_SERVICES_Datos_text-speech\",\"OSCAR_SERVICES_Visualizacion_text-speech\",\"OSCAR_SERVICES_Info_Service\"]}}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1350,
+        "y": 540,
+        "wires": [
+            [
+                "73fe2faf51ed046d",
+                "d461df4867999cc4"
+            ]
+        ]
+    },
+    {
+        "id": "6fbefed81afcd20d",
+        "type": "function",
+        "z": "cc05de0083d677ed",
+        "name": "Get Pass",
+        "func": "var var2=msg.payload;\nglobal.set(\"text-speech\",var2);\nmsg=var2;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\nglobal.set(\"text-speech\",\"\");",
+        "finalize": "",
+        "libs": [],
+        "x": 3640,
+        "y": 800,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5cd9cdf0e64313de",
+        "type": "change",
+        "z": "cc05de0083d677ed",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "headers",
+                "pt": "msg",
+                "to": "{\t   \"Authorization\": 'Basic ' & $base64encode(\t       payload.username & ':' & payload.password\t   ) \t}",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1860,
+        "y": 500,
+        "wires": [
+            [
+                "1c422cd9ab3d1641"
+            ]
+        ]
+    },
+    {
+        "id": "1c422cd9ab3d1641",
+        "type": "http request",
+        "z": "cc05de0083d677ed",
+        "name": "text-to-speech-google service",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "http://localhost/system/services/text-to-speech-google",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "basic",
+        "senderr": true,
+        "headers": [],
+        "x": 2090,
+        "y": 500,
+        "wires": [
+            [
+                "e2581a4cc52ef6c8",
+                "52087f9d15656bde"
+            ]
+        ]
+    },
+    {
+        "id": "e2581a4cc52ef6c8",
+        "type": "string",
+        "z": "cc05de0083d677ed",
+        "name": "",
+        "methods": [
+            {
+                "name": "between",
+                "params": [
+                    {
+                        "type": "str",
+                        "value": "\"token\":\""
+                    },
+                    {
+                        "type": "str",
+                        "value": "\",\"input\""
+                    }
+                ]
+            }
+        ],
+        "prop": "payload",
+        "propout": "payload",
+        "object": "msg",
+        "objectout": "msg",
+        "x": 2310,
+        "y": 500,
+        "wires": [
+            [
+                "0372434ba21aa53e"
+            ]
+        ]
+    },
+    {
+        "id": "0372434ba21aa53e",
+        "type": "function",
+        "z": "cc05de0083d677ed",
+        "name": "Get Token-text",
+        "func": "var  var1 = msg.payload;\nglobal.set(\"token_text\", var1);\nmsg.payload= \"true\";\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\nglobal.set(\"token_text\",\"\");\n",
+        "finalize": "",
+        "libs": [],
+        "x": 2460,
+        "y": 500,
+        "wires": [
+            [
+                "2f78effc1f43d03c",
+                "7cc5e8c413e0f9d4"
+            ]
+        ]
+    },
+    {
+        "id": "7d36f5b62846cb05",
+        "type": "http request",
+        "z": "cc05de0083d677ed",
+        "name": "http request text",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "query",
+        "url": "http://localhost/run/text-to-speech-google",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "bearer",
+        "senderr": true,
+        "headers": [],
+        "x": 3100,
+        "y": 980,
+        "wires": [
+            [
+                "2d67aa75fd63acce"
+            ]
+        ]
+    },
+    {
+        "id": "2d67aa75fd63acce",
+        "type": "base64",
+        "z": "cc05de0083d677ed",
+        "name": "",
+        "action": "",
+        "property": "payload",
+        "x": 3300,
+        "y": 980,
+        "wires": [
+            [
+                "56b28b0fc4d59dfd",
+                "33e4fe2a02843b43",
+                "cf5ce45328484fdb",
+                "ea46537ff2d5c1c8"
+            ]
+        ]
+    },
+    {
+        "id": "56b28b0fc4d59dfd",
+        "type": "debug",
+        "z": "cc05de0083d677ed",
+        "name": "debug 63",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 3390,
+        "y": 1160,
+        "wires": []
+    },
+    {
+        "id": "1d502e60d2e550b8",
+        "type": "file",
+        "z": "cc05de0083d677ed",
+        "name": "Save audio",
+        "filename": "filename",
+        "filenameType": "msg",
+        "appendNewline": false,
+        "createDir": true,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 3750,
+        "y": 1040,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1995d4238180c955",
+        "type": "function",
+        "z": "cc05de0083d677ed",
+        "name": "funcion text-token",
+        "func": "\nvar token_text = global.get(\"token_text\");\n\n\nmsg.headers = {\n    Authorization: \"Bearer \" + token_text\n}\n\n//msg.payload = payload;\n\nreturn msg;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2870,
+        "y": 980,
+        "wires": [
+            [
+                "7d36f5b62846cb05",
+                "00114aed91050fcd"
+            ]
+        ]
+    },
+    {
+        "id": "7cc5e8c413e0f9d4",
+        "type": "function",
+        "z": "cc05de0083d677ed",
+        "name": "Get text-speech",
+        "func": "var payload = global.get(\"text-speech\");\n\nmsg.payload = payload;\n\nreturn msg;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2540,
+        "y": 980,
+        "wires": [
+            [
+                "9a44d49d613d52fc"
+            ]
+        ]
+    },
+    {
+        "id": "9a44d49d613d52fc",
+        "type": "base64",
+        "z": "cc05de0083d677ed",
+        "name": "",
+        "action": "str",
+        "property": "payload",
+        "x": 2700,
+        "y": 980,
+        "wires": [
+            [
+                "1995d4238180c955"
+            ]
+        ]
+    },
+    {
+        "id": "33e4fe2a02843b43",
+        "type": "ui_audio",
+        "z": "cc05de0083d677ed",
+        "name": "Audio ",
+        "group": "2a2af3e71af48d83",
+        "voice": "",
+        "always": "",
+        "x": 3510,
+        "y": 980,
+        "wires": []
+    },
+    {
+        "id": "00114aed91050fcd",
+        "type": "change",
+        "z": "cc05de0083d677ed",
+        "name": "Msg",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Procesando text to speech Service ...",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 3010,
+        "y": 1040,
+        "wires": [
+            [
+                "17d61cdc58c18a4e"
+            ]
+        ]
+    },
+    {
+        "id": "17d61cdc58c18a4e",
+        "type": "ui_toast",
+        "z": "cc05de0083d677ed",
+        "position": "top right",
+        "displayTime": "2.5",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "className": "",
+        "topic": "",
+        "name": "",
+        "x": 3160,
+        "y": 1040,
+        "wires": []
+    },
+    {
+        "id": "1d973c21adbdf38b",
+        "type": "ui_switch",
+        "z": "cc05de0083d677ed",
+        "name": "",
+        "label": "See service information",
+        "tooltip": "",
+        "group": "5ddcb3d78ca5fbd6",
+        "order": 11,
+        "width": 8,
+        "height": 1,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 1090,
+        "y": 160,
+        "wires": [
+            [
+                "1ce0c05a1bf06ba4"
+            ]
+        ]
+    },
+    {
+        "id": "1ce0c05a1bf06ba4",
+        "type": "function",
+        "z": "cc05de0083d677ed",
+        "name": "Get User",
+        "func": "var  var1 = msg.payload;\nglobal.set(\"information\", var1);\nmsg = var1;\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\nglobal.set(\"information\",false);\n",
+        "finalize": "",
+        "libs": [],
+        "x": 1340,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "db2b64dfada436f8",
+        "type": "change",
+        "z": "cc05de0083d677ed",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "false",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 840,
+        "y": 140,
+        "wires": [
+            [
+                "1d973c21adbdf38b"
+            ]
+        ]
+    },
+    {
+        "id": "52087f9d15656bde",
+        "type": "function",
+        "z": "cc05de0083d677ed",
+        "name": "Show info Service",
+        "func": "var  var1 = msg.payload;\nvar msg1=\"\";\nvar info=global.get(\"information\");\nif (info==true){\n   \n    return [ msg, null]\n}\nelse {\n    \n    return [null, msg];\n}\n\n",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\nglobal.set(\"information\",false);\n",
+        "finalize": "",
+        "libs": [],
+        "x": 2270,
+        "y": 200,
+        "wires": [
+            [
+                "3a62272d0b3f659d",
+                "137c5ac6ab70a6ba"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "3a62272d0b3f659d",
+        "type": "debug",
+        "z": "cc05de0083d677ed",
+        "name": "debug 64",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2640,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "cf5ce45328484fdb",
+        "type": "function",
+        "z": "cc05de0083d677ed",
+        "name": "Save Imag text-speech",
+        "func": "var  var1 = msg.payload;\nvar var2 = global.get(\"num_eventos_t\");\n\nvar var3 = \"Cursos UPV/OSCAR NODE-RED/Directorio/OSCAR_imag/text-speech_\"+String(var2)+\".mp3\"\nvar2 = parseInt(var2) + 1;\nglobal.set(\"num_eventos_t\", String(var2));\nmsg.filename = var3;\nmsg.payload = var1;\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\nglobal.set(\"imagen_cargada\", \"\");\nglobal.set(\"num_eventos_t\", 1);\n\n",
+        "finalize": "",
+        "libs": [],
+        "x": 3540,
+        "y": 1040,
+        "wires": [
+            [
+                "1d502e60d2e550b8"
+            ]
+        ]
+    },
+    {
+        "id": "ea73b3f9c301ef01",
+        "type": "ui_text",
+        "z": "cc05de0083d677ed",
+        "group": "2a2af3e71af48d83",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "",
+        "format": "{{msg.payload}}",
+        "layout": "col-center",
+        "className": "",
+        "x": 3730,
+        "y": 900,
+        "wires": []
+    },
+    {
+        "id": "ea46537ff2d5c1c8",
+        "type": "change",
+        "z": "cc05de0083d677ed",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Reproduciendo ..",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 3520,
+        "y": 920,
+        "wires": [
+            [
+                "ea73b3f9c301ef01",
+                "b7db96399f01d844"
+            ]
+        ]
+    },
+    {
+        "id": "d461df4867999cc4",
+        "type": "change",
+        "z": "cc05de0083d677ed",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 3520,
+        "y": 880,
+        "wires": [
+            [
+                "ea73b3f9c301ef01"
+            ]
+        ]
+    },
+    {
+        "id": "137c5ac6ab70a6ba",
+        "type": "function",
+        "z": "cc05de0083d677ed",
+        "name": "Search Info",
+        "func": "var info= msg.payload;\nvar pos= info.indexOf(\"name\");\nvar pos1 = info.indexOf(\"cluster_id\");\nmsg.name = info.slice(pos - 1, pos1 - 2);\npos=pos1;\npos1 = info.indexOf(\"memory\");\nmsg.cluster_id  = info.slice(pos - 1, pos1 - 2);\npos=pos1;\npos1 = info.indexOf(\"cpu\");\nmsg.memory = info.slice(pos - 1, pos1 - 2);\npos = pos1;\npos1 = info.indexOf(\"total_memory\");\nmsg.cpu = info.slice(pos - 1, pos1 - 2);\npos = info.indexOf(\"image\");\npos1 = info.indexOf(\"alpine\");\nmsg.image = info.slice(pos - 1, pos1 - 2);\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2530,
+        "y": 120,
+        "wires": [
+            [
+                "93812b7e1e9e52b0",
+                "e5a50a6f3378329a"
+            ]
+        ]
+    },
+    {
+        "id": "93812b7e1e9e52b0",
+        "type": "debug",
+        "z": "cc05de0083d677ed",
+        "name": "debug 67",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "cluster_id",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2740,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "e5a50a6f3378329a",
+        "type": "ui_template",
+        "z": "cc05de0083d677ed",
+        "group": "10e1d4f1c589abd1",
+        "name": "Show Cowsay",
+        "order": 2,
+        "width": 10,
+        "height": 5,
+        "format": "<div class=\"wrap\">\n\t\t<div class=\"progress\" data-percent=\"80\">\n\t\t\t<span style=\"white-space: pre;\">{{msg.name}}</span>\n\t\t</div>\n\t\t<div class=\"progress\" data-percent=\"80\">\n\t\t  <span style=\"white-space: pre;\">{{msg.cluster_id}}</span>\n\t\t</div>\n\t\t<div class=\"progress\" data-percent=\"80\">\n\t\t\t<span style=\"white-space: pre;\">{{msg.memory}}</span>\n\t\t</div>\n\t\t<div class=\"progress\" data-percent=\"80\">\n\t\t\t<span style=\"white-space: pre;\">{{msg.cpu}}</span>\n\t\t</div>\n\t\t<div class=\"progress\" data-percent=\"80\">\n\t\t\t<span style=\"white-space: pre;\">{{msg.image}}</span>\n\t\t</div>\n\t</div>\n\t",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 2720,
+        "y": 40,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "7d2f4657a130c315",
+        "type": "change",
+        "z": "cc05de0083d677ed",
+        "name": "Clear Info service",
+        "rules": [
+            {
+                "t": "set",
+                "p": "name",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "cluster_id",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "memory",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "cpu",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "image",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 2070,
+        "y": 60,
+        "wires": [
+            [
+                "137c5ac6ab70a6ba",
+                "b7db96399f01d844",
+                "db2b64dfada436f8"
+            ]
+        ]
+    },
+    {
+        "id": "94115d72b9fa387f",
+        "type": "function",
+        "z": "cc05de0083d677ed",
+        "name": "Clear info",
+        "func": "var  var1 = msg.payload;\nvar msg1=\"\";\nvar info=global.get(\"information\");\nif (info==false){\n   \n    return [ msg, null]\n}\nelse {\n    \n    return [null, msg];\n}\n\n",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\nglobal.set(\"information\",false);\n",
+        "finalize": "",
+        "libs": [],
+        "x": 1920,
+        "y": 180,
+        "wires": [
+            [
+                "7d2f4657a130c315"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "c30eb8bc16625959",
+        "type": "function",
+        "z": "cc05de0083d677ed",
+        "name": "Save imag cowsay",
+        "func": "var  var1 = msg.payload;\n\nvar var2 = global.get(\"num_eventos_c\");\nvar var3 = \"Cursos UPV/OSCAR NODE-RED/Directorio/OSCAR_imag/image-cowsay_\"+String(var2)+\".txt\"\nvar2 = parseInt(var2) + 1;\nglobal.set(\"num_eventos_c\", String(var2));\nmsg.filename = var3;\nmsg.payload = var1;\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\nglobal.set(\"imagen_cargada\", \"\");\n\nglobal.set(\"num_eventos_c\", \"1\");",
+        "finalize": "",
+        "libs": [],
+        "x": 3350,
+        "y": 540,
+        "wires": [
+            [
+                "de79607a76a1e563"
+            ]
+        ]
+    },
+    {
+        "id": "de79607a76a1e563",
+        "type": "file",
+        "z": "cc05de0083d677ed",
+        "name": "Cowsay txt",
+        "filename": "filename",
+        "filenameType": "msg",
+        "appendNewline": false,
+        "createDir": true,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 3590,
+        "y": 540,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "66ca73c045a7ec04",
+        "type": "ui_spacer",
+        "z": "cc05de0083d677ed",
+        "name": "spacer",
+        "group": "5ddcb3d78ca5fbd6",
+        "order": 2,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "99e7cb9e0e6ca489",
+        "type": "ui_spacer",
+        "z": "cc05de0083d677ed",
+        "name": "spacer",
+        "group": "5ddcb3d78ca5fbd6",
+        "order": 4,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "e75b6ce53061a760",
+        "type": "ui_spacer",
+        "z": "cc05de0083d677ed",
+        "name": "spacer",
+        "group": "5ddcb3d78ca5fbd6",
+        "order": 6,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "b45e2d1c97aa8ee4",
+        "type": "ui_spacer",
+        "z": "cc05de0083d677ed",
+        "name": "spacer",
+        "group": "5ddcb3d78ca5fbd6",
+        "order": 7,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "7c90d3cd0c97193b",
+        "type": "ui_spacer",
+        "z": "cc05de0083d677ed",
+        "name": "spacer",
+        "group": "5ddcb3d78ca5fbd6",
+        "order": 8,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "bdb7fec93f68a530",
+        "type": "ui_spacer",
+        "z": "cc05de0083d677ed",
+        "name": "spacer",
+        "group": "5ddcb3d78ca5fbd6",
+        "order": 10,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "ad0a659c20b8d107",
+        "type": "ui_spacer",
+        "z": "cc05de0083d677ed",
+        "name": "spacer",
+        "group": "5ddcb3d78ca5fbd6",
+        "order": 12,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "38bf4c38bc24018e",
+        "type": "ui_spacer",
+        "z": "cc05de0083d677ed",
+        "name": "spacer",
+        "group": "469b286f7694e671",
+        "order": 1,
+        "width": 7,
+        "height": 1
+    },
+    {
+        "id": "28eccfc5afd51173",
+        "type": "ui_spacer",
+        "z": "cc05de0083d677ed",
+        "name": "spacer",
+        "group": "469b286f7694e671",
+        "order": 2,
+        "width": 7,
+        "height": 1
+    },
+    {
+        "id": "e60b9a8f7859554d",
+        "type": "ui_spacer",
+        "z": "cc05de0083d677ed",
+        "name": "spacer",
+        "group": "10e1d4f1c589abd1",
+        "order": 1,
+        "width": 10,
+        "height": 1
+    },
+    {
+        "id": "1d68d9114dc40765",
+        "type": "ui_spacer",
+        "z": "cc05de0083d677ed",
+        "name": "spacer",
+        "group": "e272d851c28c5550",
+        "order": 1,
+        "width": 7,
+        "height": 1
+    },
+    {
+        "id": "87a83271fc37b196",
+        "type": "ui_spacer",
+        "z": "cc05de0083d677ed",
+        "name": "spacer",
+        "group": "799851c6161da19f",
+        "order": 1,
+        "width": 7,
+        "height": 1
+    },
+    {
+        "id": "8c0d10f1fb6e5c9c",
+        "type": "ui_spacer",
+        "z": "cc05de0083d677ed",
+        "name": "spacer",
+        "group": "799851c6161da19f",
+        "order": 2,
+        "width": 7,
+        "height": 1
+    },
+    {
+        "id": "5ddcb3d78ca5fbd6",
+        "type": "ui_group",
+        "name": "Select Service",
+        "tab": "d5d39fa2ec2e7239",
+        "order": 1,
+        "disp": true,
+        "width": "9",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "a281a93326b5bca3",
+        "type": "ui_group",
+        "name": "Datos Cowsay",
+        "tab": "d5d39fa2ec2e7239",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "1e8d29a757a8e472",
+        "type": "ui_group",
+        "name": "Datos Grayify",
+        "tab": "d5d39fa2ec2e7239",
+        "order": 3,
+        "disp": true,
+        "width": "9",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "169f64e6d50866fb",
+        "type": "ui_group",
+        "name": "Datos text-speech",
+        "tab": "d5d39fa2ec2e7239",
+        "order": 5,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "469b286f7694e671",
+        "type": "ui_group",
+        "name": "Visualizacion Grayify",
+        "tab": "d5d39fa2ec2e7239",
+        "order": 7,
+        "disp": true,
+        "width": "7",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "0727cf1f6f4c5c78",
+        "type": "ui_group",
+        "name": "Datos Plants",
+        "tab": "d5d39fa2ec2e7239",
+        "order": 4,
+        "disp": true,
+        "width": "9",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "799851c6161da19f",
+        "type": "ui_group",
+        "name": "Visualizacion Plants",
+        "tab": "d5d39fa2ec2e7239",
+        "order": 8,
+        "disp": true,
+        "width": 7,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "e272d851c28c5550",
+        "type": "ui_group",
+        "name": "Visualizacion Cowsay",
+        "tab": "d5d39fa2ec2e7239",
+        "order": 6,
+        "disp": true,
+        "width": 7,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "2a2af3e71af48d83",
+        "type": "ui_group",
+        "name": "Visualizacion text-speech",
+        "tab": "d5d39fa2ec2e7239",
+        "order": 9,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "10e1d4f1c589abd1",
+        "type": "ui_group",
+        "name": "Info Service",
+        "tab": "d5d39fa2ec2e7239",
+        "order": 10,
+        "disp": true,
+        "width": "10",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "d5d39fa2ec2e7239",
+        "type": "ui_tab",
+        "name": "OSCAR_SERVICES",
+        "icon": "dashboard",
+        "order": 3,
+        "disabled": false,
+        "hidden": false
+    }
+]

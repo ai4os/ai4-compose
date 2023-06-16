@@ -1,0 +1,1190 @@
+[
+    {
+        "id": "cc18020bc6f47fc4",
+        "type": "subflow",
+        "name": "OSCAR Grayify Services",
+        "info": "<header>\n        <!-- menu de naveacion, logo , redes-->\n        <h1> OSCAR Grayify Services Node</h1>\n</header>\n    <main>\n        <section>\n            <article>\n                <h3>About Grayify </h3>\n                <p>This node supports highly-scalable event-driven image conversion to grayscale using the popular ImageMagick software.</p>\n                <p>ImageMagick® is a free and open-source software suite for displaying, converting, and editing raster image and vector image files. It can read and write over 200 image file formats, and can support a wide range of image manipulation operations, such as resizing, cropping, and color correction. </p>\n                <ul>\n                    <li>\n                        <a rel=\"stylesheet\" href=\"https://imagemagick.org/index.php\">ImageMagick </a>\n                    </li>\n                </ul>\n            </article>\n            <article>\n                <h3>About Cowsay Service in OSCAR</h3>\n                <p>The goal of this service is to have:</p>\n                <ul>\n                    <li>An input bucket created in Minio on which the user uploads the files to be converted.</li>\n                    <li>A function that is triggered upon each file upload in order to trigger the file conversion, which is automatically handled by an elastic Kubernetes cluster that provisions additional nodes on-demand if required.</li>\n                    <li>An output bucket created in Minio on which the user will find the converted files.</li>\n                </ul>\n                <p>For more information consult:</p>\n                <ul>\n                    <li>\n                        <a rel=\"stylesheet\" href=\"https://github.com/grycap/oscar/tree/master/examples/imagemagick\">Grayify Service </a>\n                    </li>\n                </ul>\n            </article>\n            <article>\n                <h3>Inputs</h3>\n                <p>The input variables will be the basic variables (OSCAR server url and credentials). In addition to the name that has been given to the grayify service on the server. Inside the input <code> msg.payload </code> must be the text to write. With all these elements, the service token is searched and then a request is made to the service ( POST /run/{serviceName}).</p>\n                <ul>\n                    <li>\n                        <a rel=\"stylesheet\" href=\"https://docs.oscar.grycap.net/api/\">Syns </a>\n                    </li>\n                </ul>\n            </article>\n            <article>\n                <h3>Outputs</h3>\n                <p> The node returns through <code>msg.payload</code> the grayscale image (base64), which can be used in image display nodes such as images preview node.</p>\n            </article>\n        </section>\n    </main>\n    <footer>\n        GRyCAP (Grupo de Grid y Computación de Altas Prestaciones) - UPV\n    </footer>",
+        "category": "",
+        "in": [
+            {
+                "x": 40,
+                "y": 140,
+                "wires": [
+                    {
+                        "id": "713521bb6df8eb11"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 1420,
+                "y": 200,
+                "wires": [
+                    {
+                        "id": "d9dda2d17491996e",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "Server",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "icon": "font-awesome/fa-globe"
+                }
+            },
+            {
+                "name": "Service Name",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "icon": "font-awesome/fa-pencil"
+                }
+            },
+            {
+                "name": "User",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "icon": "font-awesome/fa-user-circle-o"
+                }
+            },
+            {
+                "name": "Password",
+                "type": "cred",
+                "ui": {
+                    "icon": "font-awesome/fa-key"
+                }
+            }
+        ],
+        "meta": {
+            "module": "node-red-contrib-oscar-grayify",
+            "version": "1.0.0",
+            "author": "Vicente Rodriguez Benitez <vicente.rdguezb@gmail.com, vrodben1@i3m.upv.es>",
+            "desc": "Grayify Services at OSCAR",
+            "keywords": "node-red, oscar,grayify",
+            "license": "Apache-2.0"
+        },
+        "color": "#3FADB5",
+        "icon": "font-awesome/fa-image",
+        "status": {
+            "x": 1420,
+            "y": 40,
+            "wires": [
+                {
+                    "id": "44e4a85b83560750",
+                    "port": 0
+                },
+                {
+                    "id": "f04a2b1140d06b6e",
+                    "port": 0
+                }
+            ]
+        }
+    },
+    {
+        "id": "0fa40667e9f48ec2",
+        "type": "function",
+        "z": "cc18020bc6f47fc4",
+        "name": "Load Log",
+        "func": "msg.payload={\n\"username\":msg.username,\n\"password\":msg.pass\n\n}\nmsg.url = msg.oscar_server +\"/system/services/\"+msg.grayify ;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 320,
+        "y": 140,
+        "wires": [
+            [
+                "4ce76c5246874dd6"
+            ]
+        ]
+    },
+    {
+        "id": "713521bb6df8eb11",
+        "type": "change",
+        "z": "cc18020bc6f47fc4",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "oscar_server",
+                "pt": "msg",
+                "to": "Server",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "username",
+                "pt": "msg",
+                "to": "User",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "pass",
+                "pt": "msg",
+                "to": "Password",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "image",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "grayify",
+                "pt": "msg",
+                "to": "Service Name",
+                "tot": "env"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 160,
+        "y": 140,
+        "wires": [
+            [
+                "0fa40667e9f48ec2",
+                "44e4a85b83560750"
+            ]
+        ]
+    },
+    {
+        "id": "4ce76c5246874dd6",
+        "type": "change",
+        "z": "cc18020bc6f47fc4",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "headers",
+                "pt": "msg",
+                "to": "{\t   \"Authorization\": 'Basic ' & $base64encode(\t       payload.username & ':' & payload.password\t   ) \t}",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 500,
+        "y": 140,
+        "wires": [
+            [
+                "eeb674928976ec41"
+            ]
+        ]
+    },
+    {
+        "id": "eeb674928976ec41",
+        "type": "http request",
+        "z": "cc18020bc6f47fc4",
+        "name": "Grayify Service GET",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": true,
+        "authType": "basic",
+        "senderr": true,
+        "headers": [],
+        "x": 700,
+        "y": 140,
+        "wires": [
+            [
+                "8470a28c85e4e094"
+            ]
+        ]
+    },
+    {
+        "id": "8470a28c85e4e094",
+        "type": "string",
+        "z": "cc18020bc6f47fc4",
+        "name": "",
+        "methods": [
+            {
+                "name": "between",
+                "params": [
+                    {
+                        "type": "str",
+                        "value": "\"token\":\""
+                    },
+                    {
+                        "type": "str",
+                        "value": "\",\"input\""
+                    }
+                ]
+            }
+        ],
+        "prop": "payload",
+        "propout": "payload",
+        "object": "msg",
+        "objectout": "msg",
+        "x": 870,
+        "y": 140,
+        "wires": [
+            [
+                "2f72c3b43b2a9197"
+            ]
+        ]
+    },
+    {
+        "id": "2f72c3b43b2a9197",
+        "type": "function",
+        "z": "cc18020bc6f47fc4",
+        "name": "Get Token-Grayify",
+        "func": "var  var1 = msg.payload;\n\nmsg.token_grayify= var1;\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\n//flow.set(\"token_cowsay\",\"\");\n",
+        "finalize": "",
+        "libs": [],
+        "x": 1050,
+        "y": 140,
+        "wires": [
+            [
+                "ffa9ecc49dd969f4"
+            ]
+        ]
+    },
+    {
+        "id": "ffa9ecc49dd969f4",
+        "type": "function",
+        "z": "cc18020bc6f47fc4",
+        "name": "Send plants-token",
+        "func": "\nvar token_grayify = msg.token_grayify;\n\n\nmsg.headers = {\n    Authorization: \"Bearer \" + token_grayify\n}\n\nmsg.payload = msg.image;\nmsg.url = msg.oscar_server+\"/run/\"+msg.grayify;\n\nreturn msg;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 310,
+        "y": 200,
+        "wires": [
+            [
+                "3c6c31bf9f72c551"
+            ]
+        ]
+    },
+    {
+        "id": "3c6c31bf9f72c551",
+        "type": "base64",
+        "z": "cc18020bc6f47fc4",
+        "name": "",
+        "action": "",
+        "property": "payload",
+        "x": 480,
+        "y": 200,
+        "wires": [
+            [
+                "2b8cdd018191f987"
+            ]
+        ]
+    },
+    {
+        "id": "2b8cdd018191f987",
+        "type": "http request",
+        "z": "cc18020bc6f47fc4",
+        "name": "Grayify Services Run",
+        "method": "POST",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": true,
+        "headers": [],
+        "x": 660,
+        "y": 200,
+        "wires": [
+            [
+                "6b551e03681af190"
+            ]
+        ]
+    },
+    {
+        "id": "6b551e03681af190",
+        "type": "string",
+        "z": "cc18020bc6f47fc4",
+        "name": "",
+        "methods": [
+            {
+                "name": "delLeftMost",
+                "params": [
+                    {
+                        "type": "str",
+                        "value": "response"
+                    }
+                ]
+            }
+        ],
+        "prop": "payload",
+        "propout": "payload",
+        "object": "msg",
+        "objectout": "msg",
+        "x": 870,
+        "y": 200,
+        "wires": [
+            [
+                "bcfdf930a9e42a00"
+            ]
+        ]
+    },
+    {
+        "id": "bcfdf930a9e42a00",
+        "type": "base64",
+        "z": "cc18020bc6f47fc4",
+        "name": "",
+        "action": "",
+        "property": "payload",
+        "x": 1020,
+        "y": 200,
+        "wires": [
+            [
+                "d9dda2d17491996e"
+            ]
+        ]
+    },
+    {
+        "id": "44e4a85b83560750",
+        "type": "change",
+        "z": "cc18020bc6f47fc4",
+        "name": "Start Service",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Processing....",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 350,
+        "y": 40,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f04a2b1140d06b6e",
+        "type": "change",
+        "z": "cc18020bc6f47fc4",
+        "name": "End Service",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Finished....",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1330,
+        "y": 140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d9dda2d17491996e",
+        "type": "change",
+        "z": "cc18020bc6f47fc4",
+        "name": "Clear Data",
+        "rules": [
+            {
+                "t": "set",
+                "p": "pass",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "username",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "oscar_server",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "grayify",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "image",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "token_grayify",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "url",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "filename",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1170,
+        "y": 200,
+        "wires": [
+            [
+                "f04a2b1140d06b6e"
+            ]
+        ]
+    },
+    {
+        "id": "e77f046693d07b72",
+        "type": "subflow",
+        "name": "OSCAR Plants Services",
+        "info": " \n<main>\n    <section>\n        <article>\n            <h3>About Plants </h3>\n            <p>Classify plant images among 10K species from the iNaturalist dataset.</p>\n            <ul>\n                <li>\n                    <a rel=\"stylesheet\" href=\"https://marketplace.deep-hybrid-datacloud.eu/modules/deep-oc-plants-classification-tf.html\">Plants species classifier</a>\n                </li>\n            </ul>\n        </article>\n        <article>\n            <h3>About Plants Service in OSCAR</h3>\n            <p>This example uses the pre-trained classification model by DEEP-Hybrid-DataCloud Plants species classifier and is prepared to be used with synchronous invocations.</p>\n            <p>For more information consult:</p>\n            <ul>\n                <li>\n                    <a rel=\"stylesheet\" href=\"https://github.com/grycap/oscar/tree/master/examples/plant-classification-sync\">Plants Service </a>\n                </li>\n            </ul>\n        </article>\n        <article>\n            <h3>Inputs</h3>\n            <p>The input variables will be the basic variables (OSCAR server url and credentials). In addition to the name that has been given to the plants service on the server. Inside the input <code> msg.payload </code> must be the text to write. With all these elements, the service token is searched and then a request is made to the service ( POST /run/{serviceName}).</p>\n            <ul>\n                <li>\n                    <a rel=\"stylesheet\" href=\"https://docs.oscar.grycap.net/api/\">Syns </a>\n                </li>\n                </ul>\n        </article>\n        <article>\n            <h3>Outputs</h3>\n            <p> The node returns through <code>msg.payload</code> plant classification image using Lasagne/Theano (base64), which can be used in image display nodes such as images preview node.</p>\n        </article>\n    </section>\n</main>\n<footer>\n    GRyCAP (Grupo de Grid y Computación de Altas Prestaciones) - UPV\n</footer>\n ",
+        "category": "",
+        "in": [
+            {
+                "x": 20,
+                "y": 140,
+                "wires": [
+                    {
+                        "id": "533c151ac5429d6c"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 1380,
+                "y": 200,
+                "wires": [
+                    {
+                        "id": "2e5b24cdbe85ce1e",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "Server",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "icon": "font-awesome/fa-globe"
+                }
+            },
+            {
+                "name": "Service Name",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "icon": "font-awesome/fa-pencil"
+                }
+            },
+            {
+                "name": "User",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "icon": "font-awesome/fa-user-circle-o"
+                }
+            },
+            {
+                "name": "Password",
+                "type": "cred",
+                "ui": {
+                    "icon": "font-awesome/fa-key"
+                }
+            }
+        ],
+        "meta": {
+            "module": "node-red-contrib-oscar-plants",
+            "type": "oscar",
+            "version": "1.0.0",
+            "author": "Vicente Rodriguez <vicente.rdguezb@gmail.com, vrodben1@i3m.upv.es>",
+            "desc": "Servicio Plants Clasification",
+            "keywords": "node-red, oscar, plants",
+            "license": "Apache-2.0"
+        },
+        "color": "#3FADB5",
+        "icon": "font-awesome/fa-image",
+        "status": {
+            "x": 1480,
+            "y": 40,
+            "wires": [
+                {
+                    "id": "e7fd426fff22a566",
+                    "port": 0
+                },
+                {
+                    "id": "b13157aae65e891c",
+                    "port": 0
+                }
+            ]
+        }
+    },
+    {
+        "id": "63e5bfec4147dea9",
+        "type": "http request",
+        "z": "e77f046693d07b72",
+        "name": "Plant Services Run",
+        "method": "POST",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": true,
+        "headers": [],
+        "x": 670,
+        "y": 200,
+        "wires": [
+            [
+                "20c897150805aff2"
+            ]
+        ]
+    },
+    {
+        "id": "b8426e521da9300d",
+        "type": "base64",
+        "z": "e77f046693d07b72",
+        "name": "",
+        "action": "",
+        "property": "payload",
+        "x": 500,
+        "y": 200,
+        "wires": [
+            [
+                "63e5bfec4147dea9"
+            ]
+        ]
+    },
+    {
+        "id": "20c897150805aff2",
+        "type": "string",
+        "z": "e77f046693d07b72",
+        "name": "Get Result",
+        "methods": [
+            {
+                "name": "delLeftMost",
+                "params": [
+                    {
+                        "type": "str",
+                        "value": "response"
+                    }
+                ]
+            }
+        ],
+        "prop": "payload",
+        "propout": "payload",
+        "object": "msg",
+        "objectout": "msg",
+        "x": 870,
+        "y": 200,
+        "wires": [
+            [
+                "bd2b4c56996cfe98"
+            ]
+        ]
+    },
+    {
+        "id": "533c151ac5429d6c",
+        "type": "change",
+        "z": "e77f046693d07b72",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "oscar_server",
+                "pt": "msg",
+                "to": "Server",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "username",
+                "pt": "msg",
+                "to": "User",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "pass",
+                "pt": "msg",
+                "to": "Password",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "image",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "plants",
+                "pt": "msg",
+                "to": "Service Name",
+                "tot": "env"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 140,
+        "y": 140,
+        "wires": [
+            [
+                "2db8c57161cd2f39",
+                "e7fd426fff22a566"
+            ]
+        ]
+    },
+    {
+        "id": "2db8c57161cd2f39",
+        "type": "function",
+        "z": "e77f046693d07b72",
+        "name": "Load Log",
+        "func": "msg.payload={\n\"username\":msg.username,\n\"password\":msg.pass\n\n}\nmsg.url = msg.oscar_server +\"/system/services/\"+msg.plants ;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 140,
+        "wires": [
+            [
+                "a64f6d1b0f2db68b"
+            ]
+        ]
+    },
+    {
+        "id": "0907b4d42fb8ca42",
+        "type": "http request",
+        "z": "e77f046693d07b72",
+        "name": "plants service",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": true,
+        "authType": "basic",
+        "senderr": true,
+        "headers": [],
+        "x": 680,
+        "y": 140,
+        "wires": [
+            [
+                "b1dbd576283a8573"
+            ]
+        ]
+    },
+    {
+        "id": "b1dbd576283a8573",
+        "type": "string",
+        "z": "e77f046693d07b72",
+        "name": "",
+        "methods": [
+            {
+                "name": "between",
+                "params": [
+                    {
+                        "type": "str",
+                        "value": "\"token\":\""
+                    },
+                    {
+                        "type": "str",
+                        "value": "\",\"input\""
+                    }
+                ]
+            }
+        ],
+        "prop": "payload",
+        "propout": "payload",
+        "object": "msg",
+        "objectout": "msg",
+        "x": 850,
+        "y": 140,
+        "wires": [
+            [
+                "ac9fd137b8768a5d"
+            ]
+        ]
+    },
+    {
+        "id": "ac9fd137b8768a5d",
+        "type": "function",
+        "z": "e77f046693d07b72",
+        "name": "Get Token-Plants",
+        "func": "var  var1 = msg.payload;\n\nmsg.token_plants= var1;\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\n//flow.set(\"token_cowsay\",\"\");\n",
+        "finalize": "",
+        "libs": [],
+        "x": 1010,
+        "y": 140,
+        "wires": [
+            [
+                "01530c44b591b9ac"
+            ]
+        ]
+    },
+    {
+        "id": "01530c44b591b9ac",
+        "type": "function",
+        "z": "e77f046693d07b72",
+        "name": "Send plants-token",
+        "func": "\nvar token_plants = msg.token_plants;\n\n\nmsg.headers = {\n    Authorization: \"Bearer \" + token_plants\n}\n\nmsg.payload = msg.image;\nmsg.url = msg.oscar_server+\"/run/\"+msg.plants;\n\nreturn msg;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 200,
+        "wires": [
+            [
+                "b8426e521da9300d"
+            ]
+        ]
+    },
+    {
+        "id": "a64f6d1b0f2db68b",
+        "type": "change",
+        "z": "e77f046693d07b72",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "headers",
+                "pt": "msg",
+                "to": "{\t   \"Authorization\": 'Basic ' & $base64encode(\t       payload.username & ':' & payload.password\t   ) \t}",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 500,
+        "y": 140,
+        "wires": [
+            [
+                "0907b4d42fb8ca42"
+            ]
+        ]
+    },
+    {
+        "id": "bd2b4c56996cfe98",
+        "type": "base64",
+        "z": "e77f046693d07b72",
+        "name": "",
+        "action": "",
+        "property": "payload",
+        "x": 1020,
+        "y": 200,
+        "wires": [
+            [
+                "2e5b24cdbe85ce1e"
+            ]
+        ]
+    },
+    {
+        "id": "e7fd426fff22a566",
+        "type": "change",
+        "z": "e77f046693d07b72",
+        "name": "Start Service",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Processing....",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 350,
+        "y": 40,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b13157aae65e891c",
+        "type": "change",
+        "z": "e77f046693d07b72",
+        "name": "End Service",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Finished....",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1370,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2e5b24cdbe85ce1e",
+        "type": "change",
+        "z": "e77f046693d07b72",
+        "name": "Clear Data",
+        "rules": [
+            {
+                "t": "set",
+                "p": "pass",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "username",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "oscar_server",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "plants",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "image",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "token_plants",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "url",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "filename",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1170,
+        "y": 200,
+        "wires": [
+            [
+                "b13157aae65e891c"
+            ]
+        ]
+    },
+    {
+        "id": "7821e7a099b7f66d",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "ebecfa76b8787585",
+        "type": "inject",
+        "z": "7821e7a099b7f66d",
+        "name": "Images ",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "str",
+        "x": 230,
+        "y": 80,
+        "wires": [
+            [
+                "416734374be83f06"
+            ]
+        ]
+    },
+    {
+        "id": "416734374be83f06",
+        "type": "file in",
+        "z": "7821e7a099b7f66d",
+        "name": "Image",
+        "filename": "Descargas/image11.jpg",
+        "filenameType": "str",
+        "format": "",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 390,
+        "y": 80,
+        "wires": [
+            [
+                "57a88e74781dc57a",
+                "baa7b6da21f69138",
+                "1bf9335f4dd61323"
+            ]
+        ]
+    },
+    {
+        "id": "baa7b6da21f69138",
+        "type": "image",
+        "z": "7821e7a099b7f66d",
+        "name": "",
+        "width": 160,
+        "data": "payload",
+        "dataType": "msg",
+        "thumbnail": false,
+        "active": true,
+        "pass": false,
+        "outputs": 0,
+        "x": 500,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "57a88e74781dc57a",
+        "type": "subflow:e77f046693d07b72",
+        "z": "7821e7a099b7f66d",
+        "name": "",
+        "env": [
+            {
+                "name": "Server",
+                "value": "http://localhost",
+                "type": "str"
+            },
+            {
+                "name": "Service Name",
+                "value": "plants",
+                "type": "str"
+            },
+            {
+                "name": "User",
+                "value": "oscar",
+                "type": "str"
+            },
+            {
+                "name": "Password",
+                "type": "cred"
+            }
+        ],
+        "x": 790,
+        "y": 180,
+        "wires": [
+            [
+                "97bdf666e59d9d1e",
+                "874dae370db3819e"
+            ]
+        ]
+    },
+    {
+        "id": "1bf9335f4dd61323",
+        "type": "subflow:cc18020bc6f47fc4",
+        "z": "7821e7a099b7f66d",
+        "name": "",
+        "env": [
+            {
+                "name": "Server",
+                "value": "http://localhost",
+                "type": "str"
+            },
+            {
+                "name": "Service Name",
+                "value": "grayify",
+                "type": "str"
+            },
+            {
+                "name": "User",
+                "value": "oscar",
+                "type": "str"
+            },
+            {
+                "name": "Password",
+                "type": "cred"
+            }
+        ],
+        "x": 790,
+        "y": 80,
+        "wires": [
+            [
+                "01820a54620b16ce",
+                "29559450463f74e7"
+            ]
+        ]
+    },
+    {
+        "id": "01820a54620b16ce",
+        "type": "debug",
+        "z": "7821e7a099b7f66d",
+        "name": "debug 73",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1080,
+        "y": 20,
+        "wires": []
+    },
+    {
+        "id": "97bdf666e59d9d1e",
+        "type": "image",
+        "z": "7821e7a099b7f66d",
+        "name": "",
+        "width": 160,
+        "data": "payload",
+        "dataType": "msg",
+        "thumbnail": false,
+        "active": true,
+        "pass": false,
+        "outputs": 0,
+        "x": 1080,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "29559450463f74e7",
+        "type": "image",
+        "z": "7821e7a099b7f66d",
+        "name": "",
+        "width": 160,
+        "data": "payload",
+        "dataType": "msg",
+        "thumbnail": false,
+        "active": true,
+        "pass": false,
+        "outputs": 0,
+        "x": 1080,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "874dae370db3819e",
+        "type": "debug",
+        "z": "7821e7a099b7f66d",
+        "name": "debug 74",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1080,
+        "y": 160,
+        "wires": []
+    }
+]

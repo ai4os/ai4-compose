@@ -1,0 +1,767 @@
+[
+    {
+        "id": "d8b6cfed3b908bf3",
+        "type": "subflow",
+        "name": "OSCAR Services",
+        "info": "<main>\n    <section>\n        <article>\n            <h3>About OSCAR Service Node</h3>\n            <p>This node includes different use cases of applications that use the OSCAR framework from a single node for event-driven high-throughput processing of files:</p>\n            <ul>\n                <li>\n                    <p></p><a rel=\"stylesheet\" href=\"https://github.com/indigo-dc/plant-classification-theano\">Plants Classification:</a> an application that performs plant classification using Lasagne/Theano.</p>\n                </li>\n                <li>\n                    <p><a rel=\"stylesheet\" href=\"https://www.imagemagick.org/\">ImageMagick:</a> a tool to manipulate images.</p>\n                </li>\n                <li>  \n                    <p><a rel=\"stylesheet\" href=\"https://en.wikipedia.org/wiki/Cowsay\">Cowsay:</a> a simple toy application to show the operation of OSCAR's synchronous invocations.</p>\n                </li>\n                <li>\n                    <p><a rel=\"stylesheet\" href=\"https://pypi.org/project/google-speech/\">Text Speech:</a> by using the Google Speech library, getting plain text audio files.</p>\n                </li>\n            </ul>\n            <p>Note: If you have another service installed in the OSCAR cluster, you must contact the developers of this node to be able to include it in the functionalities of this node or create a new one that is capable of accessing the new service.</p>\n        </article>\n        <article>\n            <h3>Inputs</h3>\n            <p>The input variables will be the basic variables (OSCAR server url and credentials). In addition to the name that has been given to the service that you want to run:</p>\n            <ul>\n                <li><p>cowsay</p></li>\n                <li><p>plants</p></li>\n                <li><p>grayify</p>\n                </li><li><p>text-to-speech-google</p></li>\n            </ul>\n            <p>Inside the <code>msg.payload</code> entry must be the text or image that you want to execute depending on the service executed. With all these elements, the service token is searched and then a request is made to the service ( POST /run/{serviceName})<a rel=\"stylesheet\" href=\"https://docs.oscar.grycap.net/api/\">[1] </a>.</p>\n        </article>\n        <article>\n            <h3>Outputs</h3>\n            <p>The node returns through <code>msg.payload</code>, depending on the executed service, the associated output type:</p>\n            <ul>\n                <li><p>text</p></li>\n                <li><p>image</p></li>\n                <li><p>audio</p></li>\n            </ul>\n            <p>In the case of audio and image, these are output in base64 format. These results can be visualized with several of the nodes present in the dashboard.</p>\n        </article>\n    </section>\n</main>\n<footer>\n    GRyCAP (Grupo de Grid y Computación de Altas Prestaciones) - UPV\n</footer>",
+        "category": "",
+        "in": [
+            {
+                "x": 40,
+                "y": 100,
+                "wires": [
+                    {
+                        "id": "74651c2ea8b31759"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 1700,
+                "y": 200,
+                "wires": [
+                    {
+                        "id": "612cdd4d9de28e9a",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "Server",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "icon": "font-awesome/fa-globe"
+                }
+            },
+            {
+                "name": "Service Name",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "icon": "font-awesome/fa-pencil"
+                }
+            },
+            {
+                "name": "User",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "icon": "font-awesome/fa-user-circle-o"
+                }
+            },
+            {
+                "name": "Password",
+                "type": "cred",
+                "ui": {
+                    "icon": "font-awesome/fa-key"
+                }
+            }
+        ],
+        "meta": {
+            "module": "node-red-contrib-oscar-services",
+            "version": "1.0.0",
+            "author": "Vicente Rodriguez Benitez <vicente.rdguezb@gmail.com>",
+            "desc": "Nodo de todos los servicios de OSCAR",
+            "keywords": "node-red,oscar",
+            "license": "Apache-2.0"
+        },
+        "color": "#3FADB5",
+        "status": {
+            "x": 1800,
+            "y": 80,
+            "wires": [
+                {
+                    "id": "bc7c6b31c99518ad",
+                    "port": 0
+                },
+                {
+                    "id": "bc7c6b31c99518ad",
+                    "port": 1
+                },
+                {
+                    "id": "a2223e70f98ffcec",
+                    "port": 0
+                }
+            ]
+        }
+    },
+    {
+        "id": "74651c2ea8b31759",
+        "type": "change",
+        "z": "d8b6cfed3b908bf3",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "oscar_server",
+                "pt": "msg",
+                "to": "Server",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "username",
+                "pt": "msg",
+                "to": "User",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "pass",
+                "pt": "msg",
+                "to": "Password",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "data",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "service",
+                "pt": "msg",
+                "to": "Service Name",
+                "tot": "env"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 160,
+        "y": 100,
+        "wires": [
+            [
+                "bc7c6b31c99518ad"
+            ]
+        ]
+    },
+    {
+        "id": "f8670c3d2003b99c",
+        "type": "switch",
+        "z": "d8b6cfed3b908bf3",
+        "name": "Switch Service",
+        "property": "service",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "cowsay",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "grayify",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "plants",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "text-to-speech-google",
+                "vt": "str"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 4,
+        "x": 310,
+        "y": 240,
+        "wires": [
+            [
+                "1241d0658cf771cd"
+            ],
+            [
+                "1142a9b040041465"
+            ],
+            [
+                "1142a9b040041465"
+            ],
+            [
+                "1142a9b040041465"
+            ]
+        ]
+    },
+    {
+        "id": "1822ee2fea9866b3",
+        "type": "function",
+        "z": "d8b6cfed3b908bf3",
+        "name": "Load Log",
+        "func": "msg.payload={\n\"username\":msg.username,\n\"password\":msg.pass\n\n}\nmsg.url = msg.oscar_server +\"/system/services/\"+msg.service ;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 310,
+        "y": 160,
+        "wires": [
+            [
+                "fb149b578f862293"
+            ]
+        ]
+    },
+    {
+        "id": "fb149b578f862293",
+        "type": "change",
+        "z": "d8b6cfed3b908bf3",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "headers",
+                "pt": "msg",
+                "to": "{\t   \"Authorization\": 'Basic ' & $base64encode(\t       payload.username & ':' & payload.password\t   ) \t}",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 480,
+        "y": 160,
+        "wires": [
+            [
+                "9572e5be25a0d21b"
+            ]
+        ]
+    },
+    {
+        "id": "9572e5be25a0d21b",
+        "type": "http request",
+        "z": "d8b6cfed3b908bf3",
+        "name": " info services",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": true,
+        "authType": "basic",
+        "senderr": true,
+        "headers": [],
+        "x": 650,
+        "y": 160,
+        "wires": [
+            [
+                "c8ec4fd9dc044247"
+            ]
+        ]
+    },
+    {
+        "id": "c8ec4fd9dc044247",
+        "type": "string",
+        "z": "d8b6cfed3b908bf3",
+        "name": "",
+        "methods": [
+            {
+                "name": "between",
+                "params": [
+                    {
+                        "type": "str",
+                        "value": "\"token\":\""
+                    },
+                    {
+                        "type": "str",
+                        "value": "\",\"input\""
+                    }
+                ]
+            }
+        ],
+        "prop": "payload",
+        "propout": "payload",
+        "object": "msg",
+        "objectout": "msg",
+        "x": 790,
+        "y": 160,
+        "wires": [
+            [
+                "d0ed8d9cbb8156a9"
+            ]
+        ]
+    },
+    {
+        "id": "d0ed8d9cbb8156a9",
+        "type": "function",
+        "z": "d8b6cfed3b908bf3",
+        "name": "Get Token",
+        "func": "var  var1 = msg.payload;\n\nmsg.token= var1;\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\n//flow.set(\"token_cowsay\",\"\");\n",
+        "finalize": "",
+        "libs": [],
+        "x": 920,
+        "y": 160,
+        "wires": [
+            [
+                "9cb150fbc69b6216"
+            ]
+        ]
+    },
+    {
+        "id": "9cb150fbc69b6216",
+        "type": "function",
+        "z": "d8b6cfed3b908bf3",
+        "name": "Send token",
+        "func": "var servicio=msg.service;\nvar token = msg.token;\n\n\nmsg.headers = {\n    Authorization: \"Bearer \" + token\n}\nif (servicio==\"cowsay\"){\n    msg.payload = {\n        \"message\": msg.data\n    }\n }\nelse if (servicio == \"grayify\"){\n    msg.payload = msg.data;\n }\nelse if (servicio == \"plants\"){\n    msg.payload = msg.data;\n }\nelse if (servicio == \"text-to-speech-google\"){\n    msg.payload = msg.data;\n }\n\nmsg.url = msg.oscar_server+\"/run/\"+servicio;\n\nreturn msg;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 130,
+        "y": 220,
+        "wires": [
+            [
+                "f8670c3d2003b99c"
+            ]
+        ]
+    },
+    {
+        "id": "1142a9b040041465",
+        "type": "base64",
+        "z": "d8b6cfed3b908bf3",
+        "name": "",
+        "action": "",
+        "property": "payload",
+        "x": 560,
+        "y": 260,
+        "wires": [
+            [
+                "1241d0658cf771cd"
+            ]
+        ]
+    },
+    {
+        "id": "1241d0658cf771cd",
+        "type": "http request",
+        "z": "d8b6cfed3b908bf3",
+        "name": " Services Run",
+        "method": "POST",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": true,
+        "headers": [],
+        "x": 790,
+        "y": 220,
+        "wires": [
+            [
+                "0a7533b55bc39124"
+            ]
+        ]
+    },
+    {
+        "id": "0a7533b55bc39124",
+        "type": "switch",
+        "z": "d8b6cfed3b908bf3",
+        "name": "Switch Service",
+        "property": "service",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "cowsay",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "text-to-speech-google",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "grayify",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "plants",
+                "vt": "str"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 4,
+        "x": 960,
+        "y": 220,
+        "wires": [
+            [
+                "612cdd4d9de28e9a"
+            ],
+            [
+                "7666d6de025df290"
+            ],
+            [
+                "dc78b56748e1113a"
+            ],
+            [
+                "dc78b56748e1113a"
+            ]
+        ]
+    },
+    {
+        "id": "7666d6de025df290",
+        "type": "base64",
+        "z": "d8b6cfed3b908bf3",
+        "name": "",
+        "action": "",
+        "property": "payload",
+        "x": 1400,
+        "y": 260,
+        "wires": [
+            [
+                "612cdd4d9de28e9a"
+            ]
+        ]
+    },
+    {
+        "id": "dc78b56748e1113a",
+        "type": "string",
+        "z": "d8b6cfed3b908bf3",
+        "name": "Get Result",
+        "methods": [
+            {
+                "name": "delLeftMost",
+                "params": [
+                    {
+                        "type": "str",
+                        "value": "response"
+                    }
+                ]
+            }
+        ],
+        "prop": "payload",
+        "propout": "payload",
+        "object": "msg",
+        "objectout": "msg",
+        "x": 1230,
+        "y": 300,
+        "wires": [
+            [
+                "7666d6de025df290"
+            ]
+        ]
+    },
+    {
+        "id": "bc7c6b31c99518ad",
+        "type": "function",
+        "z": "d8b6cfed3b908bf3",
+        "name": "Send msg",
+        "func": "var servicio=msg.service;\n\n\nif (servicio==\"cowsay\"){\n     msg.payload = \"Processing Cowsay Service....\";\n    return [null, msg];\n }\nelse if (servicio == \"grayify\"){\n    msg.payload = \"Processing Grayify Service....\";\n    return [null, msg];\n }\nelse if (servicio == \"plants\"){\n    msg.payload = \"Processing Plants Service....\";\n    return [null, msg];\n }\nelse if (servicio == \"text-to-speech-google\"){\n    msg.payload = \"Processing Text-to-Speech Service....\";\n    return [null, msg];\n }\nelse {\n    msg.payload = \"Error with the selected service\";\n    return [msg, null];\n}\n\n\n\n\n",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 340,
+        "y": 80,
+        "wires": [
+            [],
+            [
+                "1822ee2fea9866b3"
+            ]
+        ]
+    },
+    {
+        "id": "a2223e70f98ffcec",
+        "type": "change",
+        "z": "d8b6cfed3b908bf3",
+        "name": "End Service",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Finished",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1710,
+        "y": 140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "612cdd4d9de28e9a",
+        "type": "change",
+        "z": "d8b6cfed3b908bf3",
+        "name": "Clear Data",
+        "rules": [
+            {
+                "t": "set",
+                "p": "pass",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "username",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "oscar_server",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "data",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "token",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "url",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "service",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "filename",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1550,
+        "y": 200,
+        "wires": [
+            [
+                "a2223e70f98ffcec"
+            ]
+        ]
+    },
+    {
+        "id": "7821e7a099b7f66d",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "c084f58fd40d990e",
+        "type": "inject",
+        "z": "7821e7a099b7f66d",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "Hello",
+        "payloadType": "str",
+        "x": 310,
+        "y": 200,
+        "wires": [
+            [
+                "07bf3f8c390ba54c"
+            ]
+        ]
+    },
+    {
+        "id": "cd81c876577de6c0",
+        "type": "inject",
+        "z": "7821e7a099b7f66d",
+        "name": "Images ",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "str",
+        "x": 230,
+        "y": 320,
+        "wires": [
+            [
+                "933c11edfb6cef25"
+            ]
+        ]
+    },
+    {
+        "id": "933c11edfb6cef25",
+        "type": "file in",
+        "z": "7821e7a099b7f66d",
+        "name": "Image ",
+        "filename": "Descargas/image11.jpg",
+        "filenameType": "str",
+        "format": "",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 370,
+        "y": 320,
+        "wires": [
+            [
+                "07bf3f8c390ba54c"
+            ]
+        ]
+    },
+    {
+        "id": "07bf3f8c390ba54c",
+        "type": "subflow:d8b6cfed3b908bf3",
+        "z": "7821e7a099b7f66d",
+        "name": "",
+        "env": [
+            {
+                "name": "Server",
+                "value": "http://localhost",
+                "type": "str"
+            },
+            {
+                "name": "Service Name",
+                "value": "plants",
+                "type": "str"
+            },
+            {
+                "name": "User",
+                "value": "oscar",
+                "type": "str"
+            },
+            {
+                "name": "Password",
+                "type": "cred"
+            }
+        ],
+        "x": 550,
+        "y": 240,
+        "wires": [
+            [
+                "8425ab8fa700cc7d",
+                "c7df62515268bd31",
+                "67ed31d99bccb9b0"
+            ]
+        ]
+    },
+    {
+        "id": "67ed31d99bccb9b0",
+        "type": "debug",
+        "z": "7821e7a099b7f66d",
+        "name": "debug 73",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 830,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "c7df62515268bd31",
+        "type": "image",
+        "z": "7821e7a099b7f66d",
+        "name": "",
+        "width": "160",
+        "data": "payload",
+        "dataType": "msg",
+        "thumbnail": false,
+        "active": true,
+        "pass": false,
+        "outputs": 0,
+        "x": 840,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "8425ab8fa700cc7d",
+        "type": "ui_audio",
+        "z": "7821e7a099b7f66d",
+        "name": "",
+        "group": "2a2af3e71af48d83",
+        "voice": "",
+        "always": true,
+        "x": 860,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "2a2af3e71af48d83",
+        "type": "ui_group",
+        "name": "Visualizacion text-speech",
+        "tab": "d5d39fa2ec2e7239",
+        "order": 9,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "d5d39fa2ec2e7239",
+        "type": "ui_tab",
+        "name": "OSCAR_SERVICES",
+        "icon": "dashboard",
+        "order": 3,
+        "disabled": false,
+        "hidden": false
+    }
+]

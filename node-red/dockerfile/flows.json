@@ -845,7 +845,7 @@
                     },
                     {
                         "type": "str",
-                        "value": "\",\"input\""
+                        "value": "\",\"file\""
                     }
                 ]
             }
@@ -1259,7 +1259,7 @@
                     },
                     {
                         "type": "str",
-                        "value": "\",\"input\""
+                        "value": "\",\"file\""
                     }
                 ]
             }
@@ -1703,7 +1703,7 @@
                     },
                     {
                         "type": "str",
-                        "value": "\",\"input\""
+                        "value": "\",\"file\""
                     }
                 ]
             }
@@ -2822,7 +2822,7 @@
                     },
                     {
                         "type": "str",
-                        "value": "\",\"input\""
+                        "value": "\",\"file\""
                     }
                 ]
             }
@@ -3195,7 +3195,7 @@
                     },
                     {
                         "type": "str",
-                        "value": "\",\"input\""
+                        "value": "\",\"file\""
                     }
                 ]
             }
