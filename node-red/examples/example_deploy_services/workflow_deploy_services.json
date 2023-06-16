@@ -1,0 +1,1289 @@
+[
+    {
+        "id": "0ae4dad0160db5b8",
+        "type": "subflow",
+        "name": "Run counter",
+        "info": "",
+        "category": "Join Activities",
+        "in": [
+            {
+                "x": 300,
+                "y": 228,
+                "wires": [
+                    {
+                        "id": "836c41e83c9caccf"
+                    },
+                    {
+                        "id": "67dc4bc23fb3a9f1"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 927,
+                "y": 218,
+                "wires": [
+                    {
+                        "id": "7581f08912dedf73",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "meta": {
+            "module": "Run time",
+            "license": "Apache-2.0"
+        },
+        "color": "#87A980",
+        "inputLabels": [
+            "Activities"
+        ],
+        "outputLabels": [
+            "Time counter"
+        ],
+        "icon": "node-red/timer.svg",
+        "status": {
+            "x": 859,
+            "y": 367,
+            "wires": [
+                {
+                    "id": "836c41e83c9caccf",
+                    "port": 0
+                },
+                {
+                    "id": "664de96c65e5e40f",
+                    "port": 0
+                }
+            ]
+        }
+    },
+    {
+        "id": "7581f08912dedf73",
+        "type": "function",
+        "z": "0ae4dad0160db5b8",
+        "name": "function 16",
+        "func": "var var1 = global.get(\"cont\");\nif (var1== 1)\n{\n    global.set(\"cont\", 2);\n}\nelse {\n    global.set(\"cont\", 1);\n    msg.payload = msg.payload ;\n    return [msg, msg]\n    \n}\n \n\n\n",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\nglobal.set(\"cont\", 1);\nglobal.set(\"start\",0);",
+        "finalize": "",
+        "libs": [],
+        "x": 690,
+        "y": 222,
+        "wires": [
+            [],
+            [
+                "664de96c65e5e40f"
+            ]
+        ]
+    },
+    {
+        "id": "836c41e83c9caccf",
+        "type": "change",
+        "z": "0ae4dad0160db5b8",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Running time counter ......",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 598,
+        "y": 365,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "664de96c65e5e40f",
+        "type": "function",
+        "z": "0ae4dad0160db5b8",
+        "name": "function 17",
+        "func": "\nvar time = msg.payload ;\nmsg.payload= String(time)+ \" ms\";\nreturn msg\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\nglobal.set(\"cont\", 1);\nglobal.set(\"start\",0);",
+        "finalize": "",
+        "libs": [],
+        "x": 700,
+        "y": 306,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "67dc4bc23fb3a9f1",
+        "type": "time_interval",
+        "z": "0ae4dad0160db5b8",
+        "name": "",
+        "x": 511,
+        "y": 218,
+        "wires": [
+            [
+                "7581f08912dedf73"
+            ]
+        ]
+    },
+    {
+        "id": "4ed408aca0be1f88",
+        "type": "subflow",
+        "name": "OSCAR Cowsay Services",
+        "info": "\n<main>\n    <section>\n        <article>\n            <h3>About Cowsay </h3>\n            <p>Cowsay is a program that generates ASCII art pictures of a cow with a message.It can also generate pictures using pre-made images of other animals, such as Tux the Penguin, the Linux mascot.</p>\n            <ul>\n                <li>\n                    <a rel=\"stylesheet\" href=\"https://es.wikipedia.org/wiki/Cowsay\">[1] </a>\n                    <a rel=\"stylesheet\" href=\"https://web.archive.org/web/20120225123719/http://www.nog.net/~tony/warez/cowsay.shtml\">[2] </a>\n                </li>\n            </ul>\n        </article>\n        <article>\n            <h3>About Cowsay Service in OSCAR</h3>\n                <p> The OSCAR Cowsay Service node shows the basic functionality for invoking the OSCAR service synchronously.</p>\n                <p>The invocation of the cowsay service in OSCAR can be seen in the following link:</p>\n            <ul>\n                <li>\n                    <a rel=\"stylesheet\" href=\"https://github.com/grycap/oscar/tree/master/examples/cowsay\">Cowsay Service </a>\n                </li>\n            </ul>\n        </article>\n        <article>\n            <h3>Inputs</h3>\n                <p>The input variables will be the basic variables (OSCAR server url and credentials). In addition to the name that has been given to the cowsay service on the server. Inside the input <code> msg.payload </code> must be the text to write. With all these elements, the service token is searched and then a request is made to the service ( POST /run/{serviceName})</p>\n            <ul>\n                <li>\n                    <a rel=\"stylesheet\" href=\"https://docs.oscar.grycap.net/api/\">Syns </a>\n                </li>\n            </ul>\n        </article>\n        <article>\n            <h3>Outputs</h3>\n                <p> Node returns in <code>msg.payload</code> an image like the one shown.</p>\n            <span style=\"white-space: pre;\"> < TEXT >\n                    -------\n                           \\   ^__^\n                            \\  (oo)\\_______\n                               (__)\\       )\\/\\\n                                   ||----w |\n                                   ||     ||\n            </span>\n        </article>\n    </section>\n</main>\n<footer>\n        GRyCAP (Grupo de Grid y Computación de Altas Prestaciones) - UPV\n</footer>       \n        ",
+        "category": "OSCAR",
+        "in": [
+            {
+                "x": 120,
+                "y": 200,
+                "wires": [
+                    {
+                        "id": "823e8c706aa2438a"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 1570,
+                "y": 260,
+                "wires": [
+                    {
+                        "id": "94f2dd07ab872b9a",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "Server",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "icon": "font-awesome/fa-globe"
+                }
+            },
+            {
+                "name": "Service Name",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "icon": "font-awesome/fa-pencil"
+                }
+            },
+            {
+                "name": "User",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "icon": "font-awesome/fa-user-circle-o"
+                }
+            },
+            {
+                "name": "Password",
+                "type": "cred",
+                "ui": {
+                    "icon": "font-awesome/fa-key"
+                }
+            }
+        ],
+        "meta": {
+            "module": "node-red-contrib-oscar-cowsay",
+            "type": "oscar",
+            "version": "1.0.0",
+            "author": "Vicente Rodriguez Benitez <vicente.rdguezb@gmail.com, vrodben1@i3m.upv.es>",
+            "desc": "Cowsay Service at OSCAR",
+            "keywords": "node-red, oscar,cowsay",
+            "license": "Apache-2.0"
+        },
+        "color": "#3FADB5",
+        "inputLabels": [
+            "Input data"
+        ],
+        "outputLabels": [
+            "Cowsay message"
+        ],
+        "icon": "font-awesome/fa-commenting-o",
+        "status": {
+            "x": 1560,
+            "y": 120,
+            "wires": [
+                {
+                    "id": "99ac26f1b6d33d84",
+                    "port": 0
+                },
+                {
+                    "id": "04b167f1571a4e08",
+                    "port": 0
+                }
+            ]
+        }
+    },
+    {
+        "id": "52b41476c53de141",
+        "type": "change",
+        "z": "4ed408aca0be1f88",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "headers",
+                "pt": "msg",
+                "to": "{\t   \"Authorization\": 'Basic ' & $base64encode(\t       payload.username & ':' & payload.password\t   ) \t}",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 640,
+        "y": 200,
+        "wires": [
+            [
+                "441b0c0a6f104a1b"
+            ]
+        ]
+    },
+    {
+        "id": "441b0c0a6f104a1b",
+        "type": "http request",
+        "z": "4ed408aca0be1f88",
+        "name": "cowsay service",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": true,
+        "authType": "basic",
+        "senderr": true,
+        "headers": [],
+        "x": 840,
+        "y": 200,
+        "wires": [
+            [
+                "9bf5aa5da1a4a073"
+            ]
+        ]
+    },
+    {
+        "id": "9bf5aa5da1a4a073",
+        "type": "string",
+        "z": "4ed408aca0be1f88",
+        "name": "",
+        "methods": [
+            {
+                "name": "between",
+                "params": [
+                    {
+                        "type": "str",
+                        "value": "\"token\":\""
+                    },
+                    {
+                        "type": "str",
+                        "value": "\",\"input\""
+                    }
+                ]
+            }
+        ],
+        "prop": "payload",
+        "propout": "payload",
+        "object": "msg",
+        "objectout": "msg",
+        "x": 1030,
+        "y": 200,
+        "wires": [
+            [
+                "358e2df4a4ce38fe"
+            ]
+        ]
+    },
+    {
+        "id": "358e2df4a4ce38fe",
+        "type": "function",
+        "z": "4ed408aca0be1f88",
+        "name": "Get Token-cowsay",
+        "func": "var  var1 = msg.payload;\n\nmsg.token_cowsay= var1;\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\n//flow.set(\"token_cowsay\",\"\");\n",
+        "finalize": "",
+        "libs": [],
+        "x": 630,
+        "y": 260,
+        "wires": [
+            [
+                "6de311eda830baae"
+            ]
+        ]
+    },
+    {
+        "id": "6de311eda830baae",
+        "type": "function",
+        "z": "4ed408aca0be1f88",
+        "name": "Send cowsay-token",
+        "func": "var payload = msg.text;\nvar token_cowsay = msg.token_cowsay;\n\n\nmsg.headers = {\n    Authorization: \"Bearer \" + token_cowsay\n}\n\nmsg.payload = {\n    \"message\":payload\n\n}\nmsg.url = msg.oscar_server+\"/run/\"+msg.cowsay;\n\nreturn msg;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 850,
+        "y": 260,
+        "wires": [
+            [
+                "b36fcf079b843552"
+            ]
+        ]
+    },
+    {
+        "id": "b36fcf079b843552",
+        "type": "http request",
+        "z": "4ed408aca0be1f88",
+        "name": "http request cowsay",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "bearer",
+        "senderr": true,
+        "headers": [],
+        "x": 1080,
+        "y": 260,
+        "wires": [
+            [
+                "94f2dd07ab872b9a"
+            ]
+        ]
+    },
+    {
+        "id": "823e8c706aa2438a",
+        "type": "change",
+        "z": "4ed408aca0be1f88",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "oscar_server",
+                "pt": "msg",
+                "to": "Server",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "username",
+                "pt": "msg",
+                "to": "User",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "pass",
+                "pt": "msg",
+                "to": "Password",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "text",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "cowsay",
+                "pt": "msg",
+                "to": "Service Name",
+                "tot": "env"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 280,
+        "y": 200,
+        "wires": [
+            [
+                "38aef3191c5b0703"
+            ]
+        ]
+    },
+    {
+        "id": "38aef3191c5b0703",
+        "type": "function",
+        "z": "4ed408aca0be1f88",
+        "name": "Load Log",
+        "func": "msg.payload={\n\"username\":msg.username,\n\"password\":msg.pass\n\n}\n\nmsg.url= msg.oscar_server +\"/system/services/\"+msg.cowsay ;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 460,
+        "y": 200,
+        "wires": [
+            [
+                "52b41476c53de141",
+                "99ac26f1b6d33d84"
+            ]
+        ]
+    },
+    {
+        "id": "99ac26f1b6d33d84",
+        "type": "change",
+        "z": "4ed408aca0be1f88",
+        "name": "Start Service",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Processing....",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 690,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "04b167f1571a4e08",
+        "type": "change",
+        "z": "4ed408aca0be1f88",
+        "name": "End Service",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Finished....",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1450,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "94f2dd07ab872b9a",
+        "type": "change",
+        "z": "4ed408aca0be1f88",
+        "name": "Clear Data",
+        "rules": [
+            {
+                "t": "set",
+                "p": "pass",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "username",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "oscar_server",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "services",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "text",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "token_cowsay",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "url",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1290,
+        "y": 260,
+        "wires": [
+            [
+                "04b167f1571a4e08"
+            ]
+        ]
+    },
+    {
+        "id": "600363bb07e040c9",
+        "type": "subflow",
+        "name": "Deploy OSCAR Service",
+        "info": "",
+        "category": "OSCAR",
+        "in": [
+            {
+                "x": 90,
+                "y": 156,
+                "wires": [
+                    {
+                        "id": "26b12796c1f51095"
+                    },
+                    {
+                        "id": "f8e3818864c1f51e"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 1683.1113204956055,
+                "y": 129.3333339691162,
+                "wires": [
+                    {
+                        "id": "2568a1546940671e",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "Server",
+                "type": "str",
+                "value": ""
+            },
+            {
+                "name": "User",
+                "type": "str",
+                "value": ""
+            },
+            {
+                "name": "Password",
+                "type": "cred"
+            },
+            {
+                "name": "Name_Service",
+                "type": "str",
+                "value": ""
+            },
+            {
+                "name": "Memory",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "type": "input",
+                    "opts": {
+                        "types": [
+                            "str",
+                            "num",
+                            "bool",
+                            "json",
+                            "bin"
+                        ]
+                    }
+                }
+            },
+            {
+                "name": "CPU",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "type": "input",
+                    "opts": {
+                        "types": [
+                            "str",
+                            "num",
+                            "bool",
+                            "json",
+                            "bin"
+                        ]
+                    }
+                }
+            },
+            {
+                "name": "Image_Service",
+                "type": "str",
+                "value": ""
+            },
+            {
+                "name": "Script",
+                "type": "str",
+                "value": ""
+            },
+            {
+                "name": "URL",
+                "type": "bool",
+                "value": "true",
+                "ui": {
+                    "type": "checkbox"
+                }
+            }
+        ],
+        "meta": {
+            "module": "Create Service",
+            "license": "Apache-2.0"
+        },
+        "credentials": {
+            "Password": ""
+        },
+        "color": "#3FADB5",
+        "inputLabels": [
+            "Input"
+        ],
+        "outputLabels": [
+            "Output"
+        ],
+        "icon": "font-awesome/fa-cogs",
+        "status": {
+            "x": 1327.6667919158936,
+            "y": 409.0000286102295,
+            "wires": [
+                {
+                    "id": "f8e3818864c1f51e",
+                    "port": 0
+                },
+                {
+                    "id": "5bb6c356423dd70a",
+                    "port": 0
+                },
+                {
+                    "id": "5489f9395f9f5236",
+                    "port": 0
+                }
+            ]
+        }
+    },
+    {
+        "id": "26b12796c1f51095",
+        "type": "change",
+        "z": "600363bb07e040c9",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "oscar_server",
+                "pt": "msg",
+                "to": "Server",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "username",
+                "pt": "msg",
+                "to": "User",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "pass",
+                "pt": "msg",
+                "to": "Password",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "name_service",
+                "pt": "msg",
+                "to": "Name_Service",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "memory_service",
+                "pt": "msg",
+                "to": "Memory",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "cpu_service",
+                "pt": "msg",
+                "to": "CPU",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "image_service",
+                "pt": "msg",
+                "to": "Image_Service",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "script",
+                "pt": "msg",
+                "to": "Script",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "pos_script",
+                "pt": "msg",
+                "to": "URL",
+                "tot": "env"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 224.55556106567383,
+        "y": 157.33334922790527,
+        "wires": [
+            [
+                "949a4b2f7174bee3"
+            ]
+        ]
+    },
+    {
+        "id": "a0d1d4727681797c",
+        "type": "function",
+        "z": "600363bb07e040c9",
+        "name": "load data",
+        "func": "var memory = msg.memory_service;\nvar image_service=msg.image_service;\n\n//var script = \"#!/bin/bash \\necho \\\"SCRIPT: Invoked classify_image.py. File available in $INPUT_FILE_PATH\\\" \\nFILE_NAME=`basename \\\"$INPUT_FILE_PATH\\\"` \\nOUTPUT_FILE=\\\"$TMP_OUTPUT_DIR/$FILE_NAME\\\" \\npython2 /opt/plant-classification-theano/classify_image.py \\\"$INPUT_FILE_PATH\\\" -o \\\"$OUTPUT_FILE\\\"\"\n//var script = \"#!/bin/sh \\nif [ \\\"$INPUT_TYPE\\\" = \\\"json\\\" ] \\nthen\\njq \\'.message\\' \\\"$INPUT_FILE_PATH\\\" -r | /usr/games/cowsay \\nelse \\n cat \\\"$INPUT_FILE_PATH\\\" | /usr/games/cowsay \\nfi \"\nvar script=msg.payload;\n\nvar cpu = msg.cpu_service;\n\nif (image_service.includes(\"cowsay\")==true){\n    msg.create_service = {\n        \"name\": msg.name_service,\n        \"cluster_id\": \"string\",\n        \"memory\": String(msg.memory_service) + \"Gi\",\n        \"cpu\": String(msg.cpu_service),\n        \"log_level\": \"CRITICAL\",\n        \"image\": image_service,\n        \"script\": script,\n        \"environment\":{\n            \"Variables\":{\n                \"INPUT_TYPE\": \"json\"\n            }\n        }\n    }\n}\nelse if (image_service.includes(\"oscar-theano-plants\") == true){\n\n    var input = {\n        \"storage_provider\": \"minio\",\n        \"path\": msg.name_service + \"/in\"\n    }\n    var output = {\n        \"storage_provider\": \"minio\",\n        \"path\": msg.name_service + \"/out\"\n    }\n    msg.create_service = {\n        \"name\": msg.name_service,\n        \"memory\": String(msg.memory_service) + \"Gi\",\n        \"cpu\": String(msg.cpu_service),\n        \"log_level\": \"CRITICAL\",\n        \"image\": image_service,\n        \"script\": script,\n        //\"input\": input,\n        //\"output\":output\n        }\n    }\nelse if (image_service.includes(\"imagemagick\") == true){\n    var input = {\n        \"storage_provider\": \"minio\",\n        \"path\": msg.name_service + \"/in\"\n    }\n    var output = {\n        \"storage_provider\": \"minio\",\n        \"path\": msg.name_service + \"/out\"\n    }\n    msg.create_service = {\n        \"name\": msg.name_service,\n        //\"cluster_id\": \"string\",\n        \"memory\": String(msg.memory_service) + \"Gi\",\n        \"cpu\": String(msg.cpu_service),\n        \"log_level\": \"CRITICAL\",\n        \"image\": image_service,\n        \"script\": script\n      //  \"input\": input,\n       // \"output\": output\n    }\n}\nelse if (image_service.includes(\"deep-oc-plants-classification-tf\") == true){\n    msg.create_service = {\n        \"name\": msg.name_service,\n        \"memory\": String(msg.memory_service) + \"Gi\",\n        \"cpu\": String(msg.cpu_service),\n        \"log_level\": \"CRITICAL\",\n        \"image\": image_service,\n        \"script\": script\n    }\n}\n\nmsg.payload = {\n    \"username\": msg.username,\n    \"password\": msg.pass\n}\nmsg.url = msg.oscar_server+\"/system/services\";\nreturn msg;\n\n//NDA3OWFk\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 869.2222328186035,
+        "y": 134.4444694519043,
+        "wires": [
+            [
+                "961ed9da9555f22d"
+            ]
+        ]
+    },
+    {
+        "id": "961ed9da9555f22d",
+        "type": "change",
+        "z": "600363bb07e040c9",
+        "name": "credential load",
+        "rules": [
+            {
+                "t": "set",
+                "p": "headers",
+                "pt": "msg",
+                "to": "{\t   \"Authorization\": 'Basic ' & $base64encode(\t       payload.username & ':' & payload.password\t   ) \t}",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1040.0000247955322,
+        "y": 133.11113357543945,
+        "wires": [
+            [
+                "434030d1e6c5dbab"
+            ]
+        ]
+    },
+    {
+        "id": "434030d1e6c5dbab",
+        "type": "function",
+        "z": "600363bb07e040c9",
+        "name": "Payload json service",
+        "func": "\nmsg.payload = msg.create_service\n\nreturn msg;\n\n//NDA3OWFk\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1243.4444046020508,
+        "y": 132.99999618530273,
+        "wires": [
+            [
+                "2568a1546940671e"
+            ]
+        ]
+    },
+    {
+        "id": "2568a1546940671e",
+        "type": "http request",
+        "z": "600363bb07e040c9",
+        "name": "Create service (post)",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "basic",
+        "senderr": true,
+        "headers": [],
+        "x": 1468.9999618530273,
+        "y": 130.8888921737671,
+        "wires": [
+            [
+                "38940236e89885a6"
+            ]
+        ]
+    },
+    {
+        "id": "f8e3818864c1f51e",
+        "type": "change",
+        "z": "600363bb07e040c9",
+        "name": "init deploy",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Creating services ....",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 376,
+        "y": 414,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "38940236e89885a6",
+        "type": "switch",
+        "z": "600363bb07e040c9",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 954,
+        "y": 275,
+        "wires": [
+            [
+                "5bb6c356423dd70a"
+            ],
+            [
+                "5489f9395f9f5236"
+            ]
+        ]
+    },
+    {
+        "id": "5bb6c356423dd70a",
+        "type": "change",
+        "z": "600363bb07e040c9",
+        "name": "msg create services",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Service created successfully",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1187,
+        "y": 256,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5489f9395f9f5236",
+        "type": "function",
+        "z": "600363bb07e040c9",
+        "name": "msg error",
+        "func": "msg.payload= \"Error ..\"+ msg.payload;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1146,
+        "y": 307,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4f0b0693bd61a462",
+        "type": "file in",
+        "z": "600363bb07e040c9",
+        "name": "directory script",
+        "filename": "payload",
+        "filenameType": "msg",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "ascii",
+        "allProps": false,
+        "x": 661.3333740234375,
+        "y": 138.1111068725586,
+        "wires": [
+            [
+                "a0d1d4727681797c"
+            ]
+        ]
+    },
+    {
+        "id": "1f4b6cf22c6a82f1",
+        "type": "change",
+        "z": "600363bb07e040c9",
+        "name": "directory",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "script",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 503.3333282470703,
+        "y": 145.7777862548828,
+        "wires": [
+            [
+                "4f0b0693bd61a462"
+            ]
+        ]
+    },
+    {
+        "id": "949a4b2f7174bee3",
+        "type": "switch",
+        "z": "600363bb07e040c9",
+        "name": "",
+        "property": "pos_script",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "false"
+            },
+            {
+                "t": "true"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 368.8888854980469,
+        "y": 157.3333511352539,
+        "wires": [
+            [
+                "1f4b6cf22c6a82f1"
+            ],
+            [
+                "87f408f0e3644484"
+            ]
+        ]
+    },
+    {
+        "id": "87f408f0e3644484",
+        "type": "change",
+        "z": "600363bb07e040c9",
+        "name": "url",
+        "rules": [
+            {
+                "t": "set",
+                "p": "url",
+                "pt": "msg",
+                "to": "script",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 495.44449615478516,
+        "y": 200.00000762939453,
+        "wires": [
+            [
+                "f1855f2096884e63"
+            ]
+        ]
+    },
+    {
+        "id": "f1855f2096884e63",
+        "type": "http request",
+        "z": "600363bb07e040c9",
+        "name": "url script",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": true,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 646.4444332122803,
+        "y": 199.22222518920898,
+        "wires": [
+            [
+                "a0d1d4727681797c"
+            ]
+        ]
+    },
+    {
+        "id": "976f72e1a3936f73",
+        "type": "tab",
+        "label": "Deploy Services",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "3b018e35edd47eb7",
+        "type": "debug",
+        "z": "976f72e1a3936f73",
+        "name": "debug 9",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1254.5555992126465,
+        "y": 218.4443645477295,
+        "wires": []
+    },
+    {
+        "id": "f156e3924db8d18f",
+        "type": "subflow:600363bb07e040c9",
+        "z": "976f72e1a3936f73",
+        "name": "Deploy Cowsay Service",
+        "env": [
+            {
+                "name": "Server",
+                "value": "https://frosty-grothendieck5.im.grycap.net",
+                "type": "str"
+            },
+            {
+                "name": "User",
+                "value": "oscar",
+                "type": "str"
+            },
+            {
+                "name": "Password",
+                "type": "cred"
+            },
+            {
+                "name": "Name_Service",
+                "value": "cowsay-dev",
+                "type": "str"
+            },
+            {
+                "name": "Memory",
+                "value": "1",
+                "type": "str"
+            },
+            {
+                "name": "CPU",
+                "value": "1",
+                "type": "str"
+            },
+            {
+                "name": "Image_Service",
+                "value": "ghcr.io/grycap/cowsay",
+                "type": "str"
+            },
+            {
+                "name": "Script",
+                "value": "https://raw.githubusercontent.com/grycap/oscar/master/examples/cowsay/script.sh",
+                "type": "str"
+            },
+            {
+                "name": "URL o Directory",
+                "value": "false",
+                "type": "bool"
+            }
+        ],
+        "x": 545.2221374511719,
+        "y": 222.9999771118164,
+        "wires": [
+            [
+                "b290ab76398d3ac5"
+            ]
+        ]
+    },
+    {
+        "id": "f79c1cc27e85878a",
+        "type": "inject",
+        "z": "976f72e1a3936f73",
+        "name": "service",
+        "props": [
+            {
+                "p": "message",
+                "v": "Cowsay",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 300.33329010009766,
+        "y": 226.7777862548828,
+        "wires": [
+            [
+                "104fca4b19513520",
+                "f156e3924db8d18f"
+            ]
+        ]
+    },
+    {
+        "id": "b77ef0095c345947",
+        "type": "subflow:4ed408aca0be1f88",
+        "z": "976f72e1a3936f73",
+        "name": "",
+        "env": [
+            {
+                "name": "Server",
+                "value": "https://frosty-grothendieck5.im.grycap.net",
+                "type": "str"
+            },
+            {
+                "name": "Service Name",
+                "value": "cowsay-dev",
+                "type": "str"
+            },
+            {
+                "name": "User",
+                "value": "oscar",
+                "type": "str"
+            },
+            {
+                "name": "Password",
+                "type": "cred"
+            }
+        ],
+        "x": 1023.1110763549805,
+        "y": 223.77761459350586,
+        "wires": [
+            [
+                "3b018e35edd47eb7",
+                "104fca4b19513520"
+            ]
+        ]
+    },
+    {
+        "id": "b290ab76398d3ac5",
+        "type": "change",
+        "z": "976f72e1a3936f73",
+        "name": "message",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "message",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 768.8889083862305,
+        "y": 227.77783203125,
+        "wires": [
+            [
+                "b77ef0095c345947"
+            ]
+        ]
+    },
+    {
+        "id": "104fca4b19513520",
+        "type": "subflow:0ae4dad0160db5b8",
+        "z": "976f72e1a3936f73",
+        "name": "",
+        "x": 687.7778091430664,
+        "y": 358.88895654678345,
+        "wires": [
+            []
+        ]
+    }
+]

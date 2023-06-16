@@ -1,0 +1,388 @@
+[
+    {
+        "id": "18c5680886df4529",
+        "type": "subflow",
+        "name": "OSCAR Info",
+        "info": "\n    \n<main>\n        <!--Contenido fundamental de la pagina-->\n        <section>\n            <h2>Description</h2>\n            <article>\n                <h3>General</h3> \n                <p> OSCAR is a framework to efficiently support on-premises FaaS (Functions as a Service)for general-purpose file-processing computing applications. It represents the porting to an on-premises scenario of the SCAR framework, which supports a High Throughput Computing Programming Model to create highly-parallel event-driven file-processing serverless applications that execute on customized runtime environments provided by Docker containers run on AWS Lambda.</p>\n                <p>For more information about this platform: </p>\n                <ul>\n                    <li>\n                        <a rel=\"stylesheet\" href=\"https://docs.oscar.grycap.net/\">OSCAR </a>\n                    </li>\n                </ul>\n            </article>\n            <article>\n                <h3>Inputs</h3> \n                <p>The input variables will be the url of the OSCAR server and the authentication credentials. With these variables a get request is made to the server (GET /system/services)</p>\n                <ul>\n                    <li>\n                        <a rel=\"stylesheet\" href=\"https://docs.oscar.grycap.net/api/\">Services </a>\n                    </li>\n                </ul>\n            </article>\n            <article>\n                <h3>Outputs</h3>\n                <p>The OSCAR info node returns the information of the OSCAR platform on which it is working.The server returns in <code> msg.payload </code>  a list of the services that are implemented.</p>\n            </article>\n        </section>\n        \n</main>\n<footer>\n        GRyCAP (Grupo de Grid y Computación de Altas Prestaciones) - UPV\n</footer>",
+        "category": "",
+        "in": [
+            {
+                "x": 140,
+                "y": 260,
+                "wires": [
+                    {
+                        "id": "ba47979fa8ed9e6f"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 1280,
+                "y": 260,
+                "wires": [
+                    {
+                        "id": "66dd8260482588b0",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "Server",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "icon": "font-awesome/fa-globe",
+                    "type": "input",
+                    "opts": {
+                        "types": [
+                            "str",
+                            "num",
+                            "bool",
+                            "json",
+                            "bin"
+                        ]
+                    }
+                }
+            },
+            {
+                "name": "User",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "icon": "font-awesome/fa-user-circle-o"
+                }
+            },
+            {
+                "name": "Password",
+                "type": "cred",
+                "ui": {
+                    "icon": "font-awesome/fa-key"
+                }
+            }
+        ],
+        "meta": {
+            "module": "node-red-contrib-oscar-info",
+            "type": "oscar",
+            "version": "1.0.0",
+            "author": "Vicente Rodriguez Benitez <vicente.rdguezb@gmail.com, vrodben1@i3m.upv.es>",
+            "desc": "OSCAR  information",
+            "keywords": "node-red,oscar, information",
+            "license": "GPL-3.0"
+        },
+        "color": "#3FADB5",
+        "icon": "font-awesome/fa-info-circle",
+        "status": {
+            "x": 1280,
+            "y": 120,
+            "wires": [
+                {
+                    "id": "aa2b0745049a4949",
+                    "port": 0
+                },
+                {
+                    "id": "a84ad47e452bfd1a",
+                    "port": 0
+                }
+            ]
+        }
+    },
+    {
+        "id": "3e166e2201f70924",
+        "type": "http request",
+        "z": "18c5680886df4529",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "basic",
+        "senderr": true,
+        "headers": [],
+        "x": 770,
+        "y": 260,
+        "wires": [
+            [
+                "66dd8260482588b0"
+            ]
+        ]
+    },
+    {
+        "id": "ba47979fa8ed9e6f",
+        "type": "change",
+        "z": "18c5680886df4529",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "oscar_server",
+                "pt": "msg",
+                "to": "Server",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "username",
+                "pt": "msg",
+                "to": "User",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "pass",
+                "pt": "msg",
+                "to": "Password",
+                "tot": "env"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 280,
+        "y": 260,
+        "wires": [
+            [
+                "faf4af791add3bb1",
+                "a84ad47e452bfd1a"
+            ]
+        ]
+    },
+    {
+        "id": "061e30d466c6710b",
+        "type": "change",
+        "z": "18c5680886df4529",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "headers",
+                "pt": "msg",
+                "to": "{\t   \"Authorization\": 'Basic ' & $base64encode(\t       payload.username & ':' & payload.password\t   ) \t}",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 600,
+        "y": 260,
+        "wires": [
+            [
+                "3e166e2201f70924"
+            ]
+        ]
+    },
+    {
+        "id": "faf4af791add3bb1",
+        "type": "function",
+        "z": "18c5680886df4529",
+        "name": "Load Log",
+        "func": "var server=msg.oscar_server;\nmsg.payload={\n\"username\":msg.username,\n\"password\":msg.pass\n\n}\nmsg.url = server +\"/system/services\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 440,
+        "y": 260,
+        "wires": [
+            [
+                "061e30d466c6710b"
+            ]
+        ]
+    },
+    {
+        "id": "a84ad47e452bfd1a",
+        "type": "change",
+        "z": "18c5680886df4529",
+        "name": "Start Service",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Processing....",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 490,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "aa2b0745049a4949",
+        "type": "change",
+        "z": "18c5680886df4529",
+        "name": "End Service",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Finished....",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "pass",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "username",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1130,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "66dd8260482588b0",
+        "type": "change",
+        "z": "18c5680886df4529",
+        "name": "Clear data",
+        "rules": [
+            {
+                "t": "set",
+                "p": "pass",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "username",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "oscar_server",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 950,
+        "y": 260,
+        "wires": [
+            [
+                "aa2b0745049a4949"
+            ]
+        ]
+    },
+    {
+        "id": "7821e7a099b7f66d",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "63c404d73c1b64f8",
+        "type": "inject",
+        "z": "7821e7a099b7f66d",
+        "name": "System Info",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "hola",
+        "payloadType": "str",
+        "x": 370,
+        "y": 180,
+        "wires": [
+            [
+                "674ab071194bb0f7"
+            ]
+        ]
+    },
+    {
+        "id": "674ab071194bb0f7",
+        "type": "subflow:18c5680886df4529",
+        "z": "7821e7a099b7f66d",
+        "name": "",
+        "env": [
+            {
+                "name": "Server",
+                "value": "http://localhost",
+                "type": "str"
+            },
+            {
+                "name": "User",
+                "value": "oscar",
+                "type": "str"
+            },
+            {
+                "name": "Password",
+                "type": "cred"
+            }
+        ],
+        "x": 650,
+        "y": 180,
+        "wires": [
+            [
+                "37cbc997bb43d8d8"
+            ]
+        ]
+    },
+    {
+        "id": "37cbc997bb43d8d8",
+        "type": "debug",
+        "z": "7821e7a099b7f66d",
+        "name": "debug 73",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 890,
+        "y": 180,
+        "wires": []
+    }
+]

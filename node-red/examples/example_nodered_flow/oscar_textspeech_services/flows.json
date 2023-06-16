@@ -1,0 +1,575 @@
+[
+    {
+        "id": "9a1796f41304fb16",
+        "type": "subflow",
+        "name": "OSCAR Text-Speech Services",
+        "info": "<main>\n    <section>\n        <article>\n            <h3>About Text to Speech </h3>\n            <p>Google Speech [1] is a simple multiplatform command line tool to read text using Google Translate TTS (Text To Speech) API .</p>\n            <p>See also gTTS [2], for a similar but probably more advanced, and actively maintained project.</p>\n            <p>gTTS (Google Text-to-Speech), a Python library and CLI tool to interface with Google Translate's text-to-speech API. Write spoken mp3 data to a file, a file-like object (bytestring) for further audio manipulation, or stdout [3]. </p>\n            <ul>\n                <li>\n                    <a rel=\"stylesheet\" href=\"https://pypi.org/project/google-speech/\">[1]]</a>\n                    <a rel=\"stylesheet\" href=\"https://github.com/pndurette/gTTS/\">[2]</a>\n                    <a rel=\"stylesheet\" href=\"https://gtts.readthedocs.org/\">[3]</a>\n                </li>\n            </ul>\n        </article>\n        <article>\n            <h3>About Text Speech Service in OSCAR</h3>\n            <p>This node applies text to speech as an OSCAR service by using the Google Speech library, obtaining audio files from plain text.</p>\n            <p>For more information consult:</p>\n            <ul>\n                <li>\n                    <a rel=\"stylesheet\" href=\"https://oscar.grycap.net/blog/post-oscar-text-to-speech/\">[1] </a>\n                    <a rel=\"stylesheet\" href=\"https://github.com/grycap/oscar/tree/master/examples/text-to-speech-google\">[2]</a>\n                </li>\n            </ul>\n        </article>\n        <article>\n            <h3>Inputs</h3>\n            <p>The input variables will be the basic variables (OSCAR server url and credentials). In addition to the name that has been given to the text speech service on the OSCAR server. Inside the <code>msg.payload</code> entry must be the text to be converted. With all these elements, the service token is searched and then a request is made to the service ( POST /run/{serviceName})</p>\n            <ul>\n                <li>\n                    <a rel=\"stylesheet\" href=\"https://docs.oscar.grycap.net/api/\">Syns </a>\n                </li>\n            </ul>\n        </article>\n        <article>\n            <h3>Outputs</h3>\n            <p> The node returns via <code>msg.payload</code> the input text to audio (base64). Audio can be played by the audio out node found in dashboard elements.</p>\n        </article>\n    </section>\n</main>\n<footer>\n        GRyCAP (Grupo de Grid y Computación de Altas Prestaciones) - UPV\n</footer>",
+        "category": "",
+        "in": [
+            {
+                "x": 40,
+                "y": 400,
+                "wires": [
+                    {
+                        "id": "fafbbbdd65a834c0"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 1500,
+                "y": 460,
+                "wires": [
+                    {
+                        "id": "9594b737369ed521",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "Server",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "icon": "font-awesome/fa-globe"
+                }
+            },
+            {
+                "name": "Service Name",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "icon": "font-awesome/fa-pencil"
+                }
+            },
+            {
+                "name": "User",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "icon": "font-awesome/fa-user-circle-o"
+                }
+            },
+            {
+                "name": "Password",
+                "type": "cred",
+                "ui": {
+                    "icon": "font-awesome/fa-key"
+                }
+            }
+        ],
+        "meta": {
+            "module": "node-red-contrib-oscar-text-speech",
+            "version": "1.0.0",
+            "author": "Vicente Rodriguez Benitez <vicente.rdguezb@gmail.com>",
+            "desc": "Implementación de Text-Speech Services de OSCAR",
+            "keywords": "node-red,oscar, text-speech",
+            "license": "Apache-2.0"
+        },
+        "color": "#3FADB5",
+        "icon": "font-awesome/fa-bullhorn",
+        "status": {
+            "x": 1620,
+            "y": 260,
+            "wires": [
+                {
+                    "id": "e095d2a13c0c8c0a",
+                    "port": 0
+                },
+                {
+                    "id": "842029e682675eb3",
+                    "port": 0
+                }
+            ]
+        }
+    },
+    {
+        "id": "af5d0ea0f39123cb",
+        "type": "change",
+        "z": "9a1796f41304fb16",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "headers",
+                "pt": "msg",
+                "to": "{\t   \"Authorization\": 'Basic ' & $base64encode(\t       payload.username & ':' & payload.password\t   ) \t}",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 500,
+        "y": 400,
+        "wires": [
+            [
+                "f3d037f3380b2091"
+            ]
+        ]
+    },
+    {
+        "id": "f3d037f3380b2091",
+        "type": "http request",
+        "z": "9a1796f41304fb16",
+        "name": "text-to-speech-google service",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "basic",
+        "senderr": true,
+        "headers": [],
+        "x": 720,
+        "y": 400,
+        "wires": [
+            [
+                "69f6aa6cc40a21a5"
+            ]
+        ]
+    },
+    {
+        "id": "69f6aa6cc40a21a5",
+        "type": "string",
+        "z": "9a1796f41304fb16",
+        "name": "",
+        "methods": [
+            {
+                "name": "between",
+                "params": [
+                    {
+                        "type": "str",
+                        "value": "\"token\":\""
+                    },
+                    {
+                        "type": "str",
+                        "value": "\",\"input\""
+                    }
+                ]
+            }
+        ],
+        "prop": "payload",
+        "propout": "payload",
+        "object": "msg",
+        "objectout": "msg",
+        "x": 350,
+        "y": 460,
+        "wires": [
+            [
+                "240294dbe7c1dc84"
+            ]
+        ]
+    },
+    {
+        "id": "240294dbe7c1dc84",
+        "type": "function",
+        "z": "9a1796f41304fb16",
+        "name": "Get Token-text",
+        "func": "msg.token_speech = msg.payload;\nmsg.payload = msg.text;\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\nglobal.set(\"token_text\",\"\");\n",
+        "finalize": "",
+        "libs": [],
+        "x": 490,
+        "y": 460,
+        "wires": [
+            [
+                "8e1871fa345d4e88"
+            ]
+        ]
+    },
+    {
+        "id": "8e1871fa345d4e88",
+        "type": "base64",
+        "z": "9a1796f41304fb16",
+        "name": "",
+        "action": "str",
+        "property": "payload",
+        "x": 660,
+        "y": 460,
+        "wires": [
+            [
+                "076e0442c3c58d28"
+            ]
+        ]
+    },
+    {
+        "id": "076e0442c3c58d28",
+        "type": "function",
+        "z": "9a1796f41304fb16",
+        "name": "Send text-token",
+        "func": "\nvar token_text = msg.token_speech;\n\n\nmsg.headers = {\n    Authorization: \"Bearer \" + token_text\n}\n\nmsg.payload = msg.payload;\nmsg.url = msg.oscar_server + \"/run/\" + msg.speech;\n\nreturn msg;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 820,
+        "y": 460,
+        "wires": [
+            [
+                "dcfaef9433f5b0f2"
+            ]
+        ]
+    },
+    {
+        "id": "dcfaef9433f5b0f2",
+        "type": "http request",
+        "z": "9a1796f41304fb16",
+        "name": "Text Speech Run",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "query",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "bearer",
+        "senderr": true,
+        "headers": [],
+        "x": 1030,
+        "y": 460,
+        "wires": [
+            [
+                "439af16f92fe7f07"
+            ]
+        ]
+    },
+    {
+        "id": "439af16f92fe7f07",
+        "type": "base64",
+        "z": "9a1796f41304fb16",
+        "name": "",
+        "action": "",
+        "property": "payload",
+        "x": 1200,
+        "y": 460,
+        "wires": [
+            [
+                "9594b737369ed521"
+            ]
+        ]
+    },
+    {
+        "id": "fafbbbdd65a834c0",
+        "type": "change",
+        "z": "9a1796f41304fb16",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "oscar_server",
+                "pt": "msg",
+                "to": "Server",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "username",
+                "pt": "msg",
+                "to": "User",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "pass",
+                "pt": "msg",
+                "to": "Password",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "text",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "speech",
+                "pt": "msg",
+                "to": "Service Name",
+                "tot": "env"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 160,
+        "y": 400,
+        "wires": [
+            [
+                "842029e682675eb3",
+                "a42dc0487f1b74f8"
+            ]
+        ]
+    },
+    {
+        "id": "842029e682675eb3",
+        "type": "change",
+        "z": "9a1796f41304fb16",
+        "name": "Start Service",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Processing....",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 350,
+        "y": 260,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e095d2a13c0c8c0a",
+        "type": "change",
+        "z": "9a1796f41304fb16",
+        "name": "End Service",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Finished....",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1510,
+        "y": 380,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a42dc0487f1b74f8",
+        "type": "function",
+        "z": "9a1796f41304fb16",
+        "name": "Load Log",
+        "func": "msg.payload={\n\"username\":msg.username,\n\"password\":msg.pass\n\n}\nmsg.url = msg.oscar_server +\"/system/services/\"+ msg.speech ;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 400,
+        "wires": [
+            [
+                "af5d0ea0f39123cb"
+            ]
+        ]
+    },
+    {
+        "id": "9594b737369ed521",
+        "type": "change",
+        "z": "9a1796f41304fb16",
+        "name": "Clear Data",
+        "rules": [
+            {
+                "t": "set",
+                "p": "pass",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "username",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "oscar_server",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "text",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "token_speech",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "url",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "speech",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1350,
+        "y": 460,
+        "wires": [
+            [
+                "e095d2a13c0c8c0a"
+            ]
+        ]
+    },
+    {
+        "id": "7821e7a099b7f66d",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "9fac17467cad6733",
+        "type": "inject",
+        "z": "7821e7a099b7f66d",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "Hello",
+        "payloadType": "str",
+        "x": 330,
+        "y": 100,
+        "wires": [
+            [
+                "e796afcc16a557ef"
+            ]
+        ]
+    },
+    {
+        "id": "e796afcc16a557ef",
+        "type": "subflow:9a1796f41304fb16",
+        "z": "7821e7a099b7f66d",
+        "name": "",
+        "env": [
+            {
+                "name": "Server",
+                "value": "http://localhost",
+                "type": "str"
+            },
+            {
+                "name": "Service Name",
+                "value": "text-to-speech-google",
+                "type": "str"
+            },
+            {
+                "name": "User",
+                "value": "oscar",
+                "type": "str"
+            },
+            {
+                "name": "Password",
+                "type": "cred"
+            }
+        ],
+        "x": 710,
+        "y": 100,
+        "wires": [
+            [
+                "5f90890f923f115c",
+                "2632c3d1dbaae50c"
+            ]
+        ]
+    },
+    {
+        "id": "5f90890f923f115c",
+        "type": "ui_audio",
+        "z": "7821e7a099b7f66d",
+        "name": "",
+        "group": "2a2af3e71af48d83",
+        "voice": "",
+        "always": true,
+        "x": 1060,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "2632c3d1dbaae50c",
+        "type": "debug",
+        "z": "7821e7a099b7f66d",
+        "name": "debug 73",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1050,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "2a2af3e71af48d83",
+        "type": "ui_group",
+        "name": "Visualizacion text-speech",
+        "tab": "d5d39fa2ec2e7239",
+        "order": 9,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "d5d39fa2ec2e7239",
+        "type": "ui_tab",
+        "name": "OSCAR_SERVICES",
+        "icon": "dashboard",
+        "order": 3,
+        "disabled": false,
+        "hidden": false
+    }
+]

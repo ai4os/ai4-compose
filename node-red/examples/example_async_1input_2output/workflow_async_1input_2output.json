@@ -1,0 +1,699 @@
+[
+    {
+        "id": "0ae4dad0160db5b8",
+        "type": "subflow",
+        "name": "Run counter",
+        "info": "",
+        "category": "Join Activities",
+        "in": [
+            {
+                "x": 300,
+                "y": 228,
+                "wires": [
+                    {
+                        "id": "836c41e83c9caccf"
+                    },
+                    {
+                        "id": "67dc4bc23fb3a9f1"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 927,
+                "y": 218,
+                "wires": [
+                    {
+                        "id": "7581f08912dedf73",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "meta": {
+            "module": "Run time",
+            "license": "Apache-2.0"
+        },
+        "color": "#87A980",
+        "inputLabels": [
+            "Activities"
+        ],
+        "outputLabels": [
+            "Time counter"
+        ],
+        "icon": "node-red/timer.svg",
+        "status": {
+            "x": 859,
+            "y": 367,
+            "wires": [
+                {
+                    "id": "836c41e83c9caccf",
+                    "port": 0
+                },
+                {
+                    "id": "664de96c65e5e40f",
+                    "port": 0
+                }
+            ]
+        }
+    },
+    {
+        "id": "7581f08912dedf73",
+        "type": "function",
+        "z": "0ae4dad0160db5b8",
+        "name": "function 16",
+        "func": "var var1 = context.get(\"cont\");\nif (var1== 1)\n{\n    context.set(\"cont\", 2);\n}\nelse {\n    context.set(\"cont\", 1);\n    msg.payload = msg.payload ;\n    return [msg, msg]\n    \n}\n \n\n\n",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\ncontext.set(\"cont\", 1);\ncontext.set(\"start\",0);",
+        "finalize": "",
+        "libs": [],
+        "x": 690,
+        "y": 222,
+        "wires": [
+            [],
+            [
+                "664de96c65e5e40f"
+            ]
+        ]
+    },
+    {
+        "id": "836c41e83c9caccf",
+        "type": "change",
+        "z": "0ae4dad0160db5b8",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Running time counter ......",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 598,
+        "y": 365,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "664de96c65e5e40f",
+        "type": "function",
+        "z": "0ae4dad0160db5b8",
+        "name": "function 17",
+        "func": "\nvar time = msg.payload ;\nmsg.payload= String(time)+ \" ms\";\nreturn msg\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 700,
+        "y": 306,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "67dc4bc23fb3a9f1",
+        "type": "time_interval",
+        "z": "0ae4dad0160db5b8",
+        "name": "",
+        "x": 511,
+        "y": 218,
+        "wires": [
+            [
+                "7581f08912dedf73"
+            ]
+        ]
+    },
+    {
+        "id": "21fd9bea1d44309a",
+        "type": "tab",
+        "label": "Workflows 2 invoke service (1 bucket)",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "236d8ace2815c20f",
+        "type": "inject",
+        "z": "21fd9bea1d44309a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "str",
+        "x": 259.55560302734375,
+        "y": 92.22221374511719,
+        "wires": [
+            [
+                "3e6ac21e9b225d1a",
+                "dd720c549f6d61b1",
+                "cd516ce8522c45b8"
+            ]
+        ]
+    },
+    {
+        "id": "1a4405c8945f5ccc",
+        "type": "debug",
+        "z": "21fd9bea1d44309a",
+        "name": "debug 21",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1146.666748046875,
+        "y": 65.11099243164062,
+        "wires": []
+    },
+    {
+        "id": "3e6ac21e9b225d1a",
+        "type": "http request",
+        "z": "21fd9bea1d44309a",
+        "name": "",
+        "method": "GET",
+        "ret": "bin",
+        "paytoqs": "ignore",
+        "url": "https://raw.githubusercontent.com/grycap/oscar/master/examples/plant-classification-theano/test-images/image1.jpg",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 444.888916015625,
+        "y": 88.11103820800781,
+        "wires": [
+            [
+                "5bf250fdc245621f",
+                "16995aece8f5700d"
+            ]
+        ]
+    },
+    {
+        "id": "5bf250fdc245621f",
+        "type": "change",
+        "z": "21fd9bea1d44309a",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "stream",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 643.4444580078125,
+        "y": 48.777679443359375,
+        "wires": [
+            [
+                "4dc09d4a5b3f2e61"
+            ]
+        ]
+    },
+    {
+        "id": "4da57c681aaa8a61",
+        "type": "debug",
+        "z": "21fd9bea1d44309a",
+        "name": "debug 22",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1151.888916015625,
+        "y": 209.55548095703125,
+        "wires": []
+    },
+    {
+        "id": "685edaaaa90f00b5",
+        "type": "notifications",
+        "z": "21fd9bea1d44309a",
+        "notifications_name": "",
+        "host": "9c1ee22dc362517e",
+        "notifications_operation": "listenBucketNotification",
+        "notifications_bucket": "plants",
+        "notifications_notificationconfig": "",
+        "notifications_prefix": "",
+        "notifications_suffix": "",
+        "notifications_events": "",
+        "notifications_events_object_created_put": true,
+        "notifications_events_object_created_post": false,
+        "notifications_events_object_created_copy": false,
+        "notifications_events_object_created_complete_multipart_upload": false,
+        "notifications_events_object_removed_delete": false,
+        "notifications_events_object_accessed_get": false,
+        "notifications_events_object_accessed_head": false,
+        "x": 733.4444580078125,
+        "y": 249.66656494140625,
+        "wires": [
+            [
+                "4da57c681aaa8a61",
+                "5fcdfd9dc702e949"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "5fcdfd9dc702e949",
+        "type": "function",
+        "z": "21fd9bea1d44309a",
+        "name": "object listen",
+        "func": "var Data=msg.payload\nmsg.objectName = Data.listenBucketNotification.s3.object.key;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 959.666748046875,
+        "y": 249.4443359375,
+        "wires": [
+            [
+                "97c1a83839fb2914",
+                "cc23d2db2fd95c04"
+            ]
+        ]
+    },
+    {
+        "id": "97c1a83839fb2914",
+        "type": "debug",
+        "z": "21fd9bea1d44309a",
+        "name": "debug 23",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "objectName",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1157.888916015625,
+        "y": 266.3332214355469,
+        "wires": []
+    },
+    {
+        "id": "3e9d4b0a3220cfe2",
+        "type": "objects",
+        "z": "21fd9bea1d44309a",
+        "objects_name": "",
+        "host": "9c1ee22dc362517e",
+        "objects_operation": "getObject",
+        "objects_bucket": "plants",
+        "objects_object": "",
+        "objects_offset": "",
+        "objects_length": "",
+        "objects_stream": "",
+        "objects_size": "",
+        "objects_metadata": "",
+        "objects_sourceobject": "",
+        "objects_conditions": "",
+        "objects_objectslist": [],
+        "objects_prefix": "",
+        "objects_etag": "",
+        "objects_datetime": "",
+        "x": 391.77783203125,
+        "y": 553.9999389648438,
+        "wires": [
+            [
+                "f7c45f9aa199d887"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "91e3205c41b8d171",
+        "type": "debug",
+        "z": "21fd9bea1d44309a",
+        "name": "debug 24",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1071,
+        "y": 482.22210693359375,
+        "wires": []
+    },
+    {
+        "id": "f7c45f9aa199d887",
+        "type": "json",
+        "z": "21fd9bea1d44309a",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 571.77783203125,
+        "y": 549.9999389648438,
+        "wires": [
+            [
+                "0cc6add9db780901"
+            ]
+        ]
+    },
+    {
+        "id": "0cc6add9db780901",
+        "type": "function",
+        "z": "21fd9bea1d44309a",
+        "name": "object data",
+        "func": "var Data=msg.payload\nmsg.payload=Data.objectData;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 783.7778167724609,
+        "y": 553.9999380111694,
+        "wires": [
+            [
+                "91e3205c41b8d171",
+                "d56aa02b5b3ab10b",
+                "cd516ce8522c45b8"
+            ]
+        ]
+    },
+    {
+        "id": "d56aa02b5b3ab10b",
+        "type": "image",
+        "z": "21fd9bea1d44309a",
+        "name": "",
+        "width": 160,
+        "data": "payload",
+        "dataType": "msg",
+        "thumbnail": false,
+        "active": true,
+        "pass": false,
+        "outputs": 0,
+        "x": 1075.888916015625,
+        "y": 519,
+        "wires": []
+    },
+    {
+        "id": "b8c8030adfb5755a",
+        "type": "comment",
+        "z": "21fd9bea1d44309a",
+        "name": "Put on MinIO",
+        "info": "",
+        "x": 451.4444580078125,
+        "y": 32.44438171386719,
+        "wires": []
+    },
+    {
+        "id": "dbda0205018ffc27",
+        "type": "comment",
+        "z": "21fd9bea1d44309a",
+        "name": "Get on MinIO Grayify",
+        "info": "",
+        "x": 597.2223510742188,
+        "y": 497.4444580078125,
+        "wires": []
+    },
+    {
+        "id": "30ef69e854cedb65",
+        "type": "comment",
+        "z": "21fd9bea1d44309a",
+        "name": "notification on MinIO",
+        "info": "",
+        "x": 812.5556030273438,
+        "y": 171.33334350585938,
+        "wires": []
+    },
+    {
+        "id": "8e95bbb742de839b",
+        "type": "debug",
+        "z": "21fd9bea1d44309a",
+        "name": "debug 25",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1050.22216796875,
+        "y": 674.22216796875,
+        "wires": []
+    },
+    {
+        "id": "fcac43f03e74fb99",
+        "type": "json",
+        "z": "21fd9bea1d44309a",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 580,
+        "y": 684,
+        "wires": [
+            [
+                "b833159a3fd741d9"
+            ]
+        ]
+    },
+    {
+        "id": "b833159a3fd741d9",
+        "type": "function",
+        "z": "21fd9bea1d44309a",
+        "name": "object data",
+        "func": "var Data=msg.payload\nmsg.payload=Data.objectData;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 778,
+        "y": 684,
+        "wires": [
+            [
+                "8e95bbb742de839b",
+                "0856835d55f57da7",
+                "dd720c549f6d61b1"
+            ]
+        ]
+    },
+    {
+        "id": "0856835d55f57da7",
+        "type": "image",
+        "z": "21fd9bea1d44309a",
+        "name": "",
+        "width": 160,
+        "data": "payload",
+        "dataType": "msg",
+        "thumbnail": false,
+        "active": true,
+        "pass": false,
+        "outputs": 0,
+        "x": 1072.111083984375,
+        "y": 708.0000610351562,
+        "wires": []
+    },
+    {
+        "id": "bf03febadad621f5",
+        "type": "comment",
+        "z": "21fd9bea1d44309a",
+        "name": "Get on MinIO Plants",
+        "info": "",
+        "x": 622.4445495605469,
+        "y": 638.4445247650146,
+        "wires": []
+    },
+    {
+        "id": "cc23d2db2fd95c04",
+        "type": "switch",
+        "z": "21fd9bea1d44309a",
+        "name": "Switch Services",
+        "property": "objectName",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "out_1/",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "out/",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 149,
+        "y": 510,
+        "wires": [
+            [
+                "3e9d4b0a3220cfe2"
+            ],
+            [
+                "773ea0d448c56cab"
+            ]
+        ]
+    },
+    {
+        "id": "dd720c549f6d61b1",
+        "type": "subflow:0ae4dad0160db5b8",
+        "z": "21fd9bea1d44309a",
+        "name": "",
+        "x": 864,
+        "y": 781.1111450195312,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "cd516ce8522c45b8",
+        "type": "subflow:0ae4dad0160db5b8",
+        "z": "21fd9bea1d44309a",
+        "name": "",
+        "x": 957.1111450195312,
+        "y": 444.6666259765625,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "16995aece8f5700d",
+        "type": "image",
+        "z": "21fd9bea1d44309a",
+        "name": "",
+        "width": 160,
+        "data": "payload",
+        "dataType": "msg",
+        "thumbnail": false,
+        "active": true,
+        "pass": false,
+        "outputs": 0,
+        "x": 635.1111450195312,
+        "y": 87.55555725097656,
+        "wires": []
+    },
+    {
+        "id": "4dc09d4a5b3f2e61",
+        "type": "objects",
+        "z": "21fd9bea1d44309a",
+        "objects_name": "",
+        "host": "9c1ee22dc362517e",
+        "objects_operation": "putObject",
+        "objects_bucket": "plants",
+        "objects_object": "in/img_1.jpg",
+        "objects_offset": "",
+        "objects_length": "",
+        "objects_stream": "",
+        "objects_size": "",
+        "objects_metadata": "",
+        "objects_sourceobject": "in/imagen1.jpg",
+        "objects_conditions": "",
+        "objects_objectslist": [],
+        "objects_prefix": "",
+        "objects_etag": "",
+        "objects_datetime": "",
+        "x": 902.4444580078125,
+        "y": 68.22215270996094,
+        "wires": [
+            [
+                "1a4405c8945f5ccc"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "773ea0d448c56cab",
+        "type": "objects",
+        "z": "21fd9bea1d44309a",
+        "objects_name": "",
+        "host": "9c1ee22dc362517e",
+        "objects_operation": "getObject",
+        "objects_bucket": "plants",
+        "objects_object": "",
+        "objects_offset": "",
+        "objects_length": "",
+        "objects_stream": "",
+        "objects_size": "",
+        "objects_metadata": "",
+        "objects_sourceobject": "",
+        "objects_conditions": "",
+        "objects_objectslist": [],
+        "objects_prefix": "",
+        "objects_etag": "",
+        "objects_datetime": "",
+        "x": 391,
+        "y": 688,
+        "wires": [
+            [
+                "fcac43f03e74fb99"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "74168c7859b27d73",
+        "type": "inject",
+        "z": "21fd9bea1d44309a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "",
+        "topic": "",
+        "payload": "Started!",
+        "payloadType": "str",
+        "x": 559,
+        "y": 166,
+        "wires": [
+            [
+                "685edaaaa90f00b5"
+            ]
+        ]
+    },
+    {
+        "id": "9c1ee22dc362517e",
+        "type": "minio-config",
+        "name": "MinIO-OSCAR",
+        "host": "minio.nervous-brahmagupta6.im.grycap.net",
+        "port": "443",
+        "useSsl": true
+    }
+]

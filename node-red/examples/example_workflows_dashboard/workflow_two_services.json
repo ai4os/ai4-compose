@@ -1,0 +1,1700 @@
+[
+    {
+        "id": "1437ca82f070508e",
+        "type": "tab",
+        "label": "Dashboard OSCAR",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "72e0aaf7e3af700a",
+        "type": "http request",
+        "z": "1437ca82f070508e",
+        "name": "Grayify Service",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "http://localhost/system/services/grayify",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 940,
+        "y": 120,
+        "wires": [
+            [
+                "0c0f0389adbecec8"
+            ]
+        ]
+    },
+    {
+        "id": "936a099897d29b6c",
+        "type": "change",
+        "z": "1437ca82f070508e",
+        "name": "Envio user-pass OSCAR",
+        "rules": [
+            {
+                "t": "set",
+                "p": "headers",
+                "pt": "msg",
+                "to": "{\t   \"Authorization\": 'Basic ' & $base64encode(\t       payload.username & ':' & payload.password\t   ) \t}",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 720,
+        "y": 120,
+        "wires": [
+            [
+                "72e0aaf7e3af700a",
+                "346cd63797ce4477"
+            ]
+        ]
+    },
+    {
+        "id": "b1e3050803477db5",
+        "type": "inject",
+        "z": "1437ca82f070508e",
+        "name": "",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 235,
+        "y": 80,
+        "wires": [
+            [
+                "b36f6cde3c4a0952"
+            ]
+        ],
+        "l": false
+    },
+    {
+        "id": "b36f6cde3c4a0952",
+        "type": "function",
+        "z": "1437ca82f070508e",
+        "name": "set user and pass",
+        "func": "var user=global.get(\"user\");\nvar pass = global.get(\"pass\");\n\nmsg.payload={\n    \"username\": user,\n        \"password\": pass\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 100,
+        "wires": [
+            [
+                "936a099897d29b6c"
+            ]
+        ]
+    },
+    {
+        "id": "c52c01f87843f33d",
+        "type": "ui_text_input",
+        "z": "1437ca82f070508e",
+        "name": "",
+        "label": "Usuario",
+        "tooltip": "",
+        "group": "d909137427ec86c3",
+        "order": 1,
+        "width": 7,
+        "height": 1,
+        "passthru": true,
+        "mode": "text",
+        "delay": 300,
+        "topic": "topic",
+        "sendOnBlur": true,
+        "className": "",
+        "topicType": "msg",
+        "x": 2580,
+        "y": 540,
+        "wires": [
+            [
+                "532c808289d2766d"
+            ]
+        ]
+    },
+    {
+        "id": "30ad5b182fcd6ea3",
+        "type": "ui_text_input",
+        "z": "1437ca82f070508e",
+        "name": "",
+        "label": "Contraseña",
+        "tooltip": "",
+        "group": "d909137427ec86c3",
+        "order": 2,
+        "width": 7,
+        "height": 1,
+        "passthru": true,
+        "mode": "password",
+        "delay": 300,
+        "topic": "topic",
+        "sendOnBlur": false,
+        "className": "",
+        "topicType": "msg",
+        "x": 2590,
+        "y": 640,
+        "wires": [
+            [
+                "a8bda4971cfb8d43"
+            ]
+        ]
+    },
+    {
+        "id": "cc9d59a08b530e5a",
+        "type": "ui_button",
+        "z": "1437ca82f070508e",
+        "name": "",
+        "group": "d909137427ec86c3",
+        "order": 4,
+        "width": 7,
+        "height": 1,
+        "passthru": false,
+        "label": "Conectar",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "Procesando....",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 120,
+        "y": 320,
+        "wires": [
+            [
+                "b36f6cde3c4a0952",
+                "7133eee49db955fd",
+                "e619b979c21b2fa7",
+                "8fa94367f0a2ab74",
+                "9c46d7af44a51480",
+                "3faf9e7daa9fbf3d"
+            ]
+        ]
+    },
+    {
+        "id": "532c808289d2766d",
+        "type": "function",
+        "z": "1437ca82f070508e",
+        "name": "Get User",
+        "func": "var  var1 = msg.payload;\nglobal.set(\"user\", var1);\nmsg = var1;\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\nglobal.set(\"user\",\"\");\n",
+        "finalize": "",
+        "libs": [],
+        "x": 2740,
+        "y": 540,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a8bda4971cfb8d43",
+        "type": "function",
+        "z": "1437ca82f070508e",
+        "name": "Get Pass",
+        "func": "var var2=msg.payload;\nglobal.set(\"pass\",var2);\nmsg=var2;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\nglobal.set(\"pass\",\"\");",
+        "finalize": "",
+        "libs": [],
+        "x": 2740,
+        "y": 640,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b2cfc819076654a8",
+        "type": "comment",
+        "z": "1437ca82f070508e",
+        "name": "Grayifi",
+        "info": "Informacion general del servicio.\nCarga una imagen de un directorio y ejecuta el servicio.",
+        "x": 1010,
+        "y": 20,
+        "wires": []
+    },
+    {
+        "id": "346cd63797ce4477",
+        "type": "http request",
+        "z": "1437ca82f070508e",
+        "name": "Plant Class Service",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "http://localhost/system/services/plants",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 950,
+        "y": 240,
+        "wires": [
+            [
+                "e28171c96991e88e",
+                "621673dae327f7c0"
+            ]
+        ]
+    },
+    {
+        "id": "e28171c96991e88e",
+        "type": "debug",
+        "z": "1437ca82f070508e",
+        "name": "debug 48",
+        "active": false,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "jsonata",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1310,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "0c0f0389adbecec8",
+        "type": "string",
+        "z": "1437ca82f070508e",
+        "name": "Token",
+        "methods": [
+            {
+                "name": "between",
+                "params": [
+                    {
+                        "type": "str",
+                        "value": "\"token\":\""
+                    },
+                    {
+                        "type": "str",
+                        "value": "\",\"input\""
+                    }
+                ]
+            }
+        ],
+        "prop": "payload",
+        "propout": "payload",
+        "object": "msg",
+        "objectout": "msg",
+        "x": 1090,
+        "y": 120,
+        "wires": [
+            [
+                "a132c16e82c5d030"
+            ]
+        ]
+    },
+    {
+        "id": "621673dae327f7c0",
+        "type": "string",
+        "z": "1437ca82f070508e",
+        "name": "Token",
+        "methods": [
+            {
+                "name": "between",
+                "params": [
+                    {
+                        "type": "str",
+                        "value": "\"token\":\""
+                    },
+                    {
+                        "type": "str",
+                        "value": "\",\"input\""
+                    }
+                ]
+            }
+        ],
+        "prop": "payload",
+        "propout": "payload",
+        "object": "msg",
+        "objectout": "msg",
+        "x": 1130,
+        "y": 240,
+        "wires": [
+            [
+                "e28171c96991e88e",
+                "b85127cdaa8f3dcb"
+            ]
+        ]
+    },
+    {
+        "id": "b85127cdaa8f3dcb",
+        "type": "function",
+        "z": "1437ca82f070508e",
+        "name": "Get Token-plant",
+        "func": "var  var1 = msg.payload;\nglobal.set(\"token_plant\", var1);\nmsg = var1;\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\nglobal.set(\"token_plant\",\"\");\n",
+        "finalize": "",
+        "libs": [],
+        "x": 1300,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a132c16e82c5d030",
+        "type": "function",
+        "z": "1437ca82f070508e",
+        "name": "Get Token-Grayify",
+        "func": "var  var2 = msg.payload;\nglobal.set(\"token_grayify\", var2);\nmsg.payload = var2;\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\nglobal.set(\"token_grayify\",\"\");\n",
+        "finalize": "",
+        "libs": [],
+        "x": 1250,
+        "y": 120,
+        "wires": [
+            [
+                "d6d2d9e356fe2142"
+            ]
+        ]
+    },
+    {
+        "id": "08c7d0384a1e1cec",
+        "type": "comment",
+        "z": "1437ca82f070508e",
+        "name": "Plant Class",
+        "info": "Informacion general del servicio.\nCarga una imagen de un directorio y ejecuta el servicio.",
+        "x": 1050,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "521ab2b218d5d27a",
+        "type": "function",
+        "z": "1437ca82f070508e",
+        "name": "Petición Grayify",
+        "func": "var token_grayify = global.get(\"token_grayify\");\nvar imagen_ini = global.get(\"imagen_cargada\");\nmsg.payload = imagen_ini;\nmsg.headers = {\n    Authorization: \"Bearer \" + token_grayify\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1620,
+        "y": 120,
+        "wires": [
+            [
+                "32e8d61f7f5ccd56"
+            ]
+        ]
+    },
+    {
+        "id": "32e8d61f7f5ccd56",
+        "type": "http request",
+        "z": "1437ca82f070508e",
+        "name": "http request Grayify",
+        "method": "POST",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "http://localhost/run/grayify",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "bearer",
+        "senderr": true,
+        "headers": [],
+        "x": 1810,
+        "y": 120,
+        "wires": [
+            [
+                "45ddcc86196af567"
+            ]
+        ]
+    },
+    {
+        "id": "45ddcc86196af567",
+        "type": "string",
+        "z": "1437ca82f070508e",
+        "name": "Resultado grayify",
+        "methods": [
+            {
+                "name": "delLeftMost",
+                "params": [
+                    {
+                        "type": "str",
+                        "value": "response"
+                    }
+                ]
+            }
+        ],
+        "prop": "payload",
+        "propout": "payload",
+        "object": "msg",
+        "objectout": "msg",
+        "x": 2010,
+        "y": 120,
+        "wires": [
+            [
+                "296e4eb0e817324d",
+                "3a39ef3be7ef9e71"
+            ]
+        ]
+    },
+    {
+        "id": "296e4eb0e817324d",
+        "type": "base64",
+        "z": "1437ca82f070508e",
+        "name": "",
+        "action": "",
+        "property": "payload",
+        "x": 2200,
+        "y": 120,
+        "wires": [
+            [
+                "724bbd4a618636a3"
+            ]
+        ]
+    },
+    {
+        "id": "083e8672ef3180fc",
+        "type": "file",
+        "z": "1437ca82f070508e",
+        "name": "Imag Negativo",
+        "filename": "filename",
+        "filenameType": "msg",
+        "appendNewline": false,
+        "createDir": true,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 2580,
+        "y": 120,
+        "wires": [
+            [
+                "9d3def499d2afac1"
+            ]
+        ]
+    },
+    {
+        "id": "c3647bbc1e072a0e",
+        "type": "image",
+        "z": "1437ca82f070508e",
+        "name": "",
+        "width": 160,
+        "data": "payload",
+        "dataType": "msg",
+        "thumbnail": false,
+        "active": true,
+        "pass": false,
+        "outputs": 0,
+        "x": 3080,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "d6d2d9e356fe2142",
+        "type": "change",
+        "z": "1437ca82f070508e",
+        "name": "Cargar imagen",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "true",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1440,
+        "y": 120,
+        "wires": [
+            [
+                "521ab2b218d5d27a"
+            ]
+        ]
+    },
+    {
+        "id": "2cf28e7e999075d9",
+        "type": "http request",
+        "z": "1437ca82f070508e",
+        "name": "http request plant",
+        "method": "POST",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "http://localhost/run/plants",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "bearer",
+        "senderr": true,
+        "headers": [],
+        "x": 2250,
+        "y": 340,
+        "wires": [
+            [
+                "d5d18ae43a5ab9e0"
+            ]
+        ]
+    },
+    {
+        "id": "d5d18ae43a5ab9e0",
+        "type": "string",
+        "z": "1437ca82f070508e",
+        "name": "Resultado Plant",
+        "methods": [
+            {
+                "name": "delLeftMost",
+                "params": [
+                    {
+                        "type": "str",
+                        "value": "response"
+                    }
+                ]
+            }
+        ],
+        "prop": "payload",
+        "propout": "payload",
+        "object": "msg",
+        "objectout": "msg",
+        "x": 2440,
+        "y": 340,
+        "wires": [
+            [
+                "809c90e33d07820c",
+                "088139c8f381b303",
+                "de07520b67f1b46e"
+            ]
+        ]
+    },
+    {
+        "id": "809c90e33d07820c",
+        "type": "debug",
+        "z": "1437ca82f070508e",
+        "name": "debug 53",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2510,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "866ff42002e9d17d",
+        "type": "image",
+        "z": "1437ca82f070508e",
+        "name": "",
+        "width": "250",
+        "data": "payload",
+        "dataType": "msg",
+        "thumbnail": false,
+        "active": true,
+        "pass": false,
+        "outputs": 0,
+        "x": 3400,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "8817702c059d0352",
+        "type": "file",
+        "z": "1437ca82f070508e",
+        "name": "Imag Procesada plant",
+        "filename": "filename",
+        "filenameType": "msg",
+        "appendNewline": false,
+        "createDir": true,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 3040,
+        "y": 340,
+        "wires": [
+            [
+                "127b0386b20c25ba"
+            ]
+        ]
+    },
+    {
+        "id": "088139c8f381b303",
+        "type": "base64",
+        "z": "1437ca82f070508e",
+        "name": "",
+        "action": "",
+        "property": "payload",
+        "x": 2640,
+        "y": 340,
+        "wires": [
+            [
+                "d225160e100d3123"
+            ]
+        ]
+    },
+    {
+        "id": "3a39ef3be7ef9e71",
+        "type": "function",
+        "z": "1437ca82f070508e",
+        "name": "Get Imagen Grayify",
+        "func": "var  var5 = msg.payload;\nglobal.set(\"imagen_grayify\", var5);\nmsg.payload = \"true\";\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\nglobal.set(\"imagen_grayify\", \"\");\n",
+        "finalize": "",
+        "libs": [],
+        "x": 1830,
+        "y": 340,
+        "wires": [
+            [
+                "9c3e9b32c4b883a8"
+            ]
+        ]
+    },
+    {
+        "id": "9c3e9b32c4b883a8",
+        "type": "function",
+        "z": "1437ca82f070508e",
+        "name": "Petición Plant Class",
+        "func": "var token_plant = global.get(\"token_plant\");\nvar imagen_grayify = global.get(\"imagen_grayify\");\nmsg.payload = imagen_grayify;\nmsg.headers = {\n    Authorization: \"Bearer \" + token_plant\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2040,
+        "y": 340,
+        "wires": [
+            [
+                "2cf28e7e999075d9"
+            ]
+        ]
+    },
+    {
+        "id": "de07520b67f1b46e",
+        "type": "change",
+        "z": "1437ca82f070508e",
+        "name": "Limpiar log",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 2350,
+        "y": 520,
+        "wires": [
+            [
+                "c52c01f87843f33d",
+                "30ad5b182fcd6ea3"
+            ]
+        ]
+    },
+    {
+        "id": "26e9f98e16c1bbea",
+        "type": "base64",
+        "z": "1437ca82f070508e",
+        "name": "",
+        "action": "str",
+        "property": "payload",
+        "x": 2880,
+        "y": 120,
+        "wires": [
+            [
+                "2647165970cf8506",
+                "c3647bbc1e072a0e",
+                "1dc7943c8d7bd81b"
+            ]
+        ]
+    },
+    {
+        "id": "2647165970cf8506",
+        "type": "ui_template",
+        "z": "1437ca82f070508e",
+        "group": "1405e607081b9d86",
+        "name": "Display Imag Grayify",
+        "order": 22,
+        "width": 8,
+        "height": 6,
+        "format": "<!DOCTYPE html>\n<html>\n<style>\n    .img {\n        border: 2px solid #000;\n        border-radius: 4px;\n        padding: 2px;\n        width: 360px;\n    }\n</style>\n\n<center>\n    <table>\n        <tr>\n            <!-- Row 1 -->\n            <td style=\"text-align: center\"><img src=\"data:image/jpg;base64,{{msg.payload}}\" class=img /></td>\n        </tr>\n            </table>\n</center>\n</html>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": false,
+        "templateScope": "local",
+        "className": "",
+        "x": 3160,
+        "y": 100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9d3def499d2afac1",
+        "type": "file in",
+        "z": "1437ca82f070508e",
+        "name": "Mostrar",
+        "filename": "filename",
+        "filenameType": "msg",
+        "format": "",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 2740,
+        "y": 120,
+        "wires": [
+            [
+                "26e9f98e16c1bbea"
+            ]
+        ]
+    },
+    {
+        "id": "127b0386b20c25ba",
+        "type": "file in",
+        "z": "1437ca82f070508e",
+        "name": "Mostrar Imag Plant",
+        "filename": "filename",
+        "filenameType": "msg",
+        "format": "",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 3050,
+        "y": 400,
+        "wires": [
+            [
+                "9459167b215e785a"
+            ]
+        ]
+    },
+    {
+        "id": "9459167b215e785a",
+        "type": "base64",
+        "z": "1437ca82f070508e",
+        "name": "",
+        "action": "str",
+        "property": "payload",
+        "x": 3220,
+        "y": 400,
+        "wires": [
+            [
+                "127d0925dafb0bfb",
+                "866ff42002e9d17d",
+                "58a6bb046048c66f"
+            ]
+        ]
+    },
+    {
+        "id": "127d0925dafb0bfb",
+        "type": "ui_template",
+        "z": "1437ca82f070508e",
+        "group": "1405e607081b9d86",
+        "name": "Display Imag Plant",
+        "order": 24,
+        "width": 8,
+        "height": 6,
+        "format": "<!DOCTYPE html>\n<html>\n<style>\n    .img {\n        border: 2px solid #000;\n        border-radius: 4px;\n        padding: 2px;\n        width: 360px;\n    }\n</style>\n\n<center>\n    <table>\n        <tr>\n            <!-- Row 1 -->\n            <td style=\"text-align: center\"><img src=\"data:image/jpg;base64,{{msg.payload}}\" class=img /></td>\n        </tr>\n        \n    </table>\n</center>\n</html>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": false,
+        "templateScope": "local",
+        "className": "",
+        "x": 3410,
+        "y": 400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "55febd946b48e142",
+        "type": "ui_template",
+        "z": "1437ca82f070508e",
+        "group": "1405e607081b9d86",
+        "name": "Display image Cargada",
+        "order": 5,
+        "width": 8,
+        "height": 6,
+        "format": "<!DOCTYPE html>\n<html>\n<style>\n    .img {\n        border: 2px solid #000;\n        border-radius: 4px;\n        padding: 2px;\n        width: 360px;\n    }\n</style>\n\n<center>\n    <table>\n        <tr>\n            <!-- Row 1 -->\n            <td style=\"text-align: center\"><img src=\"data:image/jpg;base64,{{msg.payload}}\" class=img /></td>\n        </tr>\n            </table>\n</center>\n</html>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": false,
+        "templateScope": "local",
+        "className": "",
+        "x": 2230,
+        "y": 660,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "215a7d50a30a2d46",
+        "type": "ui_text",
+        "z": "1437ca82f070508e",
+        "group": "1405e607081b9d86",
+        "order": 2,
+        "width": 5,
+        "height": 1,
+        "name": "Original",
+        "label": "",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 650,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "7cc180b6d794c649",
+        "type": "ui_text",
+        "z": "1437ca82f070508e",
+        "group": "1405e607081b9d86",
+        "order": 18,
+        "width": 5,
+        "height": 1,
+        "name": "Proc1",
+        "label": "",
+        "format": "{{msg.payload}}",
+        "layout": "row-left",
+        "className": "",
+        "x": 650,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "4110d0e58f023280",
+        "type": "ui_text",
+        "z": "1437ca82f070508e",
+        "group": "1405e607081b9d86",
+        "order": 20,
+        "width": 5,
+        "height": 1,
+        "name": "Proc2",
+        "label": "",
+        "format": "{{msg.payload}}",
+        "layout": "row-left",
+        "className": "",
+        "x": 650,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "7133eee49db955fd",
+        "type": "change",
+        "z": "1437ca82f070508e",
+        "name": "Notas de Imagen",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Imagen Original",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 430,
+        "y": 280,
+        "wires": [
+            [
+                "215a7d50a30a2d46"
+            ]
+        ]
+    },
+    {
+        "id": "e619b979c21b2fa7",
+        "type": "change",
+        "z": "1437ca82f070508e",
+        "name": "Notas de Imagen",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Imagen Grayify Service",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 430,
+        "y": 320,
+        "wires": [
+            [
+                "7cc180b6d794c649"
+            ]
+        ]
+    },
+    {
+        "id": "8fa94367f0a2ab74",
+        "type": "change",
+        "z": "1437ca82f070508e",
+        "name": "Notas de Imagen",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Imagen Plant Service",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 430,
+        "y": 360,
+        "wires": [
+            [
+                "4110d0e58f023280"
+            ]
+        ]
+    },
+    {
+        "id": "26b6e18b36dae59e",
+        "type": "ui_template",
+        "z": "1437ca82f070508e",
+        "group": "d909137427ec86c3",
+        "name": "Cargar filename Imagen",
+        "order": 3,
+        "width": 7,
+        "height": 2,
+        "format": "<div class=\"fileContainer\">\n    <input type=\"file\" name=\"file\" id=\"file\" class=\"inputfile\" />\n    <label for=\"file\">Cargar Imagen</label>\n    <p style=\"margin:auto\" id=\"fileName\"></p>\n \n    \n</div>\n\n<style>\n    .fileContainer {\n        display: flex;\n    }\n    .inputfile {\n\twidth: 0.1px;\n\theight: 0.1px;\n\topacity: 0;\n\toverflow: hidden;\n\tposition: absolute;\n\tz-index: -1;\n}\n\n.inputfile + label {\n    font-size: 1.0em;\n    font-weight: 400;\n    color: black;\n    text-align: center;\n    padding: 10px;\n    width: 150px;\n    background-color: #7db0ee;\n}\n\n.inputfile:focus + label,\n.inputfile + label:hover {\n    background-color: blue;\n}\n\n.inputfile + label {\n\tcursor: pointer; /* \"hand\" cursor */\n}\n\n.inputfile:focus + label {\n\toutline: 1px dotted #000;\n\toutline: -webkit-focus-ring-color auto 5px;\n}\n\n.inputfile + label * {\n\tpointer-events: none;\n}\n\n</style>\n\n<script>\n(function(scope) {\n   var fileInput = $('#file')\n   var fileName = $('#fileName')\n   \n   scope.clear = function() {\n       fileInput.val('').trigger('change')\n   }\n   \n   fileInput.on('change', function(event) {\n        var file = fileInput[0].files[0]; \n        \n        fileName.text(file ? file.name : '')\n        \n        if(file) {\n       \n            var reader = new FileReader();\n            \n            reader.readAsBinaryString(file);\n        \n            reader.onload = function() {\n                /* \"hand\" cursor scope.send({payload: reader.result, file: file.name, valor:file})*/\n                scope.send({payload:file})\n            };\n            reader.onerror = function() {\n                console.log('Error while reading files');\n            };\n        } else\n            scope.send({payload: null})\n   })\n    \n})(scope);\n</script>\n\n",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": false,
+        "templateScope": "local",
+        "className": "",
+        "x": 1670,
+        "y": 660,
+        "wires": [
+            [
+                "024d98ef202d279e",
+                "207ba58280fc98fd"
+            ]
+        ]
+    },
+    {
+        "id": "024d98ef202d279e",
+        "type": "base64",
+        "z": "1437ca82f070508e",
+        "name": "",
+        "action": "str",
+        "property": "payload",
+        "x": 1900,
+        "y": 660,
+        "wires": [
+            [
+                "5ebd55af0dd092de",
+                "55febd946b48e142",
+                "6e820a35c19cff68",
+                "421eb17926bad5ea",
+                "172b056a10eb88b9"
+            ]
+        ]
+    },
+    {
+        "id": "6e820a35c19cff68",
+        "type": "debug",
+        "z": "1437ca82f070508e",
+        "name": "debug 55",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2050,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "5ebd55af0dd092de",
+        "type": "image",
+        "z": "1437ca82f070508e",
+        "name": "",
+        "width": "250",
+        "data": "payload",
+        "dataType": "msg",
+        "thumbnail": false,
+        "active": true,
+        "pass": false,
+        "outputs": 0,
+        "x": 2420,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "421eb17926bad5ea",
+        "type": "function",
+        "z": "1437ca82f070508e",
+        "name": "guardar imag cargada",
+        "func": "var  var1 = msg.payload;\nglobal.set (\"imagen_cargada\",var1);\nmsg.payload = var1;\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\nglobal.set(\"imagen_cargada\", \"\");\n",
+        "finalize": "",
+        "libs": [],
+        "x": 2180,
+        "y": 760,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "fdc4badb31c9d2db",
+        "type": "file",
+        "z": "1437ca82f070508e",
+        "name": "Guardar Imag Cargada",
+        "filename": "filename",
+        "filenameType": "msg",
+        "appendNewline": true,
+        "createDir": true,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 2170,
+        "y": 820,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "207ba58280fc98fd",
+        "type": "function",
+        "z": "1437ca82f070508e",
+        "name": "guardar imag cargada",
+        "func": "var  var1 = msg.payload;\nglobal.set (\"imagen_cargada\",var1);\nvar var2 = global.get(\"num_eventos\");\nvar var3 = \"Cursos UPV/OSCAR NODE-RED/Directorio/OSCAR_imag/image-orig-2service_\"+String(var2)+\".jpg\"\nmsg.filename = var3;\nmsg.payload = var1;\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\nglobal.set(\"imagen_cargada\", \"\");\n\nglobal.set(\"num_eventos\", \"1\");",
+        "finalize": "",
+        "libs": [],
+        "x": 1880,
+        "y": 820,
+        "wires": [
+            [
+                "fdc4badb31c9d2db",
+                "51ecd9a9ed570301"
+            ]
+        ]
+    },
+    {
+        "id": "51ecd9a9ed570301",
+        "type": "debug",
+        "z": "1437ca82f070508e",
+        "name": "debug 56",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "filename",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2110,
+        "y": 860,
+        "wires": []
+    },
+    {
+        "id": "d225160e100d3123",
+        "type": "function",
+        "z": "1437ca82f070508e",
+        "name": "Guardar imagen plant",
+        "func": "var  var1 = msg.payload;\nvar var2 = global.get(\"num_eventos\");\n\nvar var3 = \"Cursos UPV/OSCAR NODE-RED/Directorio/OSCAR_imag/image-neg-proc-2service_\"+String(var2)+\".jpg\"\nvar2 = parseInt(var2) + 1;\nglobal.set(\"num_eventos\", String(var2));\nmsg.filename = var3;\nmsg.payload = var1;\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\nglobal.set(\"imagen_cargada\", \"\");\n\n",
+        "finalize": "",
+        "libs": [],
+        "x": 2820,
+        "y": 340,
+        "wires": [
+            [
+                "8817702c059d0352"
+            ]
+        ]
+    },
+    {
+        "id": "724bbd4a618636a3",
+        "type": "function",
+        "z": "1437ca82f070508e",
+        "name": "Guardar Imag Grayify",
+        "func": "var  var1 = msg.payload;\n\nvar var2 = global.get(\"num_eventos\");\nvar var3 = \"Cursos UPV/OSCAR NODE-RED/Directorio/OSCAR_imag/image-neg-2service_\"+String(var2)+\".jpg\"\nmsg.filename = var3;\nmsg.payload = var1;\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\nglobal.set(\"imagen_cargada\", \"\");\n\nglobal.set(\"num_eventos\", \"1\");",
+        "finalize": "",
+        "libs": [],
+        "x": 2380,
+        "y": 120,
+        "wires": [
+            [
+                "083e8672ef3180fc"
+            ]
+        ]
+    },
+    {
+        "id": "9c46d7af44a51480",
+        "type": "ui_toast",
+        "z": "1437ca82f070508e",
+        "position": "top right",
+        "displayTime": "1.5",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "className": "",
+        "topic": "",
+        "name": "",
+        "x": 1040,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "1dc7943c8d7bd81b",
+        "type": "change",
+        "z": "1437ca82f070508e",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Grayify Service Finalizado",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 840,
+        "y": 380,
+        "wires": [
+            [
+                "9c46d7af44a51480"
+            ]
+        ]
+    },
+    {
+        "id": "58a6bb046048c66f",
+        "type": "change",
+        "z": "1437ca82f070508e",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Plant Service Finalizado",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 680,
+        "y": 480,
+        "wires": [
+            [
+                "9c46d7af44a51480",
+                "52172a5697bd1b65"
+            ]
+        ]
+    },
+    {
+        "id": "52172a5697bd1b65",
+        "type": "ui_toast",
+        "z": "1437ca82f070508e",
+        "position": "top right",
+        "displayTime": "1.5",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "className": "",
+        "topic": "",
+        "name": "",
+        "x": 1040,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "2e8ddaf52b65fa9f",
+        "type": "change",
+        "z": "1437ca82f070508e",
+        "name": "Visualizar inicial",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"group\":{\"hide\":[\"NodeRed-OSCAR_Visualización\"],\"show\":[\"NodeRed-OSCAR_Panel_de_configuración\"]}}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 560,
+        "y": 620,
+        "wires": [
+            [
+                "15f1d3c269fa590f"
+            ]
+        ]
+    },
+    {
+        "id": "15f1d3c269fa590f",
+        "type": "ui_ui_control",
+        "z": "1437ca82f070508e",
+        "name": "",
+        "events": "all",
+        "x": 860,
+        "y": 600,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2417bf485a262a59",
+        "type": "inject",
+        "z": "1437ca82f070508e",
+        "name": "Inicializacion",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "str",
+        "x": 270,
+        "y": 620,
+        "wires": [
+            [
+                "2e8ddaf52b65fa9f"
+            ]
+        ]
+    },
+    {
+        "id": "3faf9e7daa9fbf3d",
+        "type": "change",
+        "z": "1437ca82f070508e",
+        "name": "Visualizar",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"group\":{\"hide\":[],\"show\":[\"NodeRed-OSCAR_Panel_de_configuración\",\"NodeRed-OSCAR_Visualización\"]}}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 560,
+        "y": 560,
+        "wires": [
+            [
+                "15f1d3c269fa590f"
+            ]
+        ]
+    },
+    {
+        "id": "172b056a10eb88b9",
+        "type": "change",
+        "z": "1437ca82f070508e",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 3040,
+        "y": 560,
+        "wires": [
+            [
+                "127d0925dafb0bfb",
+                "2647165970cf8506"
+            ]
+        ]
+    },
+    {
+        "id": "5083524f5a94cd7e",
+        "type": "ui_spacer",
+        "z": "1437ca82f070508e",
+        "name": "spacer",
+        "group": "160e81fb.f1c86e",
+        "order": 6,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "f2d03062a2e13afc",
+        "type": "ui_spacer",
+        "z": "1437ca82f070508e",
+        "name": "spacer",
+        "group": "160e81fb.f1c86e",
+        "order": 13,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "3a2db83f8cbff609",
+        "type": "ui_spacer",
+        "z": "1437ca82f070508e",
+        "name": "spacer",
+        "group": "1405e607081b9d86",
+        "order": 1,
+        "width": 6,
+        "height": 1
+    },
+    {
+        "id": "c677a7adfdca7953",
+        "type": "ui_spacer",
+        "z": "1437ca82f070508e",
+        "name": "spacer",
+        "group": "1405e607081b9d86",
+        "order": 3,
+        "width": 7,
+        "height": 1
+    },
+    {
+        "id": "da297798f767d44a",
+        "type": "ui_spacer",
+        "z": "1437ca82f070508e",
+        "name": "spacer",
+        "group": "1405e607081b9d86",
+        "order": 4,
+        "width": 5,
+        "height": 1
+    },
+    {
+        "id": "143f25fb94303b88",
+        "type": "ui_spacer",
+        "z": "1437ca82f070508e",
+        "name": "spacer",
+        "group": "1405e607081b9d86",
+        "order": 6,
+        "width": 5,
+        "height": 1
+    },
+    {
+        "id": "7ba1cf1570eb12a6",
+        "type": "ui_spacer",
+        "z": "1437ca82f070508e",
+        "name": "spacer",
+        "group": "1405e607081b9d86",
+        "order": 7,
+        "width": 5,
+        "height": 1
+    },
+    {
+        "id": "a879444df0053bff",
+        "type": "ui_spacer",
+        "z": "1437ca82f070508e",
+        "name": "spacer",
+        "group": "1405e607081b9d86",
+        "order": 8,
+        "width": 5,
+        "height": 1
+    },
+    {
+        "id": "16deca4fc971b24a",
+        "type": "ui_spacer",
+        "z": "1437ca82f070508e",
+        "name": "spacer",
+        "group": "1405e607081b9d86",
+        "order": 9,
+        "width": 5,
+        "height": 1
+    },
+    {
+        "id": "4806e26974c9e271",
+        "type": "ui_spacer",
+        "z": "1437ca82f070508e",
+        "name": "spacer",
+        "group": "1405e607081b9d86",
+        "order": 10,
+        "width": 5,
+        "height": 1
+    },
+    {
+        "id": "bb681884fdf774a6",
+        "type": "ui_spacer",
+        "z": "1437ca82f070508e",
+        "name": "spacer",
+        "group": "1405e607081b9d86",
+        "order": 11,
+        "width": 5,
+        "height": 1
+    },
+    {
+        "id": "f935ef0c25914a2e",
+        "type": "ui_spacer",
+        "z": "1437ca82f070508e",
+        "name": "spacer",
+        "group": "1405e607081b9d86",
+        "order": 12,
+        "width": 5,
+        "height": 1
+    },
+    {
+        "id": "0ad28749b3f42638",
+        "type": "ui_spacer",
+        "z": "1437ca82f070508e",
+        "name": "spacer",
+        "group": "1405e607081b9d86",
+        "order": 13,
+        "width": 5,
+        "height": 1
+    },
+    {
+        "id": "975cd52c7a805818",
+        "type": "ui_spacer",
+        "z": "1437ca82f070508e",
+        "name": "spacer",
+        "group": "1405e607081b9d86",
+        "order": 14,
+        "width": 5,
+        "height": 1
+    },
+    {
+        "id": "91fd2b22d6d3f719",
+        "type": "ui_spacer",
+        "z": "1437ca82f070508e",
+        "name": "spacer",
+        "group": "1405e607081b9d86",
+        "order": 15,
+        "width": 5,
+        "height": 1
+    },
+    {
+        "id": "5fcb1c03529b61f3",
+        "type": "ui_spacer",
+        "z": "1437ca82f070508e",
+        "name": "spacer",
+        "group": "1405e607081b9d86",
+        "order": 16,
+        "width": 5,
+        "height": 1
+    },
+    {
+        "id": "d90b2d2bea4613b8",
+        "type": "ui_spacer",
+        "z": "1437ca82f070508e",
+        "name": "spacer",
+        "group": "1405e607081b9d86",
+        "order": 17,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "33e41ae1a3227f95",
+        "type": "ui_spacer",
+        "z": "1437ca82f070508e",
+        "name": "spacer",
+        "group": "1405e607081b9d86",
+        "order": 19,
+        "width": 5,
+        "height": 1
+    },
+    {
+        "id": "ba0a094d262a98cb",
+        "type": "ui_spacer",
+        "z": "1437ca82f070508e",
+        "name": "spacer",
+        "group": "1405e607081b9d86",
+        "order": 21,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "cb39f354f1dcbc62",
+        "type": "ui_spacer",
+        "z": "1437ca82f070508e",
+        "name": "spacer",
+        "group": "1405e607081b9d86",
+        "order": 23,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "068dbcc4b8df6321",
+        "type": "ui_spacer",
+        "z": "1437ca82f070508e",
+        "name": "spacer",
+        "group": "1405e607081b9d86",
+        "order": 25,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "5e5703763769fb67",
+        "type": "ui_spacer",
+        "z": "1437ca82f070508e",
+        "name": "spacer",
+        "group": "1405e607081b9d86",
+        "order": 26,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "eddc2705af9374b8",
+        "type": "ui_spacer",
+        "z": "1437ca82f070508e",
+        "name": "spacer",
+        "group": "1405e607081b9d86",
+        "order": 27,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "68b0ee538c3bafe9",
+        "type": "ui_spacer",
+        "z": "1437ca82f070508e",
+        "name": "spacer",
+        "group": "1405e607081b9d86",
+        "order": 28,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "aca42e6122998af9",
+        "type": "ui_spacer",
+        "z": "1437ca82f070508e",
+        "name": "spacer",
+        "group": "1405e607081b9d86",
+        "order": 29,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "11fb2ece6a63a44a",
+        "type": "ui_spacer",
+        "z": "1437ca82f070508e",
+        "name": "spacer",
+        "group": "1405e607081b9d86",
+        "order": 31,
+        "width": 15,
+        "height": 1
+    },
+    {
+        "id": "26a8648d93d3f15a",
+        "type": "ui_spacer",
+        "z": "1437ca82f070508e",
+        "name": "spacer",
+        "group": "1405e607081b9d86",
+        "order": 32,
+        "width": 15,
+        "height": 1
+    },
+    {
+        "id": "d909137427ec86c3",
+        "type": "ui_group",
+        "name": "Panel de configuración",
+        "tab": "6448784546d2f2b2",
+        "order": 1,
+        "disp": true,
+        "width": 7,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "1405e607081b9d86",
+        "type": "ui_group",
+        "name": "Visualización",
+        "tab": "6448784546d2f2b2",
+        "order": 2,
+        "disp": true,
+        "width": "18",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "160e81fb.f1c86e",
+        "type": "ui_group",
+        "name": "File Browser",
+        "tab": "",
+        "order": 1,
+        "disp": true,
+        "width": "18",
+        "collapse": false
+    },
+    {
+        "id": "6448784546d2f2b2",
+        "type": "ui_tab",
+        "name": "NodeRed-OSCAR",
+        "icon": "dashboard",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    }
+]
