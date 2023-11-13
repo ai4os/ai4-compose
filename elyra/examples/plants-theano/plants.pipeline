@@ -9,83 +9,6 @@
       "id": "primary",
       "nodes": [
         {
-          "id": "ef4126a8-284b-46d4-845e-964e7f8d83a9",
-          "type": "execution_node",
-          "op": "execute-python-node",
-          "app_data": {
-            "component_parameters": {
-              "dependencies": [],
-              "include_subdirectories": false,
-              "outputs": [],
-              "env_vars": [
-                {
-                  "env_var": "ID",
-                  "value": "oscar-cluster"
-                },
-                {
-                  "env_var": "ENDPOINT",
-                  "value": "https://ecstatic-wing3.im.grycap.net"
-                },
-                {
-                  "env_var": "USER",
-                  "value": "oscar"
-                },
-                {
-                  "env_var": "PASSWORD",
-                  "value": "oscar123"
-                },
-                {
-                  "env_var": "JSON_NAME",
-                  "value": "certificate"
-                }
-              ],
-              "kubernetes_pod_annotations": [],
-              "kubernetes_pod_labels": [],
-              "kubernetes_secrets": [],
-              "kubernetes_shared_mem_size": {},
-              "kubernetes_tolerations": [],
-              "mounted_volumes": [],
-              "filename": "generate_credentials.py"
-            },
-            "label": "",
-            "ui_data": {
-              "label": "generate_credentials.py",
-              "image": "/static/elyra/python.svg",
-              "x_pos": 50,
-              "y_pos": 50,
-              "description": "Run Python script"
-            }
-          },
-          "inputs": [
-            {
-              "id": "inPort",
-              "app_data": {
-                "ui_data": {
-                  "cardinality": {
-                    "min": 0,
-                    "max": -1
-                  },
-                  "label": "Input Port"
-                }
-              }
-            }
-          ],
-          "outputs": [
-            {
-              "id": "outPort",
-              "app_data": {
-                "ui_data": {
-                  "cardinality": {
-                    "min": 0,
-                    "max": -1
-                  },
-                  "label": "Output Port"
-                }
-              }
-            }
-          ]
-        },
-        {
           "id": "d7da07cc-d74b-4c94-9647-3364d3a613ef",
           "type": "execution_node",
           "op": "execute-python-node",
@@ -111,9 +34,9 @@
             "label": "",
             "ui_data": {
               "label": "image_b64.py",
-              "image": "/static/elyra/python.svg",
+              "image": "/user/634476eccf0d890dd6d909761baf374852cf50a20474ee2feade49549996d01f@egi.eu/static/elyra/python.svg",
               "x_pos": 50,
-              "y_pos": 165,
+              "y_pos": 50,
               "description": "Run Python script"
             }
           },
@@ -180,9 +103,9 @@
             "label": "",
             "ui_data": {
               "label": "oscar_plants.ipynb",
-              "image": "/static/elyra/notebook.svg",
+              "image": "/user/634476eccf0d890dd6d909761baf374852cf50a20474ee2feade49549996d01f@egi.eu/static/elyra/notebook.svg",
               "x_pos": 290,
-              "y_pos": 107.5,
+              "y_pos": 50,
               "description": "Run notebook file"
             }
           },
@@ -199,11 +122,6 @@
                 }
               },
               "links": [
-                {
-                  "id": "bef218fe-347b-4514-a188-61142891c3fc",
-                  "node_id_ref": "ef4126a8-284b-46d4-845e-964e7f8d83a9",
-                  "port_id_ref": "outPort"
-                },
                 {
                   "id": "d276622c-de2d-4541-9c3e-4fd3bb102532",
                   "node_id_ref": "d7da07cc-d74b-4c94-9647-3364d3a613ef",
@@ -255,9 +173,9 @@
             "label": "",
             "ui_data": {
               "label": "show_images.ipynb",
-              "image": "/static/elyra/notebook.svg",
-              "x_pos": 531,
-              "y_pos": 107.5,
+              "image": "/user/634476eccf0d890dd6d909761baf374852cf50a20474ee2feade49549996d01f@egi.eu/static/elyra/notebook.svg",
+              "x_pos": 530,
+              "y_pos": 50,
               "description": "Run notebook file"
             }
           },
@@ -325,9 +243,9 @@
             },
             "ui_data": {
               "label": "text_from_image.py",
-              "image": "/static/elyra/python.svg",
+              "image": "/user/634476eccf0d890dd6d909761baf374852cf50a20474ee2feade49549996d01f@egi.eu/static/elyra/python.svg",
               "x_pos": 770,
-              "y_pos": 107.5,
+              "y_pos": 50,
               "description": "Run Python script"
             }
           },
