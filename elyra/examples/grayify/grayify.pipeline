@@ -9,78 +9,6 @@
       "id": "primary",
       "nodes": [
         {
-          "id": "44335060-21b1-4cff-b05d-521f5d53e9f5",
-          "type": "execution_node",
-          "op": "execute-python-node",
-          "app_data": {
-            "component_parameters": {
-              "dependencies": [],
-              "include_subdirectories": false,
-              "outputs": [],
-              "env_vars": [
-                {
-                  "env_var": "ID"
-                },
-                {
-                  "env_var": "ENDPOINT"
-                },
-                {
-                  "env_var": "USER"
-                },
-                {
-                  "env_var": "PASSWORD"
-                },
-                {
-                  "env_var": "JSON_NAME"
-                }
-              ],
-              "kubernetes_pod_annotations": [],
-              "kubernetes_pod_labels": [],
-              "kubernetes_secrets": [],
-              "kubernetes_shared_mem_size": {},
-              "kubernetes_tolerations": [],
-              "mounted_volumes": [],
-              "filename": "generate_credentials.py"
-            },
-            "label": "",
-            "ui_data": {
-              "label": "generate_credentials.py",
-              "image": "/static/elyra/python.svg",
-              "x_pos": 50,
-              "y_pos": 50,
-              "description": "Run Python script"
-            }
-          },
-          "inputs": [
-            {
-              "id": "inPort",
-              "app_data": {
-                "ui_data": {
-                  "cardinality": {
-                    "min": 0,
-                    "max": -1
-                  },
-                  "label": "Input Port"
-                }
-              }
-            }
-          ],
-          "outputs": [
-            {
-              "id": "outPort",
-              "app_data": {
-                "ui_data": {
-                  "cardinality": {
-                    "min": 0,
-                    "max": -1
-                  },
-                  "label": "Output Port"
-                }
-              }
-            }
-          ]
-        },
-        {
           "id": "248bdb96-c7e3-46eb-9833-918a1e139988",
           "type": "execution_node",
           "op": "execute-python-node",
@@ -105,9 +33,9 @@
             "label": "",
             "ui_data": {
               "label": "image_b64.py",
-              "image": "/static/elyra/python.svg",
-              "x_pos": 50,
-              "y_pos": 165,
+              "image": "/user/634476eccf0d890dd6d909761baf374852cf50a20474ee2feade49549996d01f@egi.eu/static/elyra/python.svg",
+              "x_pos": 55,
+              "y_pos": 105,
               "description": "Run Python script"
             }
           },
@@ -171,7 +99,7 @@
             "label": "",
             "ui_data": {
               "label": "oscar_grayify.ipynb",
-              "image": "/static/elyra/notebook.svg",
+              "image": "/user/634476eccf0d890dd6d909761baf374852cf50a20474ee2feade49549996d01f@egi.eu/static/elyra/notebook.svg",
               "x_pos": 291,
               "y_pos": 106.5,
               "description": "Run notebook file"
@@ -190,11 +118,6 @@
                 }
               },
               "links": [
-                {
-                  "id": "2f31ffe1-4489-47ee-ac18-4a1b4f149547",
-                  "node_id_ref": "44335060-21b1-4cff-b05d-521f5d53e9f5",
-                  "port_id_ref": "outPort"
-                },
                 {
                   "id": "b251c5b4-667f-444f-801d-bf6bad6b5f54",
                   "node_id_ref": "248bdb96-c7e3-46eb-9833-918a1e139988",
@@ -246,7 +169,7 @@
             "label": "",
             "ui_data": {
               "label": "show_images.ipynb",
-              "image": "/static/elyra/notebook.svg",
+              "image": "/user/634476eccf0d890dd6d909761baf374852cf50a20474ee2feade49549996d01f@egi.eu/static/elyra/notebook.svg",
               "x_pos": 530,
               "y_pos": 107.5,
               "description": "Run notebook file"
