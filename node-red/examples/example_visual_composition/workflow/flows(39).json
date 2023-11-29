@@ -1,0 +1,1795 @@
+[
+    {
+        "id": "5b4ca659d41e0820",
+        "type": "subflow",
+        "name": "Frame-Service",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 60,
+                "y": 180,
+                "wires": [
+                    {
+                        "id": "e808069afa6537fe"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 1210,
+                "y": 180,
+                "wires": [
+                    {
+                        "id": "34731a8f8479c49b",
+                        "port": 0
+                    }
+                ]
+            },
+            {
+                "x": 1220,
+                "y": 260,
+                "wires": [
+                    {
+                        "id": "4077019bcf8454ab",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "Location Name",
+                "type": "str",
+                "value": ""
+            },
+            {
+                "name": "Archive Name",
+                "type": "str",
+                "value": ""
+            },
+            {
+                "name": "Classification Threshold",
+                "type": "num",
+                "value": "",
+                "ui": {
+                    "type": "input",
+                    "opts": {
+                        "types": [
+                            "num"
+                        ]
+                    }
+                }
+            }
+        ],
+        "meta": {},
+        "color": "#3FADB5",
+        "inputLabels": [
+            "MQTT Input"
+        ],
+        "outputLabels": [
+            "Data",
+            "Picture"
+        ],
+        "icon": "font-awesome/fa-file-picture-o",
+        "status": {
+            "x": 1180,
+            "y": 100,
+            "wires": [
+                {
+                    "id": "fcd8a6a3277f377d",
+                    "port": 0
+                }
+            ]
+        }
+    },
+    {
+        "id": "d49a4b0f5d8659b9",
+        "type": "function",
+        "z": "5b4ca659d41e0820",
+        "name": "extract data",
+        "func": "var data =msg.payload\n\nmsg.threshold_class = msg.threshold_class\n\n\nvar prob = data.substring(\n    data.indexOf(\"@\") + 1\n    )\n\nvar object = data.substring(0,\n    data.indexOf(\"@\") \n)\nvar i=object.lastIndexOf(\"/\")\nobject=\"out_image/\"+object.substring(i+1)+\".jpeg\"\nvar array = prob.split(',')\nmsg.data=prob\nmsg.array=array\nmsg.objectName=object\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 180,
+        "wires": [
+            [
+                "098769d2a968e71b",
+                "d2740042f371c7d3",
+                "6f69519f5ecb911e"
+            ]
+        ]
+    },
+    {
+        "id": "098769d2a968e71b",
+        "type": "function",
+        "z": "5b4ca659d41e0820",
+        "name": "object data",
+        "func": "\nvar result = msg.array;\nvar object=msg.objectName;\n\nvar umbral = msg.threshold_class;\n\nvar loc = msg.loc\nvar name = msg.name\n\nvar filename = msg.loc + \"/\" + msg.name\n\n//var filename = \"/home/vrodben1/Cursos UPV/OSCAR NODE-RED/Articulo FGCS/JSON-Result/frame.json\"\n\nvar i= global.get(\"num-frame\")\nvar list = global.get(\"list-f\")\nvar frame=global.get(\"frame\")\nvar total_bird=global.get(\"total_bird\") \n\nif (list > i){\n    i=i+1;\n    global.set(\"num-frame\",i)\n\nvar bird=0;    \nmsg.payload = {};\n    var threshold=0;\n    for (var b = 0; b < result.length; b++){\n        threshold= result[b].substring(result[b].indexOf(\":\") + 1)\n        if (result[b].includes(\"bird\") == true && parseFloat(threshold)>umbral){\n            bird=bird+1;\n            total_bird=total_bird+1;}\n        \n\n\n    }\nglobal.set(\"total_bird\",total_bird);    \nmsg.payload.objectName=object;\nmsg.payload.bird_detection = bird +\" birds detection\"\nmsg.process = i + \" of \" + list + \" processes ( \" + total_bird + \" birds detected )\"\nmsg.payload.object_detection=result;\nmsg.filename=filename;\n}    \nif (i==list){\n    global.set(\"list-f\", 0)\n    global.set(\"num-frame\", 0)\n    global.set(\"frame\",1)\n    msg.filename = filename;\n    global.set(\"total_bird\", 0)  \n}\n\nreturn msg;\n\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\nglobal.set(\"num-frame\", 0)\nglobal.set(\"frame\",0)\nglobal.set(\"total_bird\", 0)  ",
+        "finalize": "",
+        "libs": [],
+        "x": 550,
+        "y": 180,
+        "wires": [
+            [
+                "f63c223dd5ca9be6",
+                "fcd8a6a3277f377d"
+            ]
+        ]
+    },
+    {
+        "id": "c932e02f532a45a4",
+        "type": "json",
+        "z": "5b4ca659d41e0820",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 730,
+        "y": 260,
+        "wires": [
+            [
+                "4077019bcf8454ab"
+            ]
+        ]
+    },
+    {
+        "id": "4077019bcf8454ab",
+        "type": "function",
+        "z": "5b4ca659d41e0820",
+        "name": "object data",
+        "func": "var Data=msg.payload\nmsg.payload=Data.objectData;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 870,
+        "y": 260,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f63c223dd5ca9be6",
+        "type": "file",
+        "z": "5b4ca659d41e0820",
+        "name": "",
+        "filename": "filename",
+        "filenameType": "msg",
+        "appendNewline": true,
+        "createDir": true,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 740,
+        "y": 180,
+        "wires": [
+            [
+                "c8555213e1f20687"
+            ]
+        ]
+    },
+    {
+        "id": "c8555213e1f20687",
+        "type": "function",
+        "z": "5b4ca659d41e0820",
+        "name": "object data",
+        "func": "\nvar x=global.get(\"frame\")\nvar file = msg.filename\n\nif(x==1){\nmsg.filename=file\n\nreturn msg;\n}\n\n\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 890,
+        "y": 180,
+        "wires": [
+            [
+                "34731a8f8479c49b"
+            ]
+        ]
+    },
+    {
+        "id": "34731a8f8479c49b",
+        "type": "file in",
+        "z": "5b4ca659d41e0820",
+        "name": "",
+        "filename": "filename",
+        "filenameType": "msg",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 1060,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e808069afa6537fe",
+        "type": "change",
+        "z": "5b4ca659d41e0820",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "threshold_class",
+                "pt": "msg",
+                "to": "Classification Threshold",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "loc",
+                "pt": "msg",
+                "to": "Location Name",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "name",
+                "pt": "msg",
+                "to": "Archive Name",
+                "tot": "env"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 180,
+        "y": 180,
+        "wires": [
+            [
+                "d49a4b0f5d8659b9"
+            ]
+        ]
+    },
+    {
+        "id": "fcd8a6a3277f377d",
+        "type": "change",
+        "z": "5b4ca659d41e0820",
+        "name": "Start Service",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "process",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 730,
+        "y": 100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d2740042f371c7d3",
+        "type": "objects",
+        "z": "5b4ca659d41e0820",
+        "objects_name": "",
+        "host": "188dce915362f372",
+        "objects_operation": "getObject",
+        "objects_bucket": "frame-object",
+        "objects_object": "",
+        "objects_offset": "",
+        "objects_length": "",
+        "objects_stream": "",
+        "objects_size": "",
+        "objects_metadata": "",
+        "objects_sourceobject": "",
+        "objects_conditions": "",
+        "objects_objectslist": [],
+        "objects_prefix": "",
+        "objects_etag": "",
+        "objects_datetime": "",
+        "x": 550,
+        "y": 260,
+        "wires": [
+            [
+                "c932e02f532a45a4",
+                "c2c261b0d502ae88"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "c2c261b0d502ae88",
+        "type": "debug",
+        "z": "5b4ca659d41e0820",
+        "name": "debug 136",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 730,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "6f69519f5ecb911e",
+        "type": "debug",
+        "z": "5b4ca659d41e0820",
+        "name": "debug 137",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "objectName",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 510,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "188dce915362f372",
+        "type": "minio-config",
+        "name": "MinIO-Frosty",
+        "host": "minio.frosty-grothendieck5.im.grycap.net",
+        "port": "443",
+        "useSsl": true
+    },
+    {
+        "id": "07e58360df29d8fe",
+        "type": "subflow",
+        "name": "Audio-Service",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 260,
+                "y": 220,
+                "wires": [
+                    {
+                        "id": "96c1daec06cbcce4"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 880,
+                "y": 320,
+                "wires": [
+                    {
+                        "id": "f8bfe0fe76107ba3",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "Location Name",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "type": "input",
+                    "opts": {
+                        "types": [
+                            "str",
+                            "num"
+                        ]
+                    }
+                }
+            },
+            {
+                "name": "Archive Name",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "type": "input",
+                    "opts": {
+                        "types": [
+                            "str",
+                            "num"
+                        ]
+                    }
+                }
+            },
+            {
+                "name": "Classification Threshold",
+                "type": "num",
+                "value": "",
+                "ui": {
+                    "type": "input",
+                    "opts": {
+                        "types": [
+                            "num"
+                        ]
+                    }
+                }
+            }
+        ],
+        "meta": {},
+        "color": "#3FADB5",
+        "icon": "font-awesome/fa-audio-description",
+        "status": {
+            "x": 900,
+            "y": 140,
+            "wires": [
+                {
+                    "id": "2023667c9ea4f768",
+                    "port": 0
+                }
+            ]
+        }
+    },
+    {
+        "id": "909b4c0a800b13d9",
+        "type": "function",
+        "z": "07e58360df29d8fe",
+        "name": "object data",
+        "func": "\nvar result = msg.data\nvar threshold = msg.threshold\nvar filename= msg.loc+\"/\"+msg.name\n\nvar i= global.get(\"num\")\nvar list = global.get(\"list\")\nvar num_bird=global.get(\"num_bird\")\n\nif (list > i){\n\nvar prob = result.substring(\n    result.indexOf(\"'probabilities': [\") + 18,\n    result.indexOf(\"], 'labels_info':\"))\n\nvar array = prob.split(','),\n    a = array[0], b = array[1], c = array[2], d = array[3], e = array[4];\n\nvar label = result.substring(\n    result.indexOf(\"'labels': [\") + 11,\n    result.indexOf(\"], 'probabilities':\"))\n\nvar array_1 = label.split(','),\n    aa = array_1[0], bb = array_1[1], cc = array_1[2], dd = array_1[3], ee = array_1[4];\n\nmsg.payload = {};\n\n    if (threshold <= parseFloat(a)){\n\n    msg.payload.bird_detection=aa;\n    num_bird=num_bird+1;\n    global.set(\"num_bird\",num_bird)\n  \n \n\n    }\n    else {\n    msg.payload.bird_detection = \"No birds detection\"\n  \n    }\n\nmsg.payload.probabilities = [];\nmsg.payload.probabilities[0] = parseFloat(a);\nmsg.payload.probabilities[1] = parseFloat(b);\nmsg.payload.probabilities[2] = parseFloat(c);\nmsg.payload.probabilities[3] = parseFloat(d);\nmsg.payload.probabilities[4] = parseFloat(e);\n\nmsg.payload.labels = []\nmsg.payload.labels[0] = aa;\nmsg.payload.labels[1] = bb;\nmsg.payload.labels[2] = cc;\nmsg.payload.labels[3] = dd;\nmsg.payload.labels[4] = ee;\n\n\n//msg.payload.data= result\nmsg.payload.object = result.substring(\n    result.indexOf(\"'title': '\") + 10,\n    result.indexOf(\"', 'labels'\"))\n\ni = i + 1;\nglobal.set(\"num\", i)\n    msg.process = i + \" of \" + list + \" processes ( \" + num_bird + \" birds detected )\" ;\nmsg.filename = filename\n\n}\nif (i==list){\n\nglobal.set(\"list\", 0)\nglobal.set(\"bird\", 1)\nglobal.set(\"num_bird\",0)\n}\nmsg.filename = filename\nreturn msg;\n\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\nglobal.set(\"num_bird\", 0)",
+        "finalize": "",
+        "libs": [],
+        "x": 590,
+        "y": 220,
+        "wires": [
+            [
+                "b3d6155772986810",
+                "2023667c9ea4f768"
+            ]
+        ]
+    },
+    {
+        "id": "b3d6155772986810",
+        "type": "file",
+        "z": "07e58360df29d8fe",
+        "name": "",
+        "filename": "filename",
+        "filenameType": "msg",
+        "appendNewline": true,
+        "createDir": true,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 760,
+        "y": 220,
+        "wires": [
+            [
+                "248fe2bf45b6b071"
+            ]
+        ]
+    },
+    {
+        "id": "96c1daec06cbcce4",
+        "type": "change",
+        "z": "07e58360df29d8fe",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "data",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg",
+                "dc": true
+            },
+            {
+                "t": "set",
+                "p": "threshold",
+                "pt": "msg",
+                "to": "Classification Threshold",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "loc",
+                "pt": "msg",
+                "to": "Location Name",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "name",
+                "pt": "msg",
+                "to": "Archive Name",
+                "tot": "env"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 400,
+        "y": 220,
+        "wires": [
+            [
+                "909b4c0a800b13d9"
+            ]
+        ]
+    },
+    {
+        "id": "2023667c9ea4f768",
+        "type": "change",
+        "z": "07e58360df29d8fe",
+        "name": "Start Service",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "process",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 770,
+        "y": 140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "248fe2bf45b6b071",
+        "type": "function",
+        "z": "07e58360df29d8fe",
+        "name": "object data",
+        "func": "\nvar x=global.get(\"bird\")\nvar file = msg.filename\n\nif(x==1){\nmsg.filename=file\nreturn msg;\n}\n\n\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\nglobal.set(\"bird\", 0)\n",
+        "finalize": "",
+        "libs": [],
+        "x": 590,
+        "y": 320,
+        "wires": [
+            [
+                "f8bfe0fe76107ba3"
+            ]
+        ]
+    },
+    {
+        "id": "f8bfe0fe76107ba3",
+        "type": "file in",
+        "z": "07e58360df29d8fe",
+        "name": "",
+        "filename": "filename",
+        "filenameType": "msg",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 760,
+        "y": 320,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2994bcd3e84a62e0",
+        "type": "subflow",
+        "name": "Segmentation Service",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 100,
+                "y": 180,
+                "wires": [
+                    {
+                        "id": "f8e31d946e4d44fd"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 1340,
+                "y": 280,
+                "wires": [
+                    {
+                        "id": "4d981ac270603a24",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "Server",
+                "type": "str",
+                "value": ""
+            },
+            {
+                "name": "Service Name",
+                "type": "str",
+                "value": ""
+            },
+            {
+                "name": "User",
+                "type": "str",
+                "value": ""
+            },
+            {
+                "name": "Password",
+                "type": "cred"
+            },
+            {
+                "name": "Object Name",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "type": "input",
+                    "opts": {
+                        "types": [
+                            "str"
+                        ]
+                    }
+                }
+            }
+        ],
+        "meta": {},
+        "color": "#3FADB5",
+        "icon": "font-awesome/fa-file-movie-o",
+        "status": {
+            "x": 1340,
+            "y": 100,
+            "wires": [
+                {
+                    "id": "c3627d1e6e7cd04d",
+                    "port": 0
+                },
+                {
+                    "id": "b56e25267a360eba",
+                    "port": 0
+                }
+            ]
+        }
+    },
+    {
+        "id": "f8e31d946e4d44fd",
+        "type": "change",
+        "z": "2994bcd3e84a62e0",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "oscar_server",
+                "pt": "msg",
+                "to": "Server",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "username",
+                "pt": "msg",
+                "to": "User",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "pass",
+                "pt": "msg",
+                "to": "Password",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "video",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "service",
+                "pt": "msg",
+                "to": "Service Name",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "archive",
+                "pt": "msg",
+                "to": "Object Name",
+                "tot": "env"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 220,
+        "y": 180,
+        "wires": [
+            [
+                "064a6b96d7f6dcbf",
+                "c3627d1e6e7cd04d"
+            ]
+        ]
+    },
+    {
+        "id": "064a6b96d7f6dcbf",
+        "type": "function",
+        "z": "2994bcd3e84a62e0",
+        "name": "Load Log",
+        "func": "msg.payload={\n\"username\":msg.username,\n\"password\":msg.pass\n\n}\nmsg.url = msg.oscar_server +\"/system/services/\"+msg.service ;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 440,
+        "y": 200,
+        "wires": [
+            [
+                "7b792ba413f50d21"
+            ]
+        ]
+    },
+    {
+        "id": "681a7908e7eb4beb",
+        "type": "http request",
+        "z": "2994bcd3e84a62e0",
+        "name": " segmentation service",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": true,
+        "authType": "basic",
+        "senderr": true,
+        "headers": [],
+        "x": 800,
+        "y": 200,
+        "wires": [
+            [
+                "59262c021a88ce2b"
+            ]
+        ]
+    },
+    {
+        "id": "7b792ba413f50d21",
+        "type": "change",
+        "z": "2994bcd3e84a62e0",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "headers",
+                "pt": "msg",
+                "to": "{\t   \"Authorization\": 'Basic ' & $base64encode(\t       payload.username & ':' & payload.password\t   ) \t}",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 600,
+        "y": 200,
+        "wires": [
+            [
+                "681a7908e7eb4beb"
+            ]
+        ]
+    },
+    {
+        "id": "c3627d1e6e7cd04d",
+        "type": "change",
+        "z": "2994bcd3e84a62e0",
+        "name": "Start Service",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Processing....",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 450,
+        "y": 100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6d5ca47939404503",
+        "type": "change",
+        "z": "2994bcd3e84a62e0",
+        "name": "Clear Data",
+        "rules": [
+            {
+                "t": "set",
+                "p": "pass",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "username",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "oscar_server",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "plants",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "image",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "token_plants",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "url",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "filename",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1550,
+        "y": 280,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "59262c021a88ce2b",
+        "type": "json",
+        "z": "2994bcd3e84a62e0",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 970,
+        "y": 200,
+        "wires": [
+            [
+                "4fe645ddfb2b097c"
+            ]
+        ]
+    },
+    {
+        "id": "b56e25267a360eba",
+        "type": "change",
+        "z": "2994bcd3e84a62e0",
+        "name": "End Service",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Finished....",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1190,
+        "y": 140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4fe645ddfb2b097c",
+        "type": "function",
+        "z": "2994bcd3e84a62e0",
+        "name": "extract features",
+        "func": "var services = msg.payload\nvar name= services.name;\nvar token_service;\nvar bucket_input\nvar bucket_output=[];\nvar bucket_providers = [];\nvar providers=[];\n\n    if (msg.service ==name){\n        token_service = services.token\n        bucket_input=services.input[0].path;\n        if (services.output.length >1){\n            //bucket_output[0] = new Array(services[i].output.length);\n            for (var ii = 0; ii < services.output.length; ii++)\n            {\n                bucket_output[ii] = services.output[ii].path;\n                bucket_providers[ii] = services.output[ii].storage_provider;\n            }\n\n        }\n        else{\n            bucket_output[0]= services.output[0].path;\n            bucket_providers[0] = services.output[0].storage_provider;\n        }\n        providers = services.storage_providers.minio;\n    }\n    else{\n        msg.payload=\"ERROR\"\n    }\n   \n\n\nmsg.token_service = token_service;\n\nmsg.bucket_input = bucket_input;\nmsg.bucket_out = bucket_output;\nmsg.bucket_providers = bucket_providers;\nmsg.providers=providers;\nreturn msg",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 480,
+        "y": 280,
+        "wires": [
+            [
+                "fd25ee2cf1ecad4f"
+            ]
+        ]
+    },
+    {
+        "id": "fd25ee2cf1ecad4f",
+        "type": "function",
+        "z": "2994bcd3e84a62e0",
+        "name": "extract  minio features",
+        "func": "//import * as Minio from 'minio'\n\nvar input = msg.bucket_input\nvar output=msg.bucket_out\nvar service=msg.payload;\n\n//const  Minio = require('minio');\n\n\n\n\nif (msg.archive!=\"\"){\n    msg.objectName= input.substring( input.indexOf(\"/\")+1)+\"/\"+msg.archive+\".mpg\"\n    global.set(\"name\",msg.archive)\n}\nelse{\n    msg.objectName = input.substring(input.indexOf(\"/\") + 1) + \"/video.mpg\"  \n    global.set(\"name\", msg.archive)  \n}\nmsg.bucketName = input.substring(0, input.indexOf(\"/\"))\nmsg.stream=msg.video;\nmsg.operation =\"putObject\";\n\nmsg.name=\"Minio Rasp\"\nmsg.endPoint=\"minio.\"+msg.oscar_server;\n//msg.endpoint=msg.host;\n//msg.accesskeyid = service.storage_providers.minio.default.access_key;\n//msg.secretaccesskey = service.storage_providers.minio.default.secret_key;\nmsg.port= 443\nmsg.useSsl=true;\n\nvar credentials= {\n    accessKey: service.storage_providers.minio.default.access_key,\n    secretKey: service.storage_providers.minio.default.secret_key\n        \n};\n msg.credentials=credentials;\n msg.test=msg.credentials.accessKey;\n\n \n\n\n/*\nflow.set('bucket_out', output);\nflow.set('archive', msg.archive);\nflow.set ('host',msg.HOST);\nflow.set('access_key', msg.ACCESS_KEY);\nflow.set('secret_key', msg.SECRET_KEY);\nflow.set('port', msg.PORT);*/\n//msg.token_service = token_service;\n//msg.bucket_input = bucket_input;\n//msg.bucket_out = bucket_output;\n//msg.bucket_providers = bucket_providers;\n//msg.providers=providers;\nreturn msg\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\nglobal.set(\"name\",\"video.mpg\")",
+        "finalize": "",
+        "libs": [],
+        "x": 700,
+        "y": 280,
+        "wires": [
+            [
+                "4d981ac270603a24"
+            ]
+        ]
+    },
+    {
+        "id": "72bc88dda32f0323",
+        "type": "delay",
+        "z": "2994bcd3e84a62e0",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "10",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 740,
+        "y": 1040,
+        "wires": [
+            [
+                "544b9eb181ce8d25"
+            ]
+        ]
+    },
+    {
+        "id": "544b9eb181ce8d25",
+        "type": "function",
+        "z": "2994bcd3e84a62e0",
+        "name": " minio features output",
+        "func": "\nvar output = flow.get('bucket_out');\n//var service=msg.payload;\nmsg.archive = flow.get('archive');\nif (msg.archive!=\"\"){\nmsg.objectName = output[0].substring( output[0].indexOf(\"/\")+1)+\"/\"+msg.archive+\".mp3/out_\"+msg.archive+\".json\"\n}\nelse{\n    msg.objectName = output[0].substring(output[0].indexOf(\"/\") + 1) + \"/audio.mp3/out_audio.json\"    \n}\nmsg.bucketName = output[0].substring(0, output[0].indexOf(\"/\"))\n\n\n\n\n\nmsg.HOST=flow.get ('host');\nmsg.ACCESS_KEY = flow.get('access_key');\nmsg.SECRET_KEY = flow.get('secret_key');\nmsg.port= 443\n   \n\n\n//msg.token_service = token_service;\n//msg.bucket_input = bucket_input;\n//msg.bucket_out = output;\n//msg.bucket_providers = bucket_providers;\n//msg.providers=providers;\nreturn msg\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 960,
+        "y": 1120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "dd8c3d3d212bff14",
+        "type": "debug",
+        "z": "2994bcd3e84a62e0",
+        "name": "debug 85",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1080,
+        "y": 1340,
+        "wires": []
+    },
+    {
+        "id": "e5b5356e466d318b",
+        "type": "json",
+        "z": "2994bcd3e84a62e0",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 990,
+        "y": 1220,
+        "wires": [
+            [
+                "9c1e0f40c45b2191"
+            ]
+        ]
+    },
+    {
+        "id": "9c1e0f40c45b2191",
+        "type": "function",
+        "z": "2994bcd3e84a62e0",
+        "name": "object data",
+        "func": "var Data=msg.payload\nmsg.payload=Data.objectData.toString();\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1170,
+        "y": 1220,
+        "wires": [
+            [
+                "dce084e2fd75713e",
+                "161455df52dc60fe",
+                "dd8c3d3d212bff14"
+            ]
+        ]
+    },
+    {
+        "id": "dce084e2fd75713e",
+        "type": "string",
+        "z": "2994bcd3e84a62e0",
+        "name": "Labels",
+        "methods": [
+            {
+                "name": "between",
+                "params": [
+                    {
+                        "type": "str",
+                        "value": "'labels': "
+                    },
+                    {
+                        "type": "str",
+                        "value": ", 'probabilities':"
+                    }
+                ]
+            }
+        ],
+        "prop": "payload",
+        "propout": "payload",
+        "object": "msg",
+        "objectout": "msg",
+        "x": 1250,
+        "y": 1280,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "161455df52dc60fe",
+        "type": "string",
+        "z": "2994bcd3e84a62e0",
+        "name": "Probabilities",
+        "methods": [
+            {
+                "name": "between",
+                "params": [
+                    {
+                        "type": "str",
+                        "value": "'probabilities':"
+                    },
+                    {
+                        "type": "str",
+                        "value": ", 'labels_info':"
+                    }
+                ]
+            }
+        ],
+        "prop": "payload",
+        "propout": "payload",
+        "object": "msg",
+        "objectout": "msg",
+        "x": 1270,
+        "y": 1400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4d981ac270603a24",
+        "type": "objects",
+        "z": "2994bcd3e84a62e0",
+        "objects_name": "",
+        "host": "2215fd0f2c849a56",
+        "objects_operation": "putObject",
+        "objects_bucket": "",
+        "objects_object": "",
+        "objects_offset": "",
+        "objects_length": "",
+        "objects_stream": "",
+        "objects_size": "",
+        "objects_metadata": "",
+        "objects_sourceobject": "",
+        "objects_conditions": "",
+        "objects_objectslist": [],
+        "objects_prefix": "",
+        "objects_etag": "",
+        "objects_datetime": "",
+        "x": 950,
+        "y": 280,
+        "wires": [
+            [
+                "b56e25267a360eba"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "2215fd0f2c849a56",
+        "type": "minio-config",
+        "z": "2994bcd3e84a62e0",
+        "name": "MinIO-Raspi",
+        "host": "minio.graspi.im.grycap.net",
+        "port": "443",
+        "useSsl": true
+    },
+    {
+        "id": "a3ebbf504839f530",
+        "type": "tab",
+        "label": "Segmentation_MQTT_v2",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "a831b39ecacb22af",
+        "type": "group",
+        "z": "a3ebbf504839f530",
+        "name": "LOAD VIDEO",
+        "style": {
+            "stroke": "#ff0000",
+            "label": true,
+            "color": "#000000",
+            "label-position": "n"
+        },
+        "nodes": [
+            "db909ec7dbb3a1e1",
+            "076547037130a1ca"
+        ],
+        "x": 254,
+        "y": 199,
+        "w": 432,
+        "h": 82
+    },
+    {
+        "id": "6e25711d6407dee4",
+        "type": "group",
+        "z": "a3ebbf504839f530",
+        "name": "POST-PROCESSING",
+        "style": {
+            "stroke": "#ff0000",
+            "label": true,
+            "label-position": "n",
+            "color": "#000000"
+        },
+        "nodes": [
+            "326538cb94dd6f32",
+            "2c0cb64449bea3a6",
+            "45ed251f37c0bc48"
+        ],
+        "x": 68,
+        "y": 353,
+        "w": 944,
+        "h": 554
+    },
+    {
+        "id": "326538cb94dd6f32",
+        "type": "group",
+        "z": "a3ebbf504839f530",
+        "g": "6e25711d6407dee4",
+        "name": "Bird Sound Classifier Service",
+        "style": {
+            "stroke": "#0070c0",
+            "label": true,
+            "label-position": "n",
+            "color": "#000000"
+        },
+        "nodes": [
+            "cb895b96f6b528ae",
+            "f5af7bdd0ba14403",
+            "8762fd3c9cf3bef2",
+            "cabb9f6e47249b8e"
+        ],
+        "x": 94,
+        "y": 539,
+        "w": 892,
+        "h": 182
+    },
+    {
+        "id": "2c0cb64449bea3a6",
+        "type": "group",
+        "z": "a3ebbf504839f530",
+        "g": "6e25711d6407dee4",
+        "name": "Segmentation Data Service",
+        "style": {
+            "stroke": "#0070c0",
+            "label": true,
+            "label-position": "n",
+            "color": "#000000"
+        },
+        "nodes": [
+            "4fe906a75a64253b",
+            "9a5663f3b8105724"
+        ],
+        "x": 114,
+        "y": 379,
+        "w": 532,
+        "h": 102
+    },
+    {
+        "id": "45ed251f37c0bc48",
+        "type": "group",
+        "z": "a3ebbf504839f530",
+        "g": "6e25711d6407dee4",
+        "name": "Object Detection and Classification Service",
+        "style": {
+            "stroke": "#0070c0",
+            "label": true,
+            "label-position": "n",
+            "color": "#000000"
+        },
+        "nodes": [
+            "167a13ac01ae336e",
+            "a2840984d72df783",
+            "894d6a50a70dc6a1"
+        ],
+        "x": 114,
+        "y": 739,
+        "w": 772,
+        "h": 142
+    },
+    {
+        "id": "cb895b96f6b528ae",
+        "type": "mqtt in",
+        "z": "a3ebbf504839f530",
+        "g": "326538cb94dd6f32",
+        "name": "",
+        "topic": "audio-service/data",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "c74d9424f3d1847e",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 210,
+        "y": 600,
+        "wires": [
+            [
+                "8762fd3c9cf3bef2",
+                "f5af7bdd0ba14403",
+                "cabb9f6e47249b8e"
+            ]
+        ]
+    },
+    {
+        "id": "5ea63c3fa4edc5fa",
+        "type": "inject",
+        "z": "a3ebbf504839f530",
+        "name": "Start Process",
+        "props": [
+            {
+                "p": "username",
+                "v": "oscar",
+                "vt": "str"
+            },
+            {
+                "p": "pass",
+                "v": "oscar123",
+                "vt": "str"
+            },
+            {
+                "p": "oscar_server",
+                "v": "https://nervous-brahmagupta6.im.grycap.net",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 150,
+        "y": 220,
+        "wires": [
+            [
+                "db909ec7dbb3a1e1"
+            ]
+        ]
+    },
+    {
+        "id": "db909ec7dbb3a1e1",
+        "type": "http request",
+        "z": "a3ebbf504839f530",
+        "g": "a831b39ecacb22af",
+        "name": "Video  ",
+        "method": "GET",
+        "ret": "bin",
+        "paytoqs": "ignore",
+        "url": "https://raw.githubusercontent.com/vicente87/segmentation-video-api/main/video_example/113-corneja-YouTube.mp4",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 330,
+        "y": 240,
+        "wires": [
+            [
+                "076547037130a1ca"
+            ]
+        ]
+    },
+    {
+        "id": "076547037130a1ca",
+        "type": "subflow:2994bcd3e84a62e0",
+        "z": "a3ebbf504839f530",
+        "g": "a831b39ecacb22af",
+        "name": "Segmentation Data ",
+        "env": [
+            {
+                "name": "Server",
+                "value": "graspi.im.grycap.net",
+                "type": "str"
+            },
+            {
+                "name": "Service Name",
+                "value": "segmentation-service",
+                "type": "str"
+            },
+            {
+                "name": "User",
+                "value": "oscar",
+                "type": "str"
+            },
+            {
+                "name": "Password",
+                "type": "cred"
+            },
+            {
+                "name": "Object Name",
+                "value": "video-bird",
+                "type": "str"
+            }
+        ],
+        "x": 570,
+        "y": 240,
+        "wires": [
+            [
+                "193804d0ab43b3a9"
+            ]
+        ],
+        "inputLabels": [
+            "Video Input"
+        ],
+        "outputLabels": [
+            "Data"
+        ]
+    },
+    {
+        "id": "193804d0ab43b3a9",
+        "type": "debug",
+        "z": "a3ebbf504839f530",
+        "name": "debug 117",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 830,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "4fe906a75a64253b",
+        "type": "mqtt in",
+        "z": "a3ebbf504839f530",
+        "g": "2c0cb64449bea3a6",
+        "name": "",
+        "topic": "segmentation-service/part",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "c74d9424f3d1847e",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 250,
+        "y": 440,
+        "wires": [
+            [
+                "9a5663f3b8105724"
+            ]
+        ]
+    },
+    {
+        "id": "9a5663f3b8105724",
+        "type": "function",
+        "z": "a3ebbf504839f530",
+        "g": "2c0cb64449bea3a6",
+        "name": "num_object",
+        "func": "var num_object = msg.payload\nglobal.set(\"list\",num_object)\nglobal.set(\"list-f\", num_object)\nglobal.set(\"num\", 0)\nglobal.set(\"num-frame\", 0)\nreturn msg\n\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\nglobal.set(\"list\", 0)\nglobal.set(\"num\", 1)",
+        "finalize": "",
+        "libs": [],
+        "x": 550,
+        "y": 420,
+        "wires": [
+            [
+                "fa3fa8cdd3858f0e"
+            ]
+        ]
+    },
+    {
+        "id": "fa3fa8cdd3858f0e",
+        "type": "debug",
+        "z": "a3ebbf504839f530",
+        "name": "Result Segmentation Data Service",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1180,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "f5af7bdd0ba14403",
+        "type": "string",
+        "z": "a3ebbf504839f530",
+        "g": "326538cb94dd6f32",
+        "name": "Labels",
+        "methods": [
+            {
+                "name": "between",
+                "params": [
+                    {
+                        "type": "str",
+                        "value": "'labels': "
+                    },
+                    {
+                        "type": "str",
+                        "value": ", 'probabilities':"
+                    }
+                ]
+            }
+        ],
+        "prop": "payload",
+        "propout": "payload",
+        "object": "msg",
+        "objectout": "msg",
+        "x": 910,
+        "y": 580,
+        "wires": [
+            [
+                "cc735c3890acad72"
+            ]
+        ]
+    },
+    {
+        "id": "8762fd3c9cf3bef2",
+        "type": "string",
+        "z": "a3ebbf504839f530",
+        "g": "326538cb94dd6f32",
+        "name": "Probabilities",
+        "methods": [
+            {
+                "name": "between",
+                "params": [
+                    {
+                        "type": "str",
+                        "value": "'probabilities':"
+                    },
+                    {
+                        "type": "str",
+                        "value": ", 'labels_info':"
+                    }
+                ]
+            }
+        ],
+        "prop": "payload",
+        "propout": "payload",
+        "object": "msg",
+        "objectout": "msg",
+        "x": 890,
+        "y": 620,
+        "wires": [
+            [
+                "8d486fbc40363abb"
+            ]
+        ]
+    },
+    {
+        "id": "8d486fbc40363abb",
+        "type": "debug",
+        "z": "a3ebbf504839f530",
+        "name": "debug 122",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1150,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "cc735c3890acad72",
+        "type": "debug",
+        "z": "a3ebbf504839f530",
+        "name": "debug 123",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1150,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "cabb9f6e47249b8e",
+        "type": "subflow:07e58360df29d8fe",
+        "z": "a3ebbf504839f530",
+        "g": "326538cb94dd6f32",
+        "name": "Bird sound classification",
+        "env": [
+            {
+                "name": "Location Name",
+                "value": "/home/vrodben1/Cursos UPV/OSCAR NODE-RED/Articulo FGCS/JSON-Result",
+                "type": "str"
+            },
+            {
+                "name": "Archive Name",
+                "value": "result.json",
+                "type": "str"
+            },
+            {
+                "name": "Classification Threshold",
+                "value": "0.4",
+                "type": "num"
+            },
+            {
+                "name": "Location",
+                "value": "/home/vrodben1/Cursos UPV/OSCAR NODE-RED/Articulo FGCS/JSON-Result",
+                "type": "str"
+            },
+            {
+                "name": "Archive Location",
+                "value": "/home/vrodben1/Cursos UPV/OSCAR NODE-RED/Articulo FGCS/JSON-Result",
+                "type": "str"
+            }
+        ],
+        "x": 600,
+        "y": 680,
+        "wires": [
+            [
+                "c76951b1f5102e2c"
+            ]
+        ],
+        "inputLabels": [
+            "MQTT Input"
+        ],
+        "outputLabels": [
+            "Data"
+        ]
+    },
+    {
+        "id": "c76951b1f5102e2c",
+        "type": "debug",
+        "z": "a3ebbf504839f530",
+        "name": "Result Bird sound classification Service",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1220,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "8c9990e417a1595e",
+        "type": "debug",
+        "z": "a3ebbf504839f530",
+        "name": "debug 134",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1190,
+        "y": 780,
+        "wires": []
+    },
+    {
+        "id": "167a13ac01ae336e",
+        "type": "mqtt in",
+        "z": "a3ebbf504839f530",
+        "g": "45ed251f37c0bc48",
+        "name": "",
+        "topic": "frame-service/data",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "c74d9424f3d1847e",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 230,
+        "y": 780,
+        "wires": [
+            [
+                "8c9990e417a1595e",
+                "a2840984d72df783"
+            ]
+        ]
+    },
+    {
+        "id": "a2840984d72df783",
+        "type": "subflow:5b4ca659d41e0820",
+        "z": "a3ebbf504839f530",
+        "g": "45ed251f37c0bc48",
+        "name": "Object detection",
+        "env": [
+            {
+                "name": "Location Name",
+                "value": "/home/vrodben1/Cursos UPV/OSCAR NODE-RED/Articulo FGCS/JSON-Result",
+                "type": "str"
+            },
+            {
+                "name": "Archive Name",
+                "value": "frame_mqtt.json",
+                "type": "str"
+            },
+            {
+                "name": "Classification Threshold",
+                "value": "0.2",
+                "type": "num"
+            }
+        ],
+        "x": 480,
+        "y": 820,
+        "wires": [
+            [
+                "b20dd57dc02c3c3c"
+            ],
+            [
+                "894d6a50a70dc6a1"
+            ]
+        ]
+    },
+    {
+        "id": "894d6a50a70dc6a1",
+        "type": "image",
+        "z": "a3ebbf504839f530",
+        "g": "45ed251f37c0bc48",
+        "name": "Image ",
+        "width": "400",
+        "data": "payload",
+        "dataType": "msg",
+        "thumbnail": false,
+        "active": true,
+        "pass": false,
+        "outputs": 0,
+        "x": 790,
+        "y": 840,
+        "wires": []
+    },
+    {
+        "id": "b20dd57dc02c3c3c",
+        "type": "debug",
+        "z": "a3ebbf504839f530",
+        "name": "Result Object detection Service",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1210,
+        "y": 820,
+        "wires": []
+    },
+    {
+        "id": "c74d9424f3d1847e",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "broker.emqx.io",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    }
+]
