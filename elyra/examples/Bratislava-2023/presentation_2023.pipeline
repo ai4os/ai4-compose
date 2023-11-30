@@ -1,0 +1,320 @@
+{
+  "doc_type": "pipeline",
+  "version": "3.0",
+  "json_schema": "http://api.dataplatform.ibm.com/schemas/common-pipeline/pipeline-flow/pipeline-flow-v3-schema.json",
+  "id": "elyra-auto-generated-pipeline",
+  "primary_pipeline": "primary",
+  "pipelines": [
+    {
+      "id": "primary",
+      "nodes": [
+        {
+          "id": "58487eea-0cf0-4b3c-85e2-c6c66e469ac0",
+          "type": "execution_node",
+          "op": "execute-notebook-node",
+          "app_data": {
+            "component_parameters": {
+              "dependencies": [],
+              "include_subdirectories": false,
+              "outputs": [],
+              "env_vars": [
+                {
+                  "env_var": "INPUT",
+                  "value": "output.txt"
+                },
+                {
+                  "env_var": "OUTPUT",
+                  "value": "gray_image.jpeg"
+                }
+              ],
+              "kubernetes_pod_annotations": [],
+              "kubernetes_pod_labels": [],
+              "kubernetes_secrets": [],
+              "kubernetes_shared_mem_size": {},
+              "kubernetes_tolerations": [],
+              "mounted_volumes": [],
+              "filename": "show_images.ipynb",
+              "runtime_image": "continuumio/anaconda3@sha256:a2816acd3acda208d92e0bf6c11eb41fda9009ea20f24e123dbf84bb4bd4c4b8"
+            },
+            "label": "",
+            "ui_data": {
+              "label": "show_images.ipynb",
+              "image": "/user/634476eccf0d890dd6d909761baf374852cf50a20474ee2feade49549996d01f@egi.eu/static/elyra/notebook.svg",
+              "x_pos": 540,
+              "y_pos": 274,
+              "description": "Run notebook file"
+            }
+          },
+          "inputs": [
+            {
+              "id": "inPort",
+              "app_data": {
+                "ui_data": {
+                  "cardinality": {
+                    "min": 0,
+                    "max": -1
+                  },
+                  "label": "Input Port"
+                }
+              },
+              "links": [
+                {
+                  "id": "f9f43b38-6da9-4c29-8217-fa84c37af9d9",
+                  "node_id_ref": "d63e5ccd-f4c5-44f3-a265-0accf135c41f",
+                  "port_id_ref": "outPort"
+                }
+              ]
+            }
+          ],
+          "outputs": [
+            {
+              "id": "outPort",
+              "app_data": {
+                "ui_data": {
+                  "cardinality": {
+                    "min": 0,
+                    "max": -1
+                  },
+                  "label": "Output Port"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "f5a5ce61-576b-4a0d-af5f-02cf37263d70",
+          "type": "execution_node",
+          "op": "execute-notebook-node",
+          "app_data": {
+            "component_parameters": {
+              "dependencies": [],
+              "include_subdirectories": false,
+              "outputs": [],
+              "env_vars": [
+                {
+                  "env_var": "INPUT",
+                  "value": "input/images/image1.jpg"
+                },
+                {
+                  "env_var": "OUTPUT",
+                  "value": "output/base64/"
+                }
+              ],
+              "kubernetes_pod_annotations": [],
+              "kubernetes_pod_labels": [],
+              "kubernetes_secrets": [],
+              "kubernetes_shared_mem_size": {},
+              "kubernetes_tolerations": [],
+              "mounted_volumes": [],
+              "filename": "oscar_plants.ipynb",
+              "runtime_image": "continuumio/anaconda3@sha256:a2816acd3acda208d92e0bf6c11eb41fda9009ea20f24e123dbf84bb4bd4c4b8"
+            },
+            "label": "",
+            "ui_data": {
+              "label": "oscar_plants.ipynb",
+              "image": "/user/634476eccf0d890dd6d909761baf374852cf50a20474ee2feade49549996d01f@egi.eu/static/elyra/notebook.svg",
+              "x_pos": 765,
+              "y_pos": 277,
+              "description": "Run notebook file"
+            }
+          },
+          "inputs": [
+            {
+              "id": "inPort",
+              "app_data": {
+                "ui_data": {
+                  "cardinality": {
+                    "min": 0,
+                    "max": -1
+                  },
+                  "label": "Input Port"
+                }
+              },
+              "links": [
+                {
+                  "id": "c725a66c-67eb-414a-b020-ed1cf47ba5d6",
+                  "node_id_ref": "58487eea-0cf0-4b3c-85e2-c6c66e469ac0",
+                  "port_id_ref": "outPort"
+                }
+              ]
+            }
+          ],
+          "outputs": [
+            {
+              "id": "outPort",
+              "app_data": {
+                "ui_data": {
+                  "cardinality": {
+                    "min": 0,
+                    "max": -1
+                  },
+                  "label": "Output Port"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "d63e5ccd-f4c5-44f3-a265-0accf135c41f",
+          "type": "execution_node",
+          "op": "execute-notebook-node",
+          "app_data": {
+            "component_parameters": {
+              "dependencies": [],
+              "include_subdirectories": false,
+              "outputs": [],
+              "env_vars": [
+                {
+                  "env_var": "INPUT",
+                  "value": "input/images/image1.jpg"
+                },
+                {
+                  "env_var": "OUTPUT",
+                  "value": "output/base64/"
+                }
+              ],
+              "kubernetes_pod_annotations": [],
+              "kubernetes_pod_labels": [],
+              "kubernetes_secrets": [],
+              "kubernetes_shared_mem_size": {},
+              "kubernetes_tolerations": [],
+              "mounted_volumes": [],
+              "filename": "oscar_grayify.ipynb",
+              "runtime_image": "continuumio/anaconda3@sha256:a2816acd3acda208d92e0bf6c11eb41fda9009ea20f24e123dbf84bb4bd4c4b8"
+            },
+            "label": "",
+            "ui_data": {
+              "label": "oscar_grayify.ipynb",
+              "image": "/user/634476eccf0d890dd6d909761baf374852cf50a20474ee2feade49549996d01f@egi.eu/static/elyra/notebook.svg",
+              "x_pos": 312,
+              "y_pos": 270,
+              "description": "Run notebook file"
+            }
+          },
+          "inputs": [
+            {
+              "id": "inPort",
+              "app_data": {
+                "ui_data": {
+                  "cardinality": {
+                    "min": 0,
+                    "max": -1
+                  },
+                  "label": "Input Port"
+                }
+              }
+            }
+          ],
+          "outputs": [
+            {
+              "id": "outPort",
+              "app_data": {
+                "ui_data": {
+                  "cardinality": {
+                    "min": 0,
+                    "max": -1
+                  },
+                  "label": "Output Port"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "6113cb78-3965-40cc-8f63-b7bb1369a291",
+          "type": "execution_node",
+          "op": "execute-notebook-node",
+          "app_data": {
+            "component_parameters": {
+              "dependencies": [],
+              "include_subdirectories": false,
+              "outputs": [],
+              "env_vars": [
+                {
+                  "env_var": "INPUT",
+                  "value": "output_2.txt"
+                },
+                {
+                  "env_var": "OUTPUT",
+                  "value": "data_plants.txt"
+                }
+              ],
+              "kubernetes_pod_annotations": [],
+              "kubernetes_pod_labels": [],
+              "kubernetes_secrets": [],
+              "kubernetes_shared_mem_size": {},
+              "kubernetes_tolerations": [],
+              "mounted_volumes": [],
+              "filename": "show_plants_results.ipynb",
+              "runtime_image": "continuumio/anaconda3@sha256:a2816acd3acda208d92e0bf6c11eb41fda9009ea20f24e123dbf84bb4bd4c4b8"
+            },
+            "label": "",
+            "ui_data": {
+              "label": "show_plants_results.ipynb",
+              "image": "/user/634476eccf0d890dd6d909761baf374852cf50a20474ee2feade49549996d01f@egi.eu/static/elyra/notebook.svg",
+              "x_pos": 1003,
+              "y_pos": 273,
+              "description": "Run notebook file"
+            }
+          },
+          "inputs": [
+            {
+              "id": "inPort",
+              "app_data": {
+                "ui_data": {
+                  "cardinality": {
+                    "min": 0,
+                    "max": -1
+                  },
+                  "label": "Input Port"
+                }
+              },
+              "links": [
+                {
+                  "id": "5e986f72-1f98-4549-9e9d-881b9c553f93",
+                  "node_id_ref": "f5a5ce61-576b-4a0d-af5f-02cf37263d70",
+                  "port_id_ref": "outPort"
+                }
+              ]
+            }
+          ],
+          "outputs": [
+            {
+              "id": "outPort",
+              "app_data": {
+                "ui_data": {
+                  "cardinality": {
+                    "min": 0,
+                    "max": -1
+                  },
+                  "label": "Output Port"
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "app_data": {
+        "ui_data": {
+          "comments": []
+        },
+        "version": 8,
+        "properties": {
+          "name": "presentation_2023",
+          "runtime": "Generic",
+          "pipeline_defaults": {
+            "kubernetes_shared_mem_size": {},
+            "mounted_volumes": [],
+            "kubernetes_pod_annotations": [],
+            "kubernetes_pod_labels": [],
+            "kubernetes_tolerations": [],
+            "env_vars": [],
+            "kubernetes_secrets": []
+          }
+        }
+      },
+      "runtime_ref": ""
+    }
+  ],
+  "schemas": []
+}
