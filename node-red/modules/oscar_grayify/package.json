@@ -1,0 +1,32 @@
+{
+  "name": "node-red-contrib-oscar-grayify",
+  "version": "0.0.1",
+  "description": "This node supports highly-scalable event-driven image conversion to grayscale using the popular ImageMagick software.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ai4os/ai4-compose.git"
+  },
+  "keywords": [
+    "node-red",
+    "OSCAR",
+    "grayify",
+    "GRyCAP",
+    "UPV",
+    "AI4EOSC"
+  ],
+  "author": "GRyCAP - UPV",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ai4os/ai4-compose/issues"
+  },
+  "homepage": "https://github.com/ai4os/ai4-compose/tree/main/node-red/modules",
+  "node-red": {
+    "nodes": {
+        "oscar-grayify-node": "oscar_grayify.js"
+    }
+  }
+}

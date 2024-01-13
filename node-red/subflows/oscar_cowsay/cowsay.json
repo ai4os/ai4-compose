@@ -1,0 +1,21 @@
+[
+    {
+        "id": "52591355d4027b1d",
+        "type": "sf:4ed408aca0be1f88",
+        "z": "b07ca221ab5f1497",
+        "name": "",
+        "Server": "https://inference.cloud.ai4eosc.eu",
+        "Service Name": "cowsay",
+        "Token": "",
+        "credentials": {
+            "Token": "__PWRD__"
+        },
+        "x": 1000,
+        "y": 380,
+        "wires": [
+            [
+                "07febef0c76cb610"
+            ]
+        ]
+    }
+]

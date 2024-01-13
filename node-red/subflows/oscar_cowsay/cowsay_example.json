@@ -1,0 +1,66 @@
+[
+    {
+        "id": "52591355d4027b1d",
+        "type": "sf:4ed408aca0be1f88",
+        "z": "b07ca221ab5f1497",
+        "name": "",
+        "Server": "https://inference.cloud.ai4eosc.eu",
+        "Service Name": "cowsay",
+        "Token": "",
+        "credentials": {
+            "Token": "__PWRD__"
+        },
+        "x": 1000,
+        "y": 380,
+        "wires": [
+            [
+                "07febef0c76cb610"
+            ]
+        ]
+    },
+    {
+        "id": "4fda3824a923e278",
+        "type": "inject",
+        "z": "b07ca221ab5f1497",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 780,
+        "y": 380,
+        "wires": [
+            [
+                "52591355d4027b1d"
+            ]
+        ]
+    },
+    {
+        "id": "07febef0c76cb610",
+        "type": "debug",
+        "z": "b07ca221ab5f1497",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1240,
+        "y": 380,
+        "wires": []
+    }
+]
