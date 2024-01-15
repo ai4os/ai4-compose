@@ -1,0 +1,387 @@
+[
+    {
+        "id": "17e086aba87b48d9",
+        "type": "subflow",
+        "name": "OSCAR Grayify Services",
+        "info": "<header>\n        <!-- menu de naveacion, logo , redes-->\n        <h1> OSCAR Grayify Services Node</h1>\n</header>\n    <main>\n        <section>\n            <article>\n                <h3>About Grayify </h3>\n                <p>This node supports highly-scalable event-driven image conversion to grayscale using the popular ImageMagick software.</p>\n                <p>ImageMagick® is a free and open-source software suite for displaying, converting, and editing raster image and vector image files. It can read and write over 200 image file formats, and can support a wide range of image manipulation operations, such as resizing, cropping, and color correction. </p>\n                <ul>\n                    <li>\n                        <a rel=\"stylesheet\" href=\"https://imagemagick.org/index.php\">ImageMagick </a>\n                    </li>\n                </ul>\n            </article>\n            <article>\n                <h3>About Cowsay Service in OSCAR</h3>\n                <p>The goal of this service is to have:</p>\n                <ul>\n                    <li>An input bucket created in Minio on which the user uploads the files to be converted.</li>\n                    <li>A function that is triggered upon each file upload in order to trigger the file conversion, which is automatically handled by an elastic Kubernetes cluster that provisions additional nodes on-demand if required.</li>\n                    <li>An output bucket created in Minio on which the user will find the converted files.</li>\n                </ul>\n                <p>For more information consult:</p>\n                <ul>\n                    <li>\n                        <a rel=\"stylesheet\" href=\"https://github.com/grycap/oscar/tree/master/examples/imagemagick\">Grayify Service </a>\n                    </li>\n                </ul>\n            </article>\n            <article>\n                <h3>Inputs</h3>\n                <p>The input variables will be the basic variables (OSCAR server url and credentials). In addition to the name that has been given to the grayify service on the server. Inside the input <code> msg.payload </code> must be the text to write. With all these elements, the service token is searched and then a request is made to the service ( POST /run/{serviceName}).</p>\n                <ul>\n                    <li>Grayify\n                        <a rel=\"stylesheet\" href=\"https://docs.oscar.grycap.net/api/\">Syns </a>\n                    </li>\n                </ul>\n            </article>\n            <article>\n                <h3>Outputs</h3>\n                <p> The node returns through <code>msg.payload</code> the grayscale image (base64), which can be used in image display nodes such as images preview node.</p>\n            </article>\n        </section>\n    </main>\n    <footer>\n        GRyCAP (Grupo de Grid y Computación de Altas Prestaciones) - UPV\n    </footer>",
+        "category": "OSCAR",
+        "in": [
+            {
+                "x": 40,
+                "y": 140,
+                "wires": [
+                    {
+                        "id": "84dc89f39647f833"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 1480,
+                "y": 200,
+                "wires": [
+                    {
+                        "id": "ae8a50a4693c5d99",
+                        "port": 0
+                    }
+                ]
+            },
+            {
+                "x": 1080,
+                "y": 360,
+                "wires": [
+                    {
+                        "id": "0d3b58fb7162dcd3",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "Server",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "icon": "font-awesome/fa-globe"
+                }
+            },
+            {
+                "name": "Service Name",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "icon": "font-awesome/fa-pencil"
+                }
+            },
+            {
+                "name": "Token",
+                "type": "cred",
+                "ui": {
+                    "icon": "font-awesome/fa-key"
+                }
+            }
+        ],
+        "meta": {
+            "module": "node-red-contrib-oscar-grayify",
+            "version": "1.0.0",
+            "author": "Vicente Rodriguez Benitez <vicente.rdguezb@gmail.com, vrodben1@i3m.upv.es>",
+            "desc": "Grayify Services at OSCAR",
+            "keywords": "node-red, oscar,grayify",
+            "license": "Apache-2.0"
+        },
+        "color": "#3FADB5",
+        "outputLabels": [
+            "Output image",
+            "Output data (complete json)"
+        ],
+        "icon": "font-awesome/fa-image",
+        "status": {
+            "x": 1420,
+            "y": 40,
+            "wires": [
+                {
+                    "id": "efeec0bcbcf76b24",
+                    "port": 0
+                },
+                {
+                    "id": "6e691a86cf1cc71c",
+                    "port": 0
+                }
+            ]
+        }
+    },
+    {
+        "id": "84dc89f39647f833",
+        "type": "change",
+        "z": "17e086aba87b48d9",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "oscar_server",
+                "pt": "msg",
+                "to": "Server",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "token",
+                "pt": "msg",
+                "to": "Token",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "image",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "grayify",
+                "pt": "msg",
+                "to": "Service Name",
+                "tot": "env"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 160,
+        "y": 140,
+        "wires": [
+            [
+                "efeec0bcbcf76b24",
+                "204de5f7959c78d8"
+            ]
+        ]
+    },
+    {
+        "id": "204de5f7959c78d8",
+        "type": "function",
+        "z": "17e086aba87b48d9",
+        "name": "Send plants-token",
+        "func": "\nvar token_grayify = msg.token;\n\n\nmsg.headers = {\n    Authorization: \"Bearer \" + token_grayify\n}\n\nmsg.payload = msg.image;\nmsg.url = msg.oscar_server+\"/run/\"+msg.grayify;\n\nreturn msg;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 310,
+        "y": 200,
+        "wires": [
+            [
+                "90c96bd44065f1a7"
+            ]
+        ]
+    },
+    {
+        "id": "90c96bd44065f1a7",
+        "type": "base64",
+        "z": "17e086aba87b48d9",
+        "name": "",
+        "action": "",
+        "property": "payload",
+        "x": 480,
+        "y": 200,
+        "wires": [
+            [
+                "0d3b58fb7162dcd3"
+            ]
+        ]
+    },
+    {
+        "id": "0d3b58fb7162dcd3",
+        "type": "http request",
+        "z": "17e086aba87b48d9",
+        "name": "Grayify Services Run",
+        "method": "POST",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 660,
+        "y": 200,
+        "wires": [
+            [
+                "5f4ab2ca0ecd79d0"
+            ]
+        ]
+    },
+    {
+        "id": "5f4ab2ca0ecd79d0",
+        "type": "string",
+        "z": "17e086aba87b48d9",
+        "name": "",
+        "methods": [
+            {
+                "name": "delLeftMost",
+                "params": [
+                    {
+                        "type": "str",
+                        "value": "response"
+                    }
+                ]
+            }
+        ],
+        "prop": "payload",
+        "propout": "payload",
+        "object": "msg",
+        "objectout": "msg",
+        "x": 870,
+        "y": 200,
+        "wires": [
+            [
+                "c99409e95147841e"
+            ]
+        ]
+    },
+    {
+        "id": "c99409e95147841e",
+        "type": "base64",
+        "z": "17e086aba87b48d9",
+        "name": "",
+        "action": "",
+        "property": "payload",
+        "x": 1020,
+        "y": 200,
+        "wires": [
+            [
+                "ae8a50a4693c5d99"
+            ]
+        ]
+    },
+    {
+        "id": "efeec0bcbcf76b24",
+        "type": "change",
+        "z": "17e086aba87b48d9",
+        "name": "Start Service",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Processing....",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 350,
+        "y": 40,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6e691a86cf1cc71c",
+        "type": "change",
+        "z": "17e086aba87b48d9",
+        "name": "End Service",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Finished....",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1330,
+        "y": 140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ae8a50a4693c5d99",
+        "type": "change",
+        "z": "17e086aba87b48d9",
+        "name": "Clear Data",
+        "rules": [
+            {
+                "t": "set",
+                "p": "token",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "oscar_server",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "grayify",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "image",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "token_grayify",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "url",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "filename",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1170,
+        "y": 200,
+        "wires": [
+            [
+                "6e691a86cf1cc71c"
+            ]
+        ]
+    },
+    {
+        "id": "39de3a7d58f9a244",
+        "type": "subflow:17e086aba87b48d9",
+        "z": "117ff88f2b90822d",
+        "name": "",
+        "env": [
+            {
+                "name": "Token",
+                "type": "cred"
+            }
+        ],
+        "credentials": {
+            "Token": ""
+        },
+        "x": 810,
+        "y": 320,
+        "wires": [
+            [
+                "92508ec6be81f534"
+            ],
+            []
+        ]
+    }
+]
