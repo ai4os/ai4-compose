@@ -1,0 +1,421 @@
+{
+    "id": "4627b10a39406f1d",
+    "type": "subflow",
+    "name": "OSCAR Plants Classification",
+    "info": "<main>\n    <section>\n        <article>\n            <h3>About Plants </h3>\n            <p>Classify plant images among 10K species from the iNaturalist dataset.</p>\n            <ul>\n                <li>\n                    <a rel=\"stylesheet\" href=\"https://marketplace.deep-hybrid-datacloud.eu/modules/deep-oc-plants-classification-tf.html\">Plants species classifier</a>\n                </li>\n            </ul>\n        </article>\n        <article>\n            <h3>About Plants Service in OSCAR</h3>\n            <p>This example uses the pre-trained classification model by DEEP-Hybrid-DataCloud Plants species classifier and is prepared to be used with synchronous invocations.</p>\n            <p>For more information consult:</p>\n            <ul>\n                <li>\n                    <a rel=\"stylesheet\" href=\"https://github.com/grycap/oscar/tree/master/examples/plant-classification-sync\">Plants Service </a>\n                </li>\n            </ul>\n        </article>\n        <article>\n            <h3>Inputs</h3>\n            <p>The input variables will be the basic variables (OSCAR server url and credentials). In addition to the name that has been given to the plants service on the server. Inside the input <code> msg.payload </code> must be the text to write. With all these elements, the service token is searched and then a request is made to the service ( POST /run/{serviceName}).</p>\n            <ul>\n                <li>\n                    <a rel=\"stylesheet\" href=\"https://docs.oscar.grycap.net/api/\">Syns </a>\n                </li>\n                </ul>\n        </article>\n        <article>\n            <h3>Outputs</h3>\n            <p> The node returns through <code>msg.payload</code> plant classification image using Lasagne/Theano (base64), which can be used in image display nodes such as images preview node.</p>\n        </article>\n    </section>\n</main>\n<footer>\n    GRyCAP (Grupo de Grid y Computación de Altas Prestaciones) - UPV\n</footer>",
+    "category": "OSCAR",
+    "in": [
+        {
+            "x": 100,
+            "y": 160,
+            "wires": [
+                {
+                    "id": "d5930328ebc40162"
+                }
+            ]
+        }
+    ],
+    "out": [
+        {
+            "x": 1580,
+            "y": 220,
+            "wires": [
+                {
+                    "id": "f70c4021ae48902b",
+                    "port": 0
+                }
+            ]
+        },
+        {
+            "x": 1040,
+            "y": 280,
+            "wires": [
+                {
+                    "id": "88c107c23cfd5121",
+                    "port": 0
+                }
+            ]
+        }
+    ],
+    "env": [
+        {
+            "name": "Server",
+            "type": "str",
+            "value": "",
+            "ui": {
+                "type": "input",
+                "opts": {
+                    "types": [
+                        "str"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Service Name",
+            "type": "str",
+            "value": "",
+            "ui": {
+                "type": "input",
+                "opts": {
+                    "types": [
+                        "str"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Token",
+            "type": "cred",
+            "ui": {
+                "type": "input",
+                "opts": {
+                    "types": [
+                        "cred"
+                    ]
+                }
+            }
+        }
+    ],
+    "meta": {
+        "module": "node-red-contrib-oscar-plants-classification",
+        "version": "0.0.6",
+        "author": "Vicente Rodriguez Benitez <vicente.rdguezb@gmail.com, vrodben1@i3m.upv.es>",
+        "desc": "Plants Classification Services at OSCAR",
+        "keywords": "node-red, oscar, plants-classification, plants, plant",
+        "license": "Apache-2.0"
+    },
+    "credentials": {
+        "Token": ""
+    },
+    "color": "#3FADB5",
+    "outputLabels": [
+        "Output image",
+        "Output data (complete json)"
+    ],
+    "icon": "font-awesome/fa-image",
+    "status": {
+        "x": 1760,
+        "y": 100,
+        "wires": [
+            {
+                "id": "3cb2f58833495981",
+                "port": 0
+            },
+            {
+                "id": "1f20433494796a42",
+                "port": 0
+            }
+        ]
+    },
+    "flow": [
+        {
+            "id": "d5930328ebc40162",
+            "type": "change",
+            "z": "4627b10a39406f1d",
+            "name": "",
+            "rules": [
+                {
+                    "t": "set",
+                    "p": "server",
+                    "pt": "msg",
+                    "to": "Server",
+                    "tot": "env"
+                },
+                {
+                    "t": "set",
+                    "p": "token",
+                    "pt": "msg",
+                    "to": "Token",
+                    "tot": "env"
+                },
+                {
+                    "t": "set",
+                    "p": "image",
+                    "pt": "msg",
+                    "to": "payload",
+                    "tot": "msg"
+                },
+                {
+                    "t": "set",
+                    "p": "service",
+                    "pt": "msg",
+                    "to": "Service Name",
+                    "tot": "env"
+                }
+            ],
+            "action": "",
+            "property": "",
+            "from": "",
+            "to": "",
+            "reg": false,
+            "x": 240,
+            "y": 160,
+            "wires": [
+                [
+                    "1f20433494796a42",
+                    "8e369ebaca235327"
+                ]
+            ]
+        },
+        {
+            "id": "f70c4021ae48902b",
+            "type": "change",
+            "z": "4627b10a39406f1d",
+            "name": "Clear Data",
+            "rules": [
+                {
+                    "t": "set",
+                    "p": "token",
+                    "pt": "msg",
+                    "to": "",
+                    "tot": "str"
+                },
+                {
+                    "t": "set",
+                    "p": "server",
+                    "pt": "msg",
+                    "to": "",
+                    "tot": "str"
+                },
+                {
+                    "t": "set",
+                    "p": "image",
+                    "pt": "msg",
+                    "to": "",
+                    "tot": "str"
+                },
+                {
+                    "t": "set",
+                    "p": "token_plants",
+                    "pt": "msg",
+                    "to": "",
+                    "tot": "str"
+                },
+                {
+                    "t": "set",
+                    "p": "filename",
+                    "pt": "msg",
+                    "to": "",
+                    "tot": "str"
+                },
+                {
+                    "t": "set",
+                    "p": "service",
+                    "pt": "msg",
+                    "to": "",
+                    "tot": "str"
+                }
+            ],
+            "action": "",
+            "property": "",
+            "from": "",
+            "to": "",
+            "reg": false,
+            "x": 1310,
+            "y": 220,
+            "wires": [
+                [
+                    "3cb2f58833495981"
+                ]
+            ],
+            "info": "<main>\n    <section>\n        <article>\n            <h3>About Plants </h3>\n            <p>Classify plant images among 10K species from the iNaturalist dataset.</p>\n            <ul>\n                <li>\n                    <a rel=\"stylesheet\" href=\"https://marketplace.deep-hybrid-datacloud.eu/modules/deep-oc-plants-classification-tf.html\">Plants species classifier</a>\n                </li>\n            </ul>\n        </article>\n        <article>\n            <h3>About Plants Service in OSCAR</h3>\n            <p>This example uses the pre-trained classification model by DEEP-Hybrid-DataCloud Plants species classifier and is prepared to be used with synchronous invocations.</p>\n            <p>For more information consult:</p>\n            <ul>\n                <li>\n                    <a rel=\"stylesheet\" href=\"https://github.com/grycap/oscar/tree/master/examples/plant-classification-sync\">Plants Service </a>\n                </li>\n            </ul>\n        </article>\n        <article>\n            <h3>Inputs</h3>\n            <p>The input variables will be the basic variables (OSCAR server url and credentials). In addition to the name that has been given to the plants service on the server. Inside the input <code> msg.payload </code> must be the text to write. With all these elements, the service token is searched and then a request is made to the service ( POST /run/{serviceName}).</p>\n            <ul>\n                <li>\n                    <a rel=\"stylesheet\" href=\"https://docs.oscar.grycap.net/api/\">Syns </a>\n                </li>\n                </ul>\n        </article>\n        <article>\n            <h3>Outputs</h3>\n            <p> The node returns through <code>msg.payload</code> plant classification image using Lasagne/Theano (base64), which can be used in image display nodes such as images preview node.</p>\n        </article>\n    </section>\n</main>\n<footer>\n    GRyCAP (Grupo de Grid y Computación de Altas Prestaciones) - UPV\n</footer>"
+        },
+        {
+            "id": "3cb2f58833495981",
+            "type": "change",
+            "z": "4627b10a39406f1d",
+            "name": "End Service",
+            "rules": [
+                {
+                    "t": "set",
+                    "p": "payload",
+                    "pt": "msg",
+                    "to": "Finished....",
+                    "tot": "str"
+                }
+            ],
+            "action": "",
+            "property": "",
+            "from": "",
+            "to": "",
+            "reg": false,
+            "x": 1410,
+            "y": 160,
+            "wires": [
+                []
+            ]
+        },
+        {
+            "id": "1f20433494796a42",
+            "type": "change",
+            "z": "4627b10a39406f1d",
+            "name": "Start Service",
+            "rules": [
+                {
+                    "t": "set",
+                    "p": "payload",
+                    "pt": "msg",
+                    "to": "Processing....",
+                    "tot": "str"
+                }
+            ],
+            "action": "",
+            "property": "",
+            "from": "",
+            "to": "",
+            "reg": false,
+            "x": 410,
+            "y": 100,
+            "wires": [
+                []
+            ]
+        },
+        {
+            "id": "8e369ebaca235327",
+            "type": "function",
+            "z": "4627b10a39406f1d",
+            "name": "Send plants-token",
+            "func": "var token_plants = msg.token;\n\n\nmsg.headers = {\n    Authorization: \"Bearer \" + token_plants\n}\n\nmsg.payload = msg.image;\nmsg.url = msg.server+\"/run/\"+msg.service;\nreturn msg;",
+            "outputs": 1,
+            "noerr": 0,
+            "initialize": "",
+            "finalize": "",
+            "libs": [],
+            "x": 350,
+            "y": 220,
+            "wires": [
+                [
+                    "493d6536f95080be"
+                ]
+            ]
+        },
+        {
+            "id": "493d6536f95080be",
+            "type": "base64",
+            "z": "4627b10a39406f1d",
+            "name": "",
+            "action": "",
+            "property": "payload",
+            "x": 540,
+            "y": 220,
+            "wires": [
+                [
+                    "88c107c23cfd5121"
+                ]
+            ]
+        },
+        {
+            "id": "f0775aa08f1484d5",
+            "type": "base64",
+            "z": "4627b10a39406f1d",
+            "name": "",
+            "action": "",
+            "property": "payload",
+            "x": 1140,
+            "y": 220,
+            "wires": [
+                [
+                    "f70c4021ae48902b"
+                ]
+            ]
+        },
+        {
+            "id": "88c107c23cfd5121",
+            "type": "http request",
+            "z": "4627b10a39406f1d",
+            "name": "Plant Classification Service Run",
+            "method": "POST",
+            "ret": "bin",
+            "paytoqs": "ignore",
+            "url": "",
+            "tls": "",
+            "persist": false,
+            "proxy": "",
+            "insecureHTTPParser": false,
+            "authType": "",
+            "senderr": false,
+            "headers": [],
+            "x": 770,
+            "y": 220,
+            "wires": [
+                [
+                    "ba0d668bec77f920"
+                ]
+            ]
+        },
+        {
+            "id": "ba0d668bec77f920",
+            "type": "string",
+            "z": "4627b10a39406f1d",
+            "name": "",
+            "methods": [
+                {
+                    "name": "delLeftMost",
+                    "params": [
+                        {
+                            "type": "str",
+                            "value": "response"
+                        }
+                    ]
+                }
+            ],
+            "prop": "payload",
+            "propout": "payload",
+            "object": "msg",
+            "objectout": "msg",
+            "x": 990,
+            "y": 220,
+            "wires": [
+                [
+                    "f0775aa08f1484d5"
+                ]
+            ]
+        },
+        {
+            "id": "316d5ddc31e27752",
+            "type": "tls-config",
+            "z": "4627b10a39406f1d",
+            "name": "",
+            "cert": "",
+            "key": "",
+            "ca": "",
+            "certname": "",
+            "keyname": "",
+            "caname": "",
+            "servername": "",
+            "verifyservercert": true,
+            "alpnprotocol": ""
+        },
+        {
+            "id": "553686766860afbc",
+            "type": "subflow:4627b10a39406f1d",
+            "z": "117ff88f2b90822d",
+            "name": "",
+            "env": [
+                {
+                    "name": "Server",
+                    "value": "https://inference.cloud.ai4eosc.eu",
+                    "type": "str"
+                },
+                {
+                    "name": "Service Name",
+                    "value": "plant-classification",
+                    "type": "str"
+                },
+                {
+                    "name": "Token",
+                    "type": "cred"
+                }
+            ],
+            "x": 820,
+            "y": 360,
+            "wires": [
+                [
+                    "92508ec6be81f534"
+                ],
+                []
+            ]
+        }
+    ]
+}
