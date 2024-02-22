@@ -9,6 +9,12 @@ authors:
   - family-names: Aguirre Ramírez
     given-names: Diego Alejandro
     email: dieagra@i3m.upv.es
+  - family-names: Rodríguez Benitez
+    given-names: Vicente
+    email: vrodben1@i3m.upv.es
+  - family-names: Calatrava Arroyo
+    given-names: Amanda
+    email: amcaar@i3m.upv.es
 repository-code: 'https://github.com/ai4os/ai4-compose'
 keywords:
   - Elyra
