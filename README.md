@@ -6,6 +6,7 @@
 
 Low-code composition of AI inference pipelines.
 
+[![SQAaaS badge shields.io](https://img.shields.io/badge/sqaaas%20software-bronze-e6ae77)](https://api.eu.badgr.io/public/assertions/V-yDIXf2RQ2LOKlKQxN1RQ "SQAaaS bronze badge achieved")
 
 ## Acknowledgements
 
