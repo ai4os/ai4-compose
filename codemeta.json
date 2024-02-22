@@ -7,7 +7,7 @@
     "identifier": "ai4-compose",
     "name": "AI4EOSC - AI4Compose",
     "version": "1.0.0",
-    "description": "Low-code composition of AI inference pipelines.",
+    "description": "Low-code composition of AI inference pipelines. For more information on flows and EGI notebooks, visit: https://forge.flows.dev.ai4eosc.eu/ and https://notebooks.egi.eu/hub/welcome",
     "license": "Apache License Version 2.0",
     "author": [
         {
@@ -45,7 +45,6 @@
     "applicationCategory": "Development Tools, Data Processing, Workflow Automation, Data Science",
     "codeRepository": "https://github.com/ai4os/ai4-compose",
     "releaseNotes": "https://github.com/ai4os/ai4-compose/releases/tag/v1.0.0",
-
     "contributor": [
         {
             "@type": "Person",
@@ -71,9 +70,8 @@
             "@type": "Person",
             "givenName": "Diego Alejandro",
             "familyName": "Aguirre Ramírez",
+            "email": "dieagra@i3m.upv.es"
         }
     ],
-    "flows": "https://forge.flows.dev.ai4eosc.eu/",
-    "egi-notebooks": "https://notebooks.egi.eu/hub/welcome",
     "readme": "https://github.com/ai4os/ai4-compose/blob/main/README.md"
 }
