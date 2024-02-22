@@ -1,9 +1,21 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
 cff-version: 1.2.0
-message: "If you use this software, please cite it as follows"
-title: "AI4EOSC - AI4Compose"
-version: 1.0.0
-date-released: 2024-02-22
+title: AI4EOSC - AI4Compose
+message: 'If you use this software, please cite it as follows'
+type: software
 authors:
-  - family-names: "Aguirre Ramírez"
-    given-names: "Diego Alejandro"
-    email: "dieagra@i3m.upv.es"
+  - family-names: Aguirre Ramírez
+    given-names: Diego Alejandro
+    email: dieagra@i3m.upv.es
+repository-code: 'https://github.com/ai4os/ai4-compose'
+keywords:
+  - Elyra
+  - Node-RED
+  - FlowFuse
+  - Composite Tools
+  - AI4EOSC
+license: Apache-2.0
+version: 1.0.0
+date-released: '2024-02-22'
