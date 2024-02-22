@@ -1,0 +1,9 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as follows"
+title: "AI4EOSC - AI4Compose"
+version: 1.0.0
+date-released: 2024-02-22
+authors:
+  - family-names: "Aguirre Ramírez"
+    given-names: "Diego Alejandro"
+    email: "dieagra@i3m.upv.es"
