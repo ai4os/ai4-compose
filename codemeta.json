@@ -8,7 +8,7 @@
     "name": "AI4EOSC - AI4Compose",
     "version": "1.0.0",
     "description": "Low-code composition of AI inference pipelines.",
-    "license": "GNU General Public License v3.0",
+    "license": "Apache License Version 2.0",
     "author": [
         {
             "@type": "Person",
