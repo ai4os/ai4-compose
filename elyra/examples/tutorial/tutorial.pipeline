@@ -40,8 +40,8 @@
             "ui_data": {
               "label": "show_images.ipynb",
               "image": "/user/634476eccf0d890dd6d909761baf374852cf50a20474ee2feade49549996d01f@egi.eu/static/elyra/notebook.svg",
-              "x_pos": 540,
-              "y_pos": 274,
+              "x_pos": 290,
+              "y_pos": 50,
               "description": "Run notebook file"
             }
           },
@@ -93,7 +93,7 @@
               "env_vars": [
                 {
                   "env_var": "INPUT",
-                  "value": "input/images/image1.jpg"
+                  "value": "output/images/gray_image.jpeg"
                 },
                 {
                   "env_var": "OUTPUT",
@@ -113,8 +113,8 @@
             "ui_data": {
               "label": "oscar_plants.ipynb",
               "image": "/user/634476eccf0d890dd6d909761baf374852cf50a20474ee2feade49549996d01f@egi.eu/static/elyra/notebook.svg",
-              "x_pos": 765,
-              "y_pos": 277,
+              "x_pos": 530,
+              "y_pos": 50,
               "description": "Run notebook file"
             }
           },
@@ -166,7 +166,7 @@
               "env_vars": [
                 {
                   "env_var": "INPUT",
-                  "value": "input/images/image1.jpg"
+                  "value": "input/images/image1.jpeg"
                 },
                 {
                   "env_var": "OUTPUT",
@@ -186,8 +186,8 @@
             "ui_data": {
               "label": "oscar_grayify.ipynb",
               "image": "/user/634476eccf0d890dd6d909761baf374852cf50a20474ee2feade49549996d01f@egi.eu/static/elyra/notebook.svg",
-              "x_pos": 312,
-              "y_pos": 270,
+              "x_pos": 51,
+              "y_pos": 50,
               "description": "Run notebook file"
             }
           },
@@ -252,8 +252,8 @@
             "ui_data": {
               "label": "show_plants_results.ipynb",
               "image": "/user/634476eccf0d890dd6d909761baf374852cf50a20474ee2feade49549996d01f@egi.eu/static/elyra/notebook.svg",
-              "x_pos": 1003,
-              "y_pos": 273,
+              "x_pos": 770,
+              "y_pos": 50,
               "description": "Run notebook file"
             }
           },
