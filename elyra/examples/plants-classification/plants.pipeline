@@ -9,159 +9,7 @@
       "id": "primary",
       "nodes": [
         {
-          "id": "3dff970c-b178-4e33-a398-80686c698e67",
-          "type": "execution_node",
-          "op": "execute-notebook-node",
-          "app_data": {
-            "component_parameters": {
-              "dependencies": [],
-              "include_subdirectories": false,
-              "outputs": [],
-              "env_vars": [
-                {
-                  "env_var": "BASE64_FILE_PATH",
-                  "value": "./output/base64/grayify.txt"
-                },
-                {
-                  "env_var": "IMAGE_OUTPUT_PATH",
-                  "value": "./output/images/grayify.jpg"
-                }
-              ],
-              "kubernetes_pod_annotations": [],
-              "kubernetes_pod_labels": [],
-              "kubernetes_secrets": [],
-              "kubernetes_shared_mem_size": {},
-              "kubernetes_tolerations": [],
-              "mounted_volumes": [],
-              "filename": "base_64_to_image.ipynb"
-            },
-            "label": "Display Image",
-            "ui_data": {
-              "label": "Display Image",
-              "image": "/user/634476eccf0d890dd6d909761baf374852cf50a20474ee2feade49549996d01f@egi.eu/static/elyra/notebook.svg",
-              "x_pos": 586,
-              "y_pos": 158,
-              "description": "Run notebook file"
-            }
-          },
-          "inputs": [
-            {
-              "id": "inPort",
-              "app_data": {
-                "ui_data": {
-                  "cardinality": {
-                    "min": 0,
-                    "max": -1
-                  },
-                  "label": "Input Port"
-                }
-              },
-              "links": [
-                {
-                  "id": "90dd804b-d045-478d-81c5-804be065f25a",
-                  "node_id_ref": "793c4a61-c4e5-45ff-8cfd-fd8c42c38eb1",
-                  "port_id_ref": "outPort"
-                }
-              ]
-            }
-          ],
-          "outputs": [
-            {
-              "id": "outPort",
-              "app_data": {
-                "ui_data": {
-                  "cardinality": {
-                    "min": 0,
-                    "max": -1
-                  },
-                  "label": "Output Port"
-                }
-              }
-            }
-          ]
-        },
-        {
-          "id": "793c4a61-c4e5-45ff-8cfd-fd8c42c38eb1",
-          "type": "execution_node",
-          "op": "execute-notebook-node",
-          "app_data": {
-            "component_parameters": {
-              "dependencies": [],
-              "include_subdirectories": false,
-              "outputs": [],
-              "env_vars": [
-                {
-                  "env_var": "TOKEN_FILE_PATH",
-                  "value": "./token/token.txt"
-                },
-                {
-                  "env_var": "IMAGE_FILE_PATH",
-                  "value": "./input/images/image3.jpg"
-                },
-                {
-                  "env_var": "OUTPUT_DIR",
-                  "value": "./output/base64/grayify.txt"
-                },
-                {
-                  "env_var": "SERVICE_NAME",
-                  "value": "grayify"
-                }
-              ],
-              "kubernetes_pod_annotations": [],
-              "kubernetes_pod_labels": [],
-              "kubernetes_secrets": [],
-              "kubernetes_shared_mem_size": {},
-              "kubernetes_tolerations": [],
-              "mounted_volumes": [],
-              "filename": "oscar_service_image.ipynb"
-            },
-            "label": "OSCAR Grayify",
-            "ui_data": {
-              "label": "OSCAR Grayify",
-              "image": "/user/634476eccf0d890dd6d909761baf374852cf50a20474ee2feade49549996d01f@egi.eu/static/elyra/notebook.svg",
-              "x_pos": 359,
-              "y_pos": 158,
-              "description": "Run notebook file"
-            }
-          },
-          "inputs": [
-            {
-              "id": "inPort",
-              "app_data": {
-                "ui_data": {
-                  "cardinality": {
-                    "min": 0,
-                    "max": -1
-                  },
-                  "label": "Input Port"
-                }
-              },
-              "links": [
-                {
-                  "id": "6119cbfb-2163-48ef-8e8f-6c8859101605",
-                  "node_id_ref": "9524329d-9736-4066-89cc-e985d757e60d",
-                  "port_id_ref": "outPort"
-                }
-              ]
-            }
-          ],
-          "outputs": [
-            {
-              "id": "outPort",
-              "app_data": {
-                "ui_data": {
-                  "cardinality": {
-                    "min": 0,
-                    "max": -1
-                  },
-                  "label": "Output Port"
-                }
-              }
-            }
-          ]
-        },
-        {
-          "id": "9524329d-9736-4066-89cc-e985d757e60d",
+          "id": "afc75278-06da-41a0-88c2-75188f1deee4",
           "type": "execution_node",
           "op": "execute-python-node",
           "app_data": {
@@ -191,8 +39,8 @@
             "ui_data": {
               "label": "Get Egi Token",
               "image": "/user/634476eccf0d890dd6d909761baf374852cf50a20474ee2feade49549996d01f@egi.eu/static/elyra/python.svg",
-              "x_pos": 133,
-              "y_pos": 158,
+              "x_pos": 53,
+              "y_pos": 57,
               "description": "Run Python script"
             }
           },
@@ -224,50 +72,202 @@
               }
             }
           ]
+        },
+        {
+          "id": "29b5a6b7-5896-4dbc-a111-313b8ab9fd28",
+          "type": "execution_node",
+          "op": "execute-notebook-node",
+          "app_data": {
+            "component_parameters": {
+              "dependencies": [],
+              "include_subdirectories": false,
+              "outputs": [],
+              "env_vars": [
+                {
+                  "env_var": "TOKEN_FILE_PATH",
+                  "value": "./token/token.txt"
+                },
+                {
+                  "env_var": "IMAGE_FILE_PATH",
+                  "value": "./input/images/image3.jpg"
+                },
+                {
+                  "env_var": "OUTPUT_DIR",
+                  "value": "./output/base64/plants.txt"
+                },
+                {
+                  "env_var": "SERVICE_NAME",
+                  "value": "plant-classification"
+                }
+              ],
+              "kubernetes_pod_annotations": [],
+              "kubernetes_pod_labels": [],
+              "kubernetes_secrets": [],
+              "kubernetes_shared_mem_size": {},
+              "kubernetes_tolerations": [],
+              "mounted_volumes": [],
+              "filename": "oscar_service_image.ipynb"
+            },
+            "label": "OSCAR Plants Classification",
+            "ui_data": {
+              "label": "OSCAR Plants Classification",
+              "image": "/user/634476eccf0d890dd6d909761baf374852cf50a20474ee2feade49549996d01f@egi.eu/static/elyra/notebook.svg",
+              "x_pos": 297,
+              "y_pos": 57,
+              "description": "Run notebook file"
+            }
+          },
+          "inputs": [
+            {
+              "id": "inPort",
+              "app_data": {
+                "ui_data": {
+                  "cardinality": {
+                    "min": 0,
+                    "max": -1
+                  },
+                  "label": "Input Port"
+                }
+              },
+              "links": [
+                {
+                  "id": "b745c536-b9a9-4b8b-ad22-f25fd308aa99",
+                  "node_id_ref": "afc75278-06da-41a0-88c2-75188f1deee4",
+                  "port_id_ref": "outPort"
+                }
+              ]
+            }
+          ],
+          "outputs": [
+            {
+              "id": "outPort",
+              "app_data": {
+                "ui_data": {
+                  "cardinality": {
+                    "min": 0,
+                    "max": -1
+                  },
+                  "label": "Output Port"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "690da96c-ce97-4c33-98de-e22bc5994d51",
+          "type": "execution_node",
+          "op": "execute-notebook-node",
+          "app_data": {
+            "component_parameters": {
+              "dependencies": [],
+              "include_subdirectories": false,
+              "outputs": [],
+              "env_vars": [
+                {
+                  "env_var": "BASE64_FILE_PATH",
+                  "value": "./output/base64/plants.txt"
+                },
+                {
+                  "env_var": "TEXT_OUTPUT_PATH",
+                  "value": "./output/data/data.txt"
+                }
+              ],
+              "kubernetes_pod_annotations": [],
+              "kubernetes_pod_labels": [],
+              "kubernetes_secrets": [],
+              "kubernetes_shared_mem_size": {},
+              "kubernetes_tolerations": [],
+              "mounted_volumes": [],
+              "filename": "base_64_to_text.ipynb"
+            },
+            "label": "Print Text",
+            "ui_data": {
+              "label": "Print Text",
+              "image": "/user/634476eccf0d890dd6d909761baf374852cf50a20474ee2feade49549996d01f@egi.eu/static/elyra/notebook.svg",
+              "x_pos": 544,
+              "y_pos": 57,
+              "description": "Run notebook file"
+            }
+          },
+          "inputs": [
+            {
+              "id": "inPort",
+              "app_data": {
+                "ui_data": {
+                  "cardinality": {
+                    "min": 0,
+                    "max": -1
+                  },
+                  "label": "Input Port"
+                }
+              },
+              "links": [
+                {
+                  "id": "a2aada94-4131-4346-bbf0-f2786e3a6712",
+                  "node_id_ref": "29b5a6b7-5896-4dbc-a111-313b8ab9fd28",
+                  "port_id_ref": "outPort"
+                }
+              ]
+            }
+          ],
+          "outputs": [
+            {
+              "id": "outPort",
+              "app_data": {
+                "ui_data": {
+                  "cardinality": {
+                    "min": 0,
+                    "max": -1
+                  },
+                  "label": "Output Port"
+                }
+              }
+            }
+          ]
         }
       ],
       "app_data": {
         "ui_data": {
           "comments": [
             {
-              "id": "e74b2c8f-58f8-45ee-9acd-b23f56f3980e",
-              "x_pos": 576.5999755859375,
-              "y_pos": 48,
+              "id": "5f28da83-cd9f-4783-9520-b135a4d37df2",
+              "x_pos": 46.5999755859375,
+              "y_pos": -34.00000214576721,
               "width": 175,
-              "height": 81,
-              "content": "This node converts the base64 format to an image and displays it in the notebook.",
-              "associated_id_refs": [
-                {
-                  "id": "f85d36d1-4171-4cd4-a9ef-4df702ae1b4c",
-                  "node_ref": "3dff970c-b178-4e33-a398-80686c698e67"
-                }
-              ]
-            },
-            {
-              "id": "363414e5-b1ad-4f09-81b1-ded0e6ad769a",
-              "x_pos": 126.5999755859375,
-              "y_pos": 65,
-              "width": 175,
-              "height": 64,
+              "height": 57,
               "content": "This node is used to obtain and save the EGI token as a file.",
               "associated_id_refs": [
                 {
-                  "id": "f3f3c7bb-2a19-461d-ab1d-671ba0996652",
-                  "node_ref": "9524329d-9736-4066-89cc-e985d757e60d"
+                  "id": "faf44856-fd77-45ac-97a2-22a5f007d9ea",
+                  "node_ref": "afc75278-06da-41a0-88c2-75188f1deee4"
                 }
               ]
             },
             {
-              "id": "efeb8379-982d-41fd-9f7b-af64bd1313a5",
-              "x_pos": 351.5999755859375,
-              "y_pos": 231,
+              "id": "0b2a779d-c0ac-41d8-8064-bf154db76628",
+              "x_pos": 287.5999755859375,
+              "y_pos": 136,
               "width": 175,
-              "height": 61,
-              "content": "This node is used to deploy the cowsay toy service.",
+              "height": 62,
+              "content": "This node is for deploying an OSCAR service that utilizes images as input.",
               "associated_id_refs": [
                 {
-                  "id": "7ff0e9d5-caa1-4723-b49f-16d01f11f4c6",
-                  "node_ref": "793c4a61-c4e5-45ff-8cfd-fd8c42c38eb1"
+                  "id": "72f207e6-d966-42ad-be2c-f31f8a815cf3",
+                  "node_ref": "29b5a6b7-5896-4dbc-a111-313b8ab9fd28"
+                }
+              ]
+            },
+            {
+              "id": "21478529-0fa1-4452-ac12-03ec7037b24b",
+              "x_pos": 536.5999755859375,
+              "y_pos": -41.000003814697266,
+              "width": 175,
+              "height": 74,
+              "content": "This node converts the base64 format to an plaint text and print it in the notebook.",
+              "associated_id_refs": [
+                {
+                  "id": "557b250e-5990-4d49-9bde-f21fd8970b3a",
+                  "node_ref": "690da96c-ce97-4c33-98de-e22bc5994d51"
                 }
               ]
             }
@@ -275,7 +275,7 @@
         },
         "version": 8,
         "properties": {
-          "name": "grayify",
+          "name": "plants",
           "runtime": "Generic",
           "pipeline_defaults": {
             "kubernetes_shared_mem_size": {},
