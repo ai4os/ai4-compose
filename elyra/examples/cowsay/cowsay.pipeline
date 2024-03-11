@@ -9,7 +9,79 @@
       "id": "primary",
       "nodes": [
         {
-          "id": "791869f5-485d-42ae-86b3-12f8074917ec",
+          "id": "6a8b70c2-4342-46de-a019-ab9013494386",
+          "type": "execution_node",
+          "op": "execute-notebook-node",
+          "app_data": {
+            "component_parameters": {
+              "dependencies": [],
+              "include_subdirectories": false,
+              "outputs": [],
+              "env_vars": [
+                {
+                  "env_var": "TEXT_INPUT",
+                  "value": "hello worl!"
+                },
+                {
+                  "env_var": "TOKEN_FILE_PATH",
+                  "value": "./token/EGI_Token.txt"
+                }
+              ],
+              "kubernetes_pod_annotations": [],
+              "kubernetes_pod_labels": [],
+              "kubernetes_secrets": [],
+              "kubernetes_shared_mem_size": {},
+              "kubernetes_tolerations": [],
+              "mounted_volumes": [],
+              "filename": "oscar_service_cowsay.ipynb"
+            },
+            "label": "OSCAR Cowsay",
+            "ui_data": {
+              "label": "OSCAR Cowsay",
+              "image": "/user/634476eccf0d890dd6d909761baf374852cf50a20474ee2feade49549996d01f@egi.eu/static/elyra/notebook.svg",
+              "x_pos": 394,
+              "y_pos": 196,
+              "description": "Run notebook file"
+            }
+          },
+          "inputs": [
+            {
+              "id": "inPort",
+              "app_data": {
+                "ui_data": {
+                  "cardinality": {
+                    "min": 0,
+                    "max": -1
+                  },
+                  "label": "Input Port"
+                }
+              },
+              "links": [
+                {
+                  "id": "776512b4-21e2-4fce-9dba-c457f9ebbda3",
+                  "node_id_ref": "3f40a9b0-0121-4e06-a9c8-4be8b53c2a21",
+                  "port_id_ref": "outPort"
+                }
+              ]
+            }
+          ],
+          "outputs": [
+            {
+              "id": "outPort",
+              "app_data": {
+                "ui_data": {
+                  "cardinality": {
+                    "min": 0,
+                    "max": -1
+                  },
+                  "label": "Output Port"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "3f40a9b0-0121-4e06-a9c8-4be8b53c2a21",
           "type": "execution_node",
           "op": "execute-python-node",
           "app_data": {
@@ -19,19 +91,12 @@
               "outputs": [],
               "env_vars": [
                 {
-                  "env_var": "ID"
+                  "env_var": "ENCODED_TOKEN_DIR",
+                  "value": "./token"
                 },
                 {
-                  "env_var": "ENDPOINT"
-                },
-                {
-                  "env_var": "USER"
-                },
-                {
-                  "env_var": "PASSWORD"
-                },
-                {
-                  "env_var": "JSON_NAME"
+                  "env_var": "ENCODED_TOKEN_FILE",
+                  "value": "EGI_Token.txt"
                 }
               ],
               "kubernetes_pod_annotations": [],
@@ -40,14 +105,14 @@
               "kubernetes_shared_mem_size": {},
               "kubernetes_tolerations": [],
               "mounted_volumes": [],
-              "filename": "generate_credentials.py"
+              "filename": "get_egi_token.py"
             },
-            "label": "",
+            "label": "Get Egi Token",
             "ui_data": {
-              "label": "generate_credentials.py",
-              "image": "/static/elyra/python.svg",
-              "x_pos": 127,
-              "y_pos": 195,
+              "label": "Get Egi Token",
+              "image": "/user/634476eccf0d890dd6d909761baf374852cf50a20474ee2feade49549996d01f@egi.eu/static/elyra/python.svg",
+              "x_pos": 137,
+              "y_pos": 196,
               "description": "Run Python script"
             }
           },
@@ -79,92 +144,51 @@
               }
             }
           ]
-        },
-        {
-          "id": "6a8b70c2-4342-46de-a019-ab9013494386",
-          "type": "execution_node",
-          "op": "execute-notebook-node",
-          "app_data": {
-            "component_parameters": {
-              "dependencies": [],
-              "include_subdirectories": false,
-              "outputs": [],
-              "env_vars": [
-                {
-                  "env_var": "JSON_NAME"
-                },
-                {
-                  "env_var": "TEXT_INPUT"
-                }
-              ],
-              "kubernetes_pod_annotations": [],
-              "kubernetes_pod_labels": [],
-              "kubernetes_secrets": [],
-              "kubernetes_shared_mem_size": {},
-              "kubernetes_tolerations": [],
-              "mounted_volumes": [],
-              "filename": "oscar_cowsay.ipynb"
-            },
-            "label": "",
-            "ui_data": {
-              "label": "oscar_cowsay.ipynb",
-              "image": "/static/elyra/notebook.svg",
-              "x_pos": 396,
-              "y_pos": 201,
-              "description": "Run notebook file"
-            }
-          },
-          "inputs": [
-            {
-              "id": "inPort",
-              "app_data": {
-                "ui_data": {
-                  "cardinality": {
-                    "min": 0,
-                    "max": -1
-                  },
-                  "label": "Input Port"
-                }
-              },
-              "links": [
-                {
-                  "id": "aad73fe1-3e96-4f7a-ba34-a701137aec19",
-                  "node_id_ref": "791869f5-485d-42ae-86b3-12f8074917ec",
-                  "port_id_ref": "outPort"
-                }
-              ]
-            }
-          ],
-          "outputs": [
-            {
-              "id": "outPort",
-              "app_data": {
-                "ui_data": {
-                  "cardinality": {
-                    "min": 0,
-                    "max": -1
-                  },
-                  "label": "Output Port"
-                }
-              }
-            }
-          ]
         }
       ],
       "app_data": {
         "ui_data": {
-          "comments": []
+          "comments": [
+            {
+              "id": "b6843404-751f-4aea-8f49-97b221128c48",
+              "x_pos": 127.5999755859375,
+              "y_pos": 103,
+              "width": 175,
+              "height": 56,
+              "content": "This node is used to obtain and save the EGI token as a file.",
+              "associated_id_refs": [
+                {
+                  "id": "98537d26-6381-4a24-ba34-59a3907a358b",
+                  "node_ref": "3f40a9b0-0121-4e06-a9c8-4be8b53c2a21"
+                }
+              ]
+            },
+            {
+              "id": "9fc09102-5d67-42b9-8dc4-e2d72e2e66bc",
+              "x_pos": 387.5999755859375,
+              "y_pos": 273,
+              "width": 175,
+              "height": 59,
+              "content": "This node is for deploying an OSCAR service that utilizes images as input.",
+              "associated_id_refs": [
+                {
+                  "id": "0c795d0c-dd93-47a5-8777-09528f5419d2",
+                  "node_ref": "6a8b70c2-4342-46de-a019-ab9013494386"
+                }
+              ]
+            }
+          ]
         },
         "version": 8,
         "properties": {
           "name": "cowsay",
           "runtime": "Generic",
           "pipeline_defaults": {
+            "kubernetes_shared_mem_size": {},
             "mounted_volumes": [],
             "kubernetes_pod_annotations": [],
             "kubernetes_pod_labels": [],
             "kubernetes_tolerations": [],
-            "kubernetes_shared_mem_size": {},
             "env_vars": [],
             "kubernetes_secrets": [],
             "runtime_image": "continuumio/anaconda3@sha256:a2816acd3acda208d92e0bf6c11eb41fda9009ea20f24e123dbf84bb4bd4c4b8"
