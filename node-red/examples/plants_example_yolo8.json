@@ -1,0 +1,106 @@
+[
+    {
+        "id": "6a7de38b4935675f",
+        "type": "sf:6924aa569048864e",
+        "z": "13fda2c4f1de6e60",
+        "name": "",
+        "Server": "https://inference.cloud.ai4eosc.eu",
+        "Service Name": "plants-classification-yolo-sync",
+        "Token": "",
+        "x": 1060,
+        "y": 280,
+        "wires": [
+            [
+                "1f2899dfce9bbae5"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "1f2899dfce9bbae5",
+        "type": "debug",
+        "z": "13fda2c4f1de6e60",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1320,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "8d6647d7ac6622db",
+        "type": "inject",
+        "z": "13fda2c4f1de6e60",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 520,
+        "y": 260,
+        "wires": [
+            [
+                "7059b7e2c0acbedd"
+            ]
+        ]
+    },
+    {
+        "id": "de4b327cb8345635",
+        "type": "image",
+        "z": "13fda2c4f1de6e60",
+        "name": "",
+        "width": 160,
+        "data": "payload",
+        "dataType": "msg",
+        "thumbnail": false,
+        "active": true,
+        "pass": false,
+        "outputs": 0,
+        "x": 880,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "7059b7e2c0acbedd",
+        "type": "http request",
+        "z": "13fda2c4f1de6e60",
+        "name": "",
+        "method": "GET",
+        "ret": "bin",
+        "paytoqs": "body",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/b/bc/T_albidum01.jpg",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 710,
+        "y": 260,
+        "wires": [
+            [
+                "6a7de38b4935675f",
+                "de4b327cb8345635"
+            ]
+        ]
+    }
+]
