@@ -1,0 +1,338 @@
+{
+    "id": "5b4ca659d41e0820",
+    "type": "subflow",
+    "name": "Frame-Service",
+    "info": "<main>\n    <section>\n        <article>\n            <h3>About Object Detection and Classification</h3>\n            <p> It uses YOLOv3 along with OpenCV’s DNN module to detect objects in images. This object detector will allow you to detect objects from among 80 categories, including birds. </p>\n        </article>\n        <article>\n            <h3>About Object Detection and Classification Service in OSCAR</h3>\n            <p>This service is created in such a way that birds are detected. The result of the service is an image with the detected object (in this case a bird) and the probability of its detection. This image is saved in a MinIO bucket. Additionally, this information is sent and published in an MQTT topic (bird/data).</p>\n            <p>For more information consult:</p>\n            <ul>\n                <li>\n                    <a rel=\"stylesheet\" href=\"https://pjreddie.com/darknet/yolo/\"> Object Detection and Classification Service </a>\n                </li>\n            </ul>\n        </article>\n        <article>\n            <h3>Inputs</h3>\n            <p>The input parameters of this node are the location where the node processing results will be saved. This will be a json file (the file name is an input parameter of the node). Additionally, the threshold for detecting birds in the images is set as an input parameter.</p>\n        </article>\n        <article>\n            <h3>Outputs</h3>\n            <p> Shows the number of images that have been processed and the number of birds that have been detected depending on the threshold value set. This provides an estimate to the user of the number of times a service has been invoked and how many birds were detected. It also shows each image that has been processed.</p>\n        </article>\n    </section>\n</main>\n<footer>\n    GryCAP\n</footer>",
+    "category": "OSCAR",
+    "in": [
+        {
+            "x": 60,
+            "y": 180,
+            "wires": [
+                {
+                    "id": "e808069afa6537fe"
+                }
+            ]
+        }
+    ],
+    "out": [
+        {
+            "x": 1210,
+            "y": 180,
+            "wires": [
+                {
+                    "id": "34731a8f8479c49b",
+                    "port": 0
+                }
+            ]
+        },
+        {
+            "x": 1220,
+            "y": 260,
+            "wires": [
+                {
+                    "id": "4077019bcf8454ab",
+                    "port": 0
+                }
+            ]
+        }
+    ],
+    "env": [
+        {
+            "name": "Location Name",
+            "type": "str",
+            "value": ""
+        },
+        {
+            "name": "Archive Name",
+            "type": "str",
+            "value": ""
+        },
+        {
+            "name": "Classification Threshold",
+            "type": "num",
+            "value": "",
+            "ui": {
+                "type": "input",
+                "opts": {
+                    "types": [
+                        "num"
+                    ]
+                }
+            }
+        }
+    ],
+    "meta": {
+        "module": "node-red-contrib-oscar-object-detection-classifier",
+        "version": "0.1.0",
+        "author": "Vicente Rodriguez Benitez <vicente.rdguezb@gmail.com, vrodben1@i3m.upv.es>",
+        "desc": "Object Detector Classifier Service for OSCAR",
+        "keywords": "node-red, upv, grycap, object detector classifier, object detector classifier service, oscar",
+        "license": "Apache-2.0"
+    },
+    "color": "#3FADB5",
+    "inputLabels": [
+        "MQTT Input"
+    ],
+    "outputLabels": [
+        "Data",
+        "Picture"
+    ],
+    "icon": "font-awesome/fa-file-picture-o",
+    "status": {
+        "x": 1180,
+        "y": 100,
+        "wires": [
+            {
+                "id": "fcd8a6a3277f377d",
+                "port": 0
+            }
+        ]
+    },
+    "flow": [
+        {
+            "id": "d49a4b0f5d8659b9",
+            "type": "function",
+            "z": "5b4ca659d41e0820",
+            "name": "extract data",
+            "func": "var data =msg.payload\n\nmsg.threshold_class = msg.threshold_class\n\nvar prob = data.substring(\n    data.indexOf(\"@\") + 1\n    )\n\nvar object = data.substring(0,\n    data.indexOf(\"@\") \n)\nvar i=object.lastIndexOf(\"/\")\nobject=\"out_image/\"+object.substring(i+1)+\".jpeg\"\nvar array = prob.split(',')\nmsg.data=prob\nmsg.array=array\nmsg.objectName=object\n\nreturn msg;",
+            "outputs": 1,
+            "noerr": 0,
+            "initialize": "",
+            "finalize": "",
+            "libs": [],
+            "x": 350,
+            "y": 180,
+            "wires": [
+                [
+                    "098769d2a968e71b",
+                    "d2740042f371c7d3"
+                ]
+            ]
+        },
+        {
+            "id": "098769d2a968e71b",
+            "type": "function",
+            "z": "5b4ca659d41e0820",
+            "name": "object data",
+            "func": "var result = msg.array;\nvar object=msg.objectName;\nvar umbral = msg.threshold_class;\nvar loc = msg.loc\nvar name = msg.name\n\nvar filename = msg.loc + \"/\" + msg.name\n\nvar i= global.get(\"num-frame\")\nvar list = global.get(\"list-f\")\nvar frame=global.get(\"frame\")\nvar total_bird=global.get(\"total_bird\") \n\nif (list > i){\n    i=i+1;\n    global.set(\"num-frame\",i)\n\n    var bird=0;    \n    msg.payload = {};\n    var threshold=0;\n    for (var b = 0; b < result.length; b++){\n        threshold= result[b].substring(result[b].indexOf(\":\") + 1)\n        if (result[b].includes(\"bird\") == true && parseFloat(threshold)>umbral){\n            bird=bird+1;\n            total_bird=total_bird+1;\n        }\n    }\n    global.set(\"total_bird\",total_bird);    \n    msg.payload.objectName=object;\n    msg.payload.bird_detection = bird +\" birds detection\"\n    msg.process = i + \" of \" + list + \" processes ( \" + total_bird + \" birds detected )\"\n    msg.payload.object_detection=result;\n    msg.filename=filename;\n}    \nif (i==list){\n    global.set(\"list-f\", 0)\n    global.set(\"num-frame\", 0)\n    global.set(\"frame\",1)\n    msg.filename = filename;\n    global.set(\"total_bird\", 0)  \n}\n\nreturn msg;\n\n\n",
+            "outputs": 1,
+            "noerr": 0,
+            "initialize": "// Code added here will be run once\n// whenever the node is started.\nglobal.set(\"num-frame\", 0)\nglobal.set(\"frame\",0)\nglobal.set(\"total_bird\", 0)  ",
+            "finalize": "",
+            "libs": [],
+            "x": 550,
+            "y": 180,
+            "wires": [
+                [
+                    "f63c223dd5ca9be6",
+                    "fcd8a6a3277f377d"
+                ]
+            ]
+        },
+        {
+            "id": "c932e02f532a45a4",
+            "type": "json",
+            "z": "5b4ca659d41e0820",
+            "name": "",
+            "property": "payload",
+            "action": "obj",
+            "pretty": false,
+            "x": 730,
+            "y": 260,
+            "wires": [
+                [
+                    "4077019bcf8454ab"
+                ]
+            ]
+        },
+        {
+            "id": "4077019bcf8454ab",
+            "type": "function",
+            "z": "5b4ca659d41e0820",
+            "name": "object data",
+            "func": "var Data=msg.payload\nmsg.payload=Data.objectData;\nreturn msg;",
+            "outputs": 1,
+            "noerr": 0,
+            "initialize": "",
+            "finalize": "",
+            "libs": [],
+            "x": 870,
+            "y": 260,
+            "wires": [
+                []
+            ]
+        },
+        {
+            "id": "f63c223dd5ca9be6",
+            "type": "file",
+            "z": "5b4ca659d41e0820",
+            "name": "",
+            "filename": "filename",
+            "filenameType": "msg",
+            "appendNewline": true,
+            "createDir": true,
+            "overwriteFile": "false",
+            "encoding": "none",
+            "x": 740,
+            "y": 180,
+            "wires": [
+                [
+                    "c8555213e1f20687"
+                ]
+            ]
+        },
+        {
+            "id": "c8555213e1f20687",
+            "type": "function",
+            "z": "5b4ca659d41e0820",
+            "name": "object data",
+            "func": "\nvar x=global.get(\"frame\")\nvar file = msg.filename\n\nif(x==1){\n    msg.filename=file\n    return msg;\n}\n\n\n\n",
+            "outputs": 1,
+            "noerr": 0,
+            "initialize": "",
+            "finalize": "",
+            "libs": [],
+            "x": 890,
+            "y": 180,
+            "wires": [
+                [
+                    "34731a8f8479c49b"
+                ]
+            ]
+        },
+        {
+            "id": "34731a8f8479c49b",
+            "type": "file in",
+            "z": "5b4ca659d41e0820",
+            "name": "",
+            "filename": "filename",
+            "filenameType": "msg",
+            "format": "utf8",
+            "chunk": false,
+            "sendError": false,
+            "encoding": "none",
+            "allProps": false,
+            "x": 1060,
+            "y": 180,
+            "wires": [
+                []
+            ]
+        },
+        {
+            "id": "e808069afa6537fe",
+            "type": "change",
+            "z": "5b4ca659d41e0820",
+            "name": "",
+            "rules": [
+                {
+                    "t": "set",
+                    "p": "threshold_class",
+                    "pt": "msg",
+                    "to": "Classification Threshold",
+                    "tot": "env"
+                },
+                {
+                    "t": "set",
+                    "p": "loc",
+                    "pt": "msg",
+                    "to": "Location Name",
+                    "tot": "env"
+                },
+                {
+                    "t": "set",
+                    "p": "name",
+                    "pt": "msg",
+                    "to": "Archive Name",
+                    "tot": "env"
+                }
+            ],
+            "action": "",
+            "property": "",
+            "from": "",
+            "to": "",
+            "reg": false,
+            "x": 180,
+            "y": 180,
+            "wires": [
+                [
+                    "d49a4b0f5d8659b9"
+                ]
+            ]
+        },
+        {
+            "id": "fcd8a6a3277f377d",
+            "type": "change",
+            "z": "5b4ca659d41e0820",
+            "name": "Start Service",
+            "rules": [
+                {
+                    "t": "set",
+                    "p": "payload",
+                    "pt": "msg",
+                    "to": "process",
+                    "tot": "msg"
+                }
+            ],
+            "action": "",
+            "property": "",
+            "from": "",
+            "to": "",
+            "reg": false,
+            "x": 730,
+            "y": 100,
+            "wires": [
+                []
+            ]
+        },
+        {
+            "id": "d2740042f371c7d3",
+            "type": "objects",
+            "z": "5b4ca659d41e0820",
+            "objects_name": "",
+            "host": "188dce915362f372",
+            "objects_operation": "getObject",
+            "objects_bucket": "frame-object",
+            "objects_object": "",
+            "objects_offset": "",
+            "objects_length": "",
+            "objects_stream": "",
+            "objects_size": "",
+            "objects_metadata": "",
+            "objects_sourceobject": "",
+            "objects_conditions": "",
+            "objects_objectslist": [],
+            "objects_prefix": "",
+            "objects_etag": "",
+            "objects_datetime": "",
+            "x": 550,
+            "y": 260,
+            "wires": [
+                [
+                    "c932e02f532a45a4"
+                ],
+                []
+            ]
+        },
+        {
+            "id": "188dce915362f372",
+            "type": "minio-config",
+            "name": "MinIO-Frosty",
+            "host": "minio.frosty-grothendieck5.im.grycap.net",
+            "port": "443",
+            "useSsl": true
+        },
+        {
+            "id": "21dfbef6114cbf33",
+            "type": "subflow:5b4ca659d41e0820",
+            "z": "b1cc275ad0ee8105",
+            "name": "",
+            "x": 820,
+            "y": 360,
+            "wires": [
+                [],
+                []
+            ]
+        }
+    ]
+}

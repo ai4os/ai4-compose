@@ -1,0 +1,257 @@
+{
+    "id": "07e58360df29d8fe",
+    "type": "subflow",
+    "name": "Audio-Service",
+    "info": "<main>\n    <section>\n        <article>\n            <h3>About Bird Sound Classifier </h3>\n            <p></p>\n        </article>\n        <article>\n            <h3>About Bird Sound Classifier Service in OSCAR</h3>\n            <p>It uses a pre-trained AI model to act as a bird sound classifier publicly available on the AI4EOSC marketplace, which uses the Xenocanth dataset [32]. This takes an audio file to perform bird sound classification with Deep Learning and will return a JSON with the top five predictions. Then it publishes the\nresults obtained in an MQTT topic (audio/data).</p>\n            <p>For more information consult:</p>\n            <ul>\n                <li>\n                    <a rel=\"stylesheet\" href=\"https://dashboard.cloud.ai4eosc.eu/marketplace/modules/deep-oc-birds-audio-classification-tf\"> Bird Sound Classifier Service </a>\n                </li>\n            </ul>\n        </article>\n        <article>\n            <h3>Inputs</h3>\n            <p>The data is published to an MQTT topic and through the bird sounds classification node a JSON file is created with all the processed audios. The user just has to enter the location where the file will be saved and the bird detection probability threshold that will be taken for bird detection.</p>\n        </article>\n        <article>\n            <h3>Outputs</h3>\n            <p> As the service execution process starts, the results of the services are also displayed in real time through the Labels (name of the birds) and Probabilities (probability value that it is a given bird) nodes as are executed, showing the user more information about the process. With the detection threshold value, birds that have a higher probability value are detected. Showing the number of birds detected at the bottom of the node.</p>\n        </article>\n    </section>\n</main>\n<footer>\n    GryCAP\n</footer>",
+    "category": "OSCAR",
+    "in": [
+        {
+            "x": 260,
+            "y": 220,
+            "wires": [
+                {
+                    "id": "96c1daec06cbcce4"
+                }
+            ]
+        }
+    ],
+    "out": [
+        {
+            "x": 880,
+            "y": 320,
+            "wires": [
+                {
+                    "id": "f8bfe0fe76107ba3",
+                    "port": 0
+                }
+            ]
+        }
+    ],
+    "env": [
+        {
+            "name": "Location Name",
+            "type": "str",
+            "value": "",
+            "ui": {
+                "type": "input",
+                "opts": {
+                    "types": [
+                        "str",
+                        "num"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Archive Name",
+            "type": "str",
+            "value": "",
+            "ui": {
+                "type": "input",
+                "opts": {
+                    "types": [
+                        "str",
+                        "num"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Classification Threshold",
+            "type": "num",
+            "value": "",
+            "ui": {
+                "type": "input",
+                "opts": {
+                    "types": [
+                        "num"
+                    ]
+                }
+            }
+        }
+    ],
+    "meta": {
+        "module": "node-red-contrib-oscar-bird-sound-classifier",
+        "version": "0.1.1",
+        "author": "Vicente Rodriguez Benitez <vicente.rdguezb@gmail.com, vrodben1@i3m.upv.es>",
+        "desc": "bird sound classifier for OSCAR",
+        "keywords": "node-red, upv,  oscar, grycap, bird sound classifier, audio-bird-service, audio-bird,  audio, bird",
+        "license": "Apache-2.0"
+    },
+    "color": "#3FADB5",
+    "icon": "font-awesome/fa-audio-description",
+    "status": {
+        "x": 900,
+        "y": 140,
+        "wires": [
+            {
+                "id": "2023667c9ea4f768",
+                "port": 0
+            }
+        ]
+    },
+    "flow": [
+        {},
+        {
+            "id": "909b4c0a800b13d9",
+            "type": "function",
+            "z": "07e58360df29d8fe",
+            "name": "object data",
+            "func": "var result = msg.data\nvar threshold = msg.threshold\nvar filename= msg.loc+\"/\"+msg.name\n\nvar i= global.get(\"num\")\nvar list = global.get(\"list\")\nvar num_bird=global.get(\"num_bird\")\n\nif (list > i){\n    var prob = result.substring(\n    result.indexOf(\"'probabilities': [\") + 18,\n    result.indexOf(\"], 'labels_info':\"))\n\n    var array = prob.split(','),\n    a = array[0], b = array[1], c = array[2], d = array[3], e = array[4];\n\n    var label = result.substring(\n    result.indexOf(\"'labels': [\") + 11,\n    result.indexOf(\"], 'probabilities':\"))\n\n    var array_1 = label.split(','),\n    aa = array_1[0], bb = array_1[1], cc = array_1[2], dd = array_1[3], ee = array_1[4];\n\n    msg.payload = {};\n\n    if (threshold <= parseFloat(a)){\n        msg.payload.bird_detection=aa;\n        num_bird=num_bird+1;\n        global.set(\"num_bird\",num_bird)\n    }\n    else {\n        msg.payload.bird_detection = \"No birds detection\"\n    }\n\n    msg.payload.probabilities = [];\n    msg.payload.probabilities[0] = parseFloat(a);\n    msg.payload.probabilities[1] = parseFloat(b);\n    msg.payload.probabilities[2] = parseFloat(c);\n    msg.payload.probabilities[3] = parseFloat(d);\n    msg.payload.probabilities[4] = parseFloat(e);\n\n    msg.payload.labels = []\n    msg.payload.labels[0] = aa;\n    msg.payload.labels[1] = bb;\n    msg.payload.labels[2] = cc;\n    msg.payload.labels[3] = dd;\n    msg.payload.labels[4] = ee;\n\n    msg.payload.object = result.substring(\n    result.indexOf(\"'title': '\") + 10,\n    result.indexOf(\"', 'labels'\"))\n\n    i = i + 1;\n    global.set(\"num\", i)\n    msg.process = i + \" of \" + list + \" processes ( \" + num_bird + \" birds detected )\" ;\n    msg.filename = filename\n\n}\nif (i==list){\n    global.set(\"list\", 0)\n    global.set(\"bird\", 1)\n    global.set(\"num_bird\",0)\n}\nmsg.filename = filename\nreturn msg;",
+            "outputs": 1,
+            "noerr": 0,
+            "initialize": "// Code added here will be run once\n// whenever the node is started.\nglobal.set(\"num_bird\", 0)",
+            "finalize": "",
+            "libs": [],
+            "x": 590,
+            "y": 220,
+            "wires": [
+                [
+                    "b3d6155772986810",
+                    "2023667c9ea4f768"
+                ]
+            ]
+        },
+        {
+            "id": "b3d6155772986810",
+            "type": "file",
+            "z": "07e58360df29d8fe",
+            "name": "",
+            "filename": "filename",
+            "filenameType": "msg",
+            "appendNewline": true,
+            "createDir": true,
+            "overwriteFile": "false",
+            "encoding": "none",
+            "x": 760,
+            "y": 220,
+            "wires": [
+                [
+                    "248fe2bf45b6b071"
+                ]
+            ]
+        },
+        {
+            "id": "96c1daec06cbcce4",
+            "type": "change",
+            "z": "07e58360df29d8fe",
+            "name": "",
+            "rules": [
+                {
+                    "t": "set",
+                    "p": "data",
+                    "pt": "msg",
+                    "to": "payload",
+                    "tot": "msg",
+                    "dc": true
+                },
+                {
+                    "t": "set",
+                    "p": "threshold",
+                    "pt": "msg",
+                    "to": "Classification Threshold",
+                    "tot": "env"
+                },
+                {
+                    "t": "set",
+                    "p": "loc",
+                    "pt": "msg",
+                    "to": "Location Name",
+                    "tot": "env"
+                },
+                {
+                    "t": "set",
+                    "p": "name",
+                    "pt": "msg",
+                    "to": "Archive Name",
+                    "tot": "env"
+                }
+            ],
+            "action": "",
+            "property": "",
+            "from": "",
+            "to": "",
+            "reg": false,
+            "x": 400,
+            "y": 220,
+            "wires": [
+                [
+                    "909b4c0a800b13d9"
+                ]
+            ]
+        },
+        {
+            "id": "2023667c9ea4f768",
+            "type": "change",
+            "z": "07e58360df29d8fe",
+            "name": "Start Service",
+            "rules": [
+                {
+                    "t": "set",
+                    "p": "payload",
+                    "pt": "msg",
+                    "to": "process",
+                    "tot": "msg"
+                }
+            ],
+            "action": "",
+            "property": "",
+            "from": "",
+            "to": "",
+            "reg": false,
+            "x": 770,
+            "y": 140,
+            "wires": [
+                []
+            ]
+        },
+        {
+            "id": "248fe2bf45b6b071",
+            "type": "function",
+            "z": "07e58360df29d8fe",
+            "name": "object data",
+            "func": "var x=global.get(\"bird\")\nvar file = msg.filename\n\nif(x==1){\n    msg.filename=file\n    return msg;\n}",
+            "outputs": 1,
+            "noerr": 0,
+            "initialize": "// Code added here will be run once\n// whenever the node is started.\nglobal.set(\"bird\", 0)\n",
+            "finalize": "",
+            "libs": [],
+            "x": 590,
+            "y": 320,
+            "wires": [
+                [
+                    "f8bfe0fe76107ba3"
+                ]
+            ]
+        },
+        {
+            "id": "f8bfe0fe76107ba3",
+            "type": "file in",
+            "z": "07e58360df29d8fe",
+            "name": "",
+            "filename": "filename",
+            "filenameType": "msg",
+            "format": "utf8",
+            "chunk": false,
+            "sendError": false,
+            "encoding": "none",
+            "allProps": false,
+            "x": 760,
+            "y": 320,
+            "wires": [
+                []
+            ]
+        },
+        {
+            "id": "6fba9e2cfa8af352",
+            "type": "subflow:07e58360df29d8fe",
+            "z": "676912fe7a55b352",
+            "name": "",
+            "x": 1000,
+            "y": 340,
+            "wires": [
+                []
+            ]
+        }
+    ]
+}
