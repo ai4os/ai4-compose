@@ -1,6 +1,6 @@
 {
-  "name": "node-red-contrib-oscar-plants-classification-yolov8",
-  "version": "0.0.2",
+  "name": "node-red-contrib-oscar-plants-classification-theano",
+  "version": "1.0.0",
   "description": "This node classsify plants images among 10k most popular plants species from iNaturalist dataset.",
   "main": "index.js",
   "scripts": {
@@ -13,14 +13,15 @@
     "plants",
     "classifier",
     "oscar",
-    "AI4EOSC"
+    "AI4EOSC",
+    "AI4OS"
   ],
   "author": "Diego Alejandro Aguirre Ramirez",
   "license": "ISC",
   "node-red": {
     "version": ">=2.0.0",
     "nodes": {
-      "BSC-node": "plants-yolo.js"
+      "BSC-node": "plants-theano.js"
     }
   }
 }
