@@ -1,42 +1,44 @@
 [
     {
-        "id": "6a7de38b4935675f",
+        "id": "b76fb1c67963a7e4",
         "type": "sf:6924aa569048864e",
-        "z": "13fda2c4f1de6e60",
+        "z": "42ad638c54c325bf",
         "name": "",
         "Server": "https://inference.cloud.ai4eosc.eu",
-        "Service Name": "plants-classification-yolo-sync",
+        "Service Name": "plant-classification-tensorflow",
         "Token": "",
-        "x": 1060,
-        "y": 280,
+        "credentials": {
+            "Token": ""
+        },
+        "x": 1120,
+        "y": 240,
         "wires": [
             [
-                "1f2899dfce9bbae5"
+                "ba0213a2aef7e98c"
             ],
             []
         ]
     },
     {
-        "id": "1f2899dfce9bbae5",
+        "id": "ba0213a2aef7e98c",
         "type": "debug",
-        "z": "13fda2c4f1de6e60",
+        "z": "42ad638c54c325bf",
         "name": "debug 1",
         "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
+        "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1320,
-        "y": 280,
+        "x": 1380,
+        "y": 240,
         "wires": []
     },
     {
-        "id": "8d6647d7ac6622db",
+        "id": "76ee7e77d764072a",
         "type": "inject",
-        "z": "13fda2c4f1de6e60",
+        "z": "42ad638c54c325bf",
         "name": "",
         "props": [
             {
@@ -54,18 +56,18 @@
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 520,
-        "y": 260,
+        "x": 640,
+        "y": 240,
         "wires": [
             [
-                "7059b7e2c0acbedd"
+                "40e2fe83df3d513e"
             ]
         ]
     },
     {
-        "id": "de4b327cb8345635",
+        "id": "68d609b61004b9bd",
         "type": "image",
-        "z": "13fda2c4f1de6e60",
+        "z": "42ad638c54c325bf",
         "name": "",
         "width": 160,
         "data": "payload",
@@ -74,14 +76,14 @@
         "active": true,
         "pass": false,
         "outputs": 0,
-        "x": 880,
-        "y": 440,
+        "x": 1040,
+        "y": 320,
         "wires": []
     },
     {
-        "id": "7059b7e2c0acbedd",
+        "id": "40e2fe83df3d513e",
         "type": "http request",
-        "z": "13fda2c4f1de6e60",
+        "z": "42ad638c54c325bf",
         "name": "",
         "method": "GET",
         "ret": "bin",
@@ -94,12 +96,16 @@
         "authType": "",
         "senderr": false,
         "headers": [],
-        "x": 710,
-        "y": 260,
+        "credentials": {
+            "user": "",
+            "password": ""
+        },
+        "x": 810,
+        "y": 240,
         "wires": [
             [
-                "6a7de38b4935675f",
-                "de4b327cb8345635"
+                "68d609b61004b9bd",
+                "b76fb1c67963a7e4"
             ]
         ]
     }

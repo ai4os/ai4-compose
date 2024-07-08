@@ -1,12 +1,12 @@
 
-# Plant Classification with YOLO v8
+# Plant Classification Theano
 
 Classify plant images among 10K species from the iNaturalist dataset.
 
 ## Installation
 
 ```bash
-npm install node-red-contrib-oscar-plants-classification-yolo
+npm install node-red-contrib-oscar-plants-classification-theano
 ```
 
 ## About Plants
@@ -31,7 +31,7 @@ The input variables will be the basic variables (OSCAR server URL and credential
 
 ## Outputs
 
-The node returns through `msg.payload` plant classification data using YOLO version 8.
+The node returns through `msg.payload` plant classification data using Tensorflow.
 
 ---
 
