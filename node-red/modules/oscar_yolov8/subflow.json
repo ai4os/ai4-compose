@@ -1,0 +1,390 @@
+{
+    "id": "12538e869520378f",
+    "type": "subflow",
+    "name": "OSCAR YOLO8",
+    "info": "<header>\r\n    <!-- Navigation menu, logo, social media links -->\r\n    <h1>OSCAR Object Detection Service Node</h1>\r\n</header>\r\n<main>\r\n    <section>\r\n        <article>\r\n            <h3>About Object Detection with YOLOv8</h3>\r\n            <p>This node supports highly scalable, event-driven object detection using the state-of-the-art YOLOv8 (You Only Look Once version 8) model. YOLOv8 is a leading real-time object detection system that provides fast and accurate predictions on images.</p>\r\n            <p>YOLOv8 is widely recognized for its ability to detect multiple objects in an image with high precision. It is particularly well-suited for applications requiring quick responses and can identify thousands of object categories with impressive speed and accuracy.</p>\r\n            <ul>\r\n                <li>\r\n                    <a href=\"https://github.com/ultralytics/yolov8\">Learn more about YOLOv8</a>\r\n                </li>\r\n            </ul>\r\n        </article>\r\n        <article>\r\n            <h3>About Object Detection Service in OSCAR</h3>\r\n            <p>The goal of this service is to provide:</p>\r\n            <ul>\r\n                <li>An input bucket in Minio where users can upload images to be analyzed.</li>\r\n                <li>A function that is triggered upon each image upload, which processes the image using YOLOv8 to detect objects within it. The processing is automatically managed by an elastic Kubernetes cluster that scales as needed.</li>\r\n                <li>An output bucket in Minio where users can find the resulting images annotated with detected objects and their labels.</li>\r\n            </ul>\r\n            <p>For more information, consult:</p>\r\n            <ul>\r\n                <li>\r\n                    <a href=\"https://github.com/grycap/oscar/tree/master/examples/object-detection-yolov8\">Object Detection Service</a>\r\n                </li>\r\n            </ul>\r\n        </article>\r\n        <article>\r\n            <h3>Inputs</h3>\r\n            <p>The input variables will include the basic variables (OSCAR server URL and credentials) and the name of the object detection service on the server. The image data to analyze should be included within the input <code>msg.payload</code>. With these elements, the service token is retrieved, and a request is made to the service (POST /run/{serviceName}).</p>\r\n            <ul>\r\n                <li>YOLOv8 Detection\r\n                    <a href=\"https://docs.oscar.grycap.net/api/\">API Documentation</a>\r\n                </li>\r\n            </ul>\r\n        </article>\r\n        <article>\r\n            <h3>Outputs</h3>\r\n            <p>The node returns a JSON object through <code>msg.payload</code> containing the annotated image (base64) and the predictions of detected objects with their corresponding labels and confidence scores. This data can be used in image display nodes, such as image preview nodes, to visualize the results.</p>\r\n        </article>\r\n    </section>\r\n</main>\r\n<footer>\r\n    GRyCAP (Grupo de Grid y Computación de Altas Prestaciones) - UPV\r\n</footer>\r\n",
+    "category": "",
+    "in": [
+        {
+            "x": 60,
+            "y": 140,
+            "wires": [
+                {
+                    "id": "8d557b6d9ec2cdf1"
+                }
+            ]
+        }
+    ],
+    "out": [
+        {
+            "x": 1480,
+            "y": 180,
+            "wires": [
+                {
+                    "id": "251fab8977ee6fc1",
+                    "port": 0
+                }
+            ]
+        },
+        {
+            "x": 1070,
+            "y": 260,
+            "wires": [
+                {
+                    "id": "18b84ad67ad56014",
+                    "port": 0
+                }
+            ]
+        }
+    ],
+    "env": [
+        {
+            "name": "Server",
+            "type": "str",
+            "value": ""
+        },
+        {
+            "name": "Service Name",
+            "type": "str",
+            "value": ""
+        },
+        {
+            "name": "Token",
+            "type": "cred",
+            "ui": {
+                "type": "input",
+                "opts": {
+                    "types": [
+                        "str",
+                        "num",
+                        "bool",
+                        "json",
+                        "bin",
+                        "env",
+                        "cred"
+                    ]
+                }
+            }
+        }
+    ],
+    "meta": {
+        "module": "node-red-contrib-oscar-yolo",
+        "version": "1.0.0",
+        "author": "Diego Alejandro Aguirre Ramírez <aguirre.dial@gmail.com, dieagra@i3m.upv.es>",
+        "desc": "YOLO Services at OSCAR",
+        "keywords": "node-red, oscar,yolo",
+        "license": "Apache-2.0"
+    },
+    "color": "#3FADB5",
+    "outputLabels": [
+        "Output image",
+        "Output data (Complete JSON)"
+    ],
+    "icon": "font-awesome/fa-image",
+    "status": {
+        "x": 1560,
+        "y": 80,
+        "wires": [
+            {
+                "id": "863fce744776318f",
+                "port": 0
+            },
+            {
+                "id": "2512cc5b69f017d9",
+                "port": 0
+            }
+        ]
+    },
+    "flow": [
+        {
+            "id": "d0694fda340e5e68",
+            "type": "function",
+            "z": "12538e869520378f",
+            "name": "Send Yolo Token",
+            "func": "\nvar token = msg.token;\n\n\nmsg.headers = {\n    Authorization: \"Bearer \" + token\n}\n\nmsg.payload = msg.image;\nmsg.url = msg.oscar_server + \"/run/\" + msg.yolo;\n\nreturn msg;\n\n",
+            "outputs": 1,
+            "noerr": 0,
+            "initialize": "",
+            "finalize": "",
+            "libs": [],
+            "x": 410,
+            "y": 180,
+            "wires": [
+                [
+                    "5641a1807df4c708"
+                ]
+            ]
+        },
+        {
+            "id": "5641a1807df4c708",
+            "type": "base64",
+            "z": "12538e869520378f",
+            "name": "",
+            "action": "",
+            "property": "payload",
+            "x": 580,
+            "y": 180,
+            "wires": [
+                [
+                    "18b84ad67ad56014"
+                ]
+            ]
+        },
+        {
+            "id": "18b84ad67ad56014",
+            "type": "http request",
+            "z": "12538e869520378f",
+            "name": "YOLO Services Run",
+            "method": "POST",
+            "ret": "obj",
+            "paytoqs": "ignore",
+            "url": "",
+            "tls": "",
+            "persist": false,
+            "proxy": "",
+            "insecureHTTPParser": false,
+            "authType": "",
+            "senderr": false,
+            "headers": [],
+            "x": 760,
+            "y": 180,
+            "wires": [
+                [
+                    "03aa7b22523be219"
+                ]
+            ]
+        },
+        {
+            "id": "03aa7b22523be219",
+            "type": "string",
+            "z": "12538e869520378f",
+            "name": "",
+            "methods": [
+                {
+                    "name": "delLeftMost",
+                    "params": [
+                        {
+                            "type": "str",
+                            "value": "response"
+                        }
+                    ]
+                }
+            ],
+            "prop": "payload",
+            "propout": "payload",
+            "object": "msg",
+            "objectout": "msg",
+            "x": 950,
+            "y": 180,
+            "wires": [
+                [
+                    "47d584fbcfd73cf4"
+                ]
+            ]
+        },
+        {
+            "id": "47d584fbcfd73cf4",
+            "type": "base64",
+            "z": "12538e869520378f",
+            "name": "",
+            "action": "",
+            "property": "payload",
+            "x": 1100,
+            "y": 180,
+            "wires": [
+                [
+                    "251fab8977ee6fc1"
+                ]
+            ]
+        },
+        {
+            "id": "251fab8977ee6fc1",
+            "type": "change",
+            "z": "12538e869520378f",
+            "name": "Clear Data",
+            "rules": [
+                {
+                    "t": "set",
+                    "p": "token",
+                    "pt": "msg",
+                    "to": "",
+                    "tot": "str"
+                },
+                {
+                    "t": "set",
+                    "p": "oscar_server",
+                    "pt": "msg",
+                    "to": "",
+                    "tot": "str"
+                },
+                {
+                    "t": "set",
+                    "p": "yolo",
+                    "pt": "msg",
+                    "to": "",
+                    "tot": "str"
+                },
+                {
+                    "t": "set",
+                    "p": "image",
+                    "pt": "msg",
+                    "to": "",
+                    "tot": "str"
+                },
+                {
+                    "t": "set",
+                    "p": "token",
+                    "pt": "msg",
+                    "to": "",
+                    "tot": "str"
+                },
+                {
+                    "t": "set",
+                    "p": "url",
+                    "pt": "msg",
+                    "to": "",
+                    "tot": "str"
+                },
+                {
+                    "t": "set",
+                    "p": "filename",
+                    "pt": "msg",
+                    "to": "",
+                    "tot": "str"
+                }
+            ],
+            "action": "",
+            "property": "",
+            "from": "",
+            "to": "",
+            "reg": false,
+            "x": 1250,
+            "y": 180,
+            "wires": [
+                [
+                    "863fce744776318f"
+                ]
+            ]
+        },
+        {
+            "id": "8d557b6d9ec2cdf1",
+            "type": "change",
+            "z": "12538e869520378f",
+            "name": "",
+            "rules": [
+                {
+                    "t": "set",
+                    "p": "oscar_server",
+                    "pt": "msg",
+                    "to": "Server",
+                    "tot": "env"
+                },
+                {
+                    "t": "set",
+                    "p": "token",
+                    "pt": "msg",
+                    "to": "Token",
+                    "tot": "msg"
+                },
+                {
+                    "t": "set",
+                    "p": "image",
+                    "pt": "msg",
+                    "to": "payload",
+                    "tot": "env"
+                },
+                {
+                    "t": "set",
+                    "p": "yolo",
+                    "pt": "msg",
+                    "to": "Service Name",
+                    "tot": "env"
+                }
+            ],
+            "action": "",
+            "property": "",
+            "from": "",
+            "to": "",
+            "reg": false,
+            "x": 200,
+            "y": 140,
+            "wires": [
+                [
+                    "d0694fda340e5e68",
+                    "2512cc5b69f017d9"
+                ]
+            ]
+        },
+        {
+            "id": "2512cc5b69f017d9",
+            "type": "change",
+            "z": "12538e869520378f",
+            "name": "Start Service",
+            "rules": [
+                {
+                    "t": "set",
+                    "p": "payload",
+                    "pt": "msg",
+                    "to": "Processing....",
+                    "tot": "str"
+                }
+            ],
+            "action": "",
+            "property": "",
+            "from": "",
+            "to": "",
+            "reg": false,
+            "x": 390,
+            "y": 80,
+            "wires": [
+                []
+            ]
+        },
+        {
+            "id": "863fce744776318f",
+            "type": "change",
+            "z": "12538e869520378f",
+            "name": "End Service",
+            "rules": [
+                {
+                    "t": "set",
+                    "p": "payload",
+                    "pt": "msg",
+                    "to": "Finished!",
+                    "tot": "str"
+                }
+            ],
+            "action": "",
+            "property": "",
+            "from": "",
+            "to": "",
+            "reg": false,
+            "x": 1430,
+            "y": 120,
+            "wires": [
+                []
+            ]
+        },
+        {
+            "id": "3397ac3081847c06",
+            "type": "subflow:12538e869520378f",
+            "z": "2422143461911897",
+            "name": "",
+            "env": [
+                {
+                    "name": "Token",
+                    "type": "cred"
+                }
+            ],
+            "credentials": {
+                "Token": ""
+            },
+            "x": 320,
+            "y": 160,
+            "wires": [
+                [],
+                []
+            ]
+        }
+    ]
+}
