@@ -18,7 +18,7 @@ This node utilizes the YOLOv8 (You Only Look Once version 8) model to detect obj
 
 ## About YOLOV8 Service in OSCAR
 
-his service uses the pre-trained YOLOv8 model provided by DEEP-Hybrid-DataCloud for object detection. It is designed to handle synchronous invocations and real-time image processing with high scalability, managed automatically by an elastic Kubernetes cluster.
+This service uses the pre-trained YOLOv8 model provided by DEEP-Hybrid-DataCloud for object detection. It is designed to handle synchronous invocations and real-time image processing with high scalability, managed automatically by an elastic Kubernetes cluster.
 
 For more information consult:
 
