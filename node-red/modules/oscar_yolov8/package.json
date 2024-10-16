@@ -1,0 +1,29 @@
+{
+  "name": "node-red-contrib-oscar-yolo",
+  "version": "1.0.1",
+  "description": "Detect objects in images using the state-of-the-art YOLOv8 model.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ai4os/ai4-compose.git"
+  },
+  "keywords": [
+    "node-red",
+    "upv",
+    "grycap",
+    "oscar",
+    "AI4EOSC",
+    "AI4OS"
+  ],
+  "author": "Diego Alejandro Aguirre Ramirez",
+  "license": "ISC",
+  "node-red": {
+    "version": ">=2.0.0",
+    "nodes": {
+      "yolo-node": "yolo.js"
+    }
+  }
+}

@@ -1,0 +1,190 @@
+[
+    {
+        "id": "cf86547d9ec1420f",
+        "type": "sf:12538e869520378f",
+        "z": "2422143461911897",
+        "name": "",
+        "Server": "",
+        "Service Name": "",
+        "Token": "",
+        "credentials": {
+            "Token": ""
+        },
+        "x": 800,
+        "y": 460,
+        "wires": [
+            [
+                "2d54ed6020715e03"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "2d54ed6020715e03",
+        "type": "debug",
+        "z": "2422143461911897",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1020,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "371c6f74fa7736e4",
+        "type": "inject",
+        "z": "2422143461911897",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 400,
+        "y": 460,
+        "wires": [
+            [
+                "7cc234032481c2ec"
+            ]
+        ]
+    },
+    {
+        "id": "7cc234032481c2ec",
+        "type": "http request",
+        "z": "2422143461911897",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": false,
+        "url": "",
+        "persist": false,
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 590,
+        "y": 460,
+        "wires": [
+            [
+                "cf86547d9ec1420f"
+            ]
+        ]
+    },
+    {
+        "id": "df3e9e676852b2ef",
+        "type": "image",
+        "z": "2422143461911897",
+        "name": "",
+        "width": 160,
+        "data": "payload",
+        "dataType": "msg",
+        "thumbnail": false,
+        "active": true,
+        "pass": false,
+        "outputs": 0,
+        "x": 680,
+        "y": 940,
+        "wires": []
+    },
+    {
+        "id": "a10bf6398ae20624",
+        "type": "inject",
+        "z": "2422143461911897",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 280,
+        "y": 840,
+        "wires": [
+            [
+                "11d4b0f331232b15"
+            ]
+        ]
+    },
+    {
+        "id": "67a84b1036024ac2",
+        "type": "debug",
+        "z": "2422143461911897",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 880,
+        "y": 840,
+        "wires": []
+    },
+    {
+        "id": "11d4b0f331232b15",
+        "type": "http request",
+        "z": "2422143461911897",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": false,
+        "url": "",
+        "persist": false,
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 470,
+        "y": 840,
+        "wires": [
+            [
+                "df3e9e676852b2ef",
+                "bf6a0ce80cddaea0"
+            ]
+        ]
+    },
+    {
+        "id": "bf6a0ce80cddaea0",
+        "type": "sf:12538e869520378f",
+        "z": "2422143461911897",
+        "name": "",
+        "Server": "",
+        "Service Name": "",
+        "Token": "",
+        "x": 680,
+        "y": 840,
+        "wires": [
+            [
+                "67a84b1036024ac2"
+            ],
+            []
+        ]
+    }
+]
