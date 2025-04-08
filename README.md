@@ -6,6 +6,10 @@
 
 AI4Compose is a suite of software utilities designed to facilitate the integration and orchestration of multiple artificial intelligence (AI) models and machine learning techniques. Its primary function is to amalgamate various AI components into organised workflows or pipelines. AI4Compose integrates with well-known visual programming tools such as Elyra and Node-RED (along with FlowFuse), enabling the creation of workflows from the inference of pre-trained models. Users can work with nodes and connections between them. Despite their different functionalities and capabilities, both platforms share a common purpose in utilising graphical composition tools applicable to AI models. As a tool for executing inference tasks, AI4Compose has been integrated with OSCAR. 
 
+<div align="center">
+  <img src="https://github.com/ai4os/ai4-compose/blob/main/img/Runtime_view_AI4Compose.png" alt="ai4compose architecture" width="500"/>
+</div>
+
 ## Elyra Integration
 
 In Elyra, AI4Compose presents a series of notebooks utilising OSCAR's functionalities, integrating OSCAR's Python client to invoke and interact with OSCAR services. This integration facilitates users in seamlessly blending AI models and machine learning techniques into their data science workflows, leveraging Elyra's notebook-based environment for a more efficient and productive development experience.
