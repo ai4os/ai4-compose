@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://ai4eosc.eu/wp-content/uploads/sites/10/2022/09/horizontal-transparent.png" alt="logo" width="500"/>
+  <img src="https://github.com/ai4os/ai4-compose/blob/main/img/ai4compose-logo-transparent.png" alt="ai4compose architecture" width="500"/>
 </div>
 
 # AI4Compose
@@ -21,6 +21,11 @@ For Node-RED, AI4Compose introduces new modules based on subflows. These subflow
 In both platforms, AI4Compose stands as a testament to the innovative fusion of AI orchestration and visual programming, offering users an accessible and powerful toolset for developing sophisticated AI-powered applications.
 
 [![SQAaaS badge shields.io](https://img.shields.io/badge/sqaaas%20software-silver-lightgrey)](https://api.eu.badgr.io/public/assertions/mmlz4p1eTvi5-ZEwXSpUdA "SQAaaS silver badge achieved")
+
+
+<div align="center">
+  <img src="https://ai4eosc.eu/wp-content/uploads/sites/10/2022/09/horizontal-transparent.png" alt="logo" width="500"/>
+</div>
 
 ## Acknowledgements
 
