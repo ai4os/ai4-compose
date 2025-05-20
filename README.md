@@ -20,8 +20,11 @@ For Node-RED, AI4Compose introduces new modules based on subflows. These subflow
 
 In both platforms, AI4Compose stands as a testament to the innovative fusion of AI orchestration and visual programming, offering users an accessible and powerful toolset for developing sophisticated AI-powered applications.
 
-[![SQAaaS badge shields.io](https://img.shields.io/badge/sqaaas%20software-silver-lightgrey)](https://api.eu.badgr.io/public/assertions/mmlz4p1eTvi5-ZEwXSpUdA "SQAaaS silver badge achieved")
+## More info and tutorials
+You can obtain more info of AI4Compose in the [official documentation of the AI4EOSC Project](https://docs.ai4os.eu/en/latest/howtos/pipelines/index.html). Also, you can find demo tutorials in the AI4EOSC [Youtube](https://www.youtube.com/@ai4eosc) channel.
 
+
+[![SQAaaS badge shields.io](https://img.shields.io/badge/sqaaas%20software-silver-lightgrey)](https://api.eu.badgr.io/public/assertions/mmlz4p1eTvi5-ZEwXSpUdA "SQAaaS silver badge achieved")
 
 <div align="center">
   <img src="https://ai4eosc.eu/wp-content/uploads/sites/10/2022/09/horizontal-transparent.png" alt="logo" width="500"/>
