@@ -1,4 +1,4 @@
-# ![FlowFuse Logo](https://avatars.githubusercontent.com/u/122208269?s=200&v=4) NodeRED-based solution
+# ![FlowFuse Logo](https://raw.githubusercontent.com/ai4os/ai4-compose/main/img/ff-logo--wordmark--light.png) NodeRED-based solution
 
 This repository contains a collection of nodes and interaction flows for [Node-RED](https://nodered.org/) specifically designed to interact with OSCAR. It includes example workflows, reusable subflows, and a Dockerfile for deploying a pre-configured Node-RED instance with all necessary dependencies.
 
