@@ -1,4 +1,4 @@
-# ![Elyra Logo](https://elyra.readthedocs.io/en/latest/_static/elyra-logo.svg) Elyra-based solution
+# ![Elyra Logo](https://raw.githubusercontent.com/ai4os/ai4-compose/main/img/elyra-horizontal-color.svg) Elyra-based solution
 
 This repository contains examples of how to use [OSCAR](https://oscar.egi.eu) with Elyra to create and manage AI pipelines in JupyterLab. It includes ready-to-use components that demonstrate the capabilities of Elyra and OSCAR in the context of AI workflows.
 
