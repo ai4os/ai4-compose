@@ -1,0 +1,433 @@
+[
+    {
+        "id": "610be1bbceb42075",
+        "type": "subflow",
+        "name": "OSCAR Phytoplankton-Classifier Async",
+        "info": "",
+        "category": "OSCAR",
+        "in": [
+            {
+                "x": 120,
+                "y": 180,
+                "wires": [
+                    {
+                        "id": "cf6bb2f137d8dc7e"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 1290,
+                "y": 340,
+                "wires": [
+                    {
+                        "id": "55117d6f4082229e",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "Phytoplankton-classifier",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "type": "none"
+                }
+            },
+            {
+                "name": "inputBucket",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "type": "input",
+                    "opts": {
+                        "types": [
+                            "str"
+                        ]
+                    }
+                }
+            },
+            {
+                "name": "objectName",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "type": "input",
+                    "opts": {
+                        "types": [
+                            "str"
+                        ]
+                    }
+                }
+            },
+            {
+                "name": "outputBucket",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "type": "input",
+                    "opts": {
+                        "types": [
+                            "str"
+                        ]
+                    }
+                }
+            },
+            {
+                "name": "Prefix",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "type": "input",
+                    "opts": {
+                        "types": [
+                            "str"
+                        ]
+                    }
+                }
+            }
+        ],
+        "meta": {},
+        "color": "#3FADB5",
+        "inputLabels": [
+            "Image"
+        ],
+        "outputLabels": [
+            "Json"
+        ],
+        "icon": "font-awesome/fa-picture-o",
+        "status": {
+            "x": 1100,
+            "y": 100,
+            "wires": [
+                {
+                    "id": "b6863d5583e8025e",
+                    "port": 0
+                },
+                {
+                    "id": "b2850769589025f6",
+                    "port": 0
+                },
+                {
+                    "id": "8c73b4d3484b1167",
+                    "port": 0
+                }
+            ]
+        }
+    },
+    {
+        "id": "17d2270ad85c9d69",
+        "type": "notifications",
+        "z": "610be1bbceb42075",
+        "notifications_name": "",
+        "host": "8b1cd69cc4852c7e",
+        "notifications_operation": "listenBucketNotification",
+        "notifications_bucket": "",
+        "notifications_notificationconfig": "",
+        "notifications_prefix": "",
+        "notifications_suffix": "",
+        "notifications_events": "",
+        "notifications_events_object_created_put": true,
+        "notifications_events_object_created_post": false,
+        "notifications_events_object_created_copy": false,
+        "notifications_events_object_created_complete_multipart_upload": false,
+        "notifications_events_object_removed_delete": false,
+        "notifications_events_object_accessed_get": false,
+        "notifications_events_object_accessed_head": false,
+        "x": 340,
+        "y": 340,
+        "wires": [
+            [
+                "f1615981a4d26994"
+            ],
+            [
+                "b2850769589025f6"
+            ]
+        ]
+    },
+    {
+        "id": "42f960c8cc2926a7",
+        "type": "function",
+        "z": "610be1bbceb42075",
+        "name": "function 76",
+        "func": "msg.stream = msg.imageUC5\nmsg.objectName = msg.objectNameUC5\nmsg.bucketName = msg.inBucketUC5\n\nflow.set(\"outBucket_UC5\", msg.outBucketUC5);\nflow.set(\"prefix_UC5\", msg.prefixUC5);\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 570,
+        "y": 200,
+        "wires": [
+            [
+                "9edc8ea735dc0436"
+            ]
+        ]
+    },
+    {
+        "id": "9edc8ea735dc0436",
+        "type": "objects",
+        "z": "610be1bbceb42075",
+        "objects_name": "",
+        "host": "8b1cd69cc4852c7e",
+        "objects_operation": "putObject",
+        "objects_bucket": "",
+        "objects_object": "",
+        "objects_offset": "",
+        "objects_length": "",
+        "objects_stream": "",
+        "objects_size": "",
+        "objects_metadata": "",
+        "objects_sourceobject": "",
+        "objects_conditions": "",
+        "objects_objectslist": [],
+        "objects_prefix": "",
+        "objects_etag": "",
+        "objects_datetime": "",
+        "x": 780,
+        "y": 200,
+        "wires": [
+            [
+                "e6d3d1cf60136645"
+            ],
+            [
+                "b2850769589025f6"
+            ]
+        ]
+    },
+    {
+        "id": "f1615981a4d26994",
+        "type": "function",
+        "z": "610be1bbceb42075",
+        "name": "function 77",
+        "func": "msg.objectName = msg.payload.listenBucketNotification.s3.object.key\nvar out = flow.get(\"outBucket_UC5\")\n\nmsg.bucketName = out\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 630,
+        "y": 340,
+        "wires": [
+            [
+                "3ffa70c17612dfa3"
+            ]
+        ]
+    },
+    {
+        "id": "3ffa70c17612dfa3",
+        "type": "objects",
+        "z": "610be1bbceb42075",
+        "objects_name": "",
+        "host": "8b1cd69cc4852c7e",
+        "objects_operation": "getObject",
+        "objects_bucket": "",
+        "objects_object": "",
+        "objects_offset": "",
+        "objects_length": "",
+        "objects_stream": "",
+        "objects_size": "",
+        "objects_metadata": "",
+        "objects_sourceobject": "",
+        "objects_conditions": "",
+        "objects_objectslist": [],
+        "objects_prefix": "",
+        "objects_etag": "",
+        "objects_datetime": "",
+        "x": 840,
+        "y": 340,
+        "wires": [
+            [
+                "55117d6f4082229e"
+            ],
+            [
+                "b2850769589025f6"
+            ]
+        ]
+    },
+    {
+        "id": "55117d6f4082229e",
+        "type": "function",
+        "z": "610be1bbceb42075",
+        "name": "function 78",
+        "func": "var data = msg.payload.objectData\nif (Buffer.isBuffer(data)) {\n    msg.payload = data.toString('utf8');\n}\n\n// Si es un objeto con datos binarios (por ejemplo, msg.payload.body en algunos casos)\nelse if (data && data.body && Buffer.isBuffer(data.body)) {\n    msg.payload = data.toString('utf8');\n}\n\n// Si ya es string, lo dejamos igual\nelse if (typeof data !== 'string') {\n    // Si es un objeto JS, puedes convertirlo a string plano (opcional)\n    msg.payload = JSON.stringify(data, null, 2);\n}\n\n\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1050,
+        "y": 340,
+        "wires": [
+            [
+                "8c73b4d3484b1167"
+            ]
+        ]
+    },
+    {
+        "id": "cf6bb2f137d8dc7e",
+        "type": "change",
+        "z": "610be1bbceb42075",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "prefixUC5",
+                "pt": "msg",
+                "to": "Prefix",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "outBucketUC5",
+                "pt": "msg",
+                "to": "outputBucket",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "imageUC5",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "inBucketUC5",
+                "pt": "msg",
+                "to": "inputBucket",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "objectNameUC5",
+                "pt": "msg",
+                "to": "objectName",
+                "tot": "env"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 310,
+        "y": 180,
+        "wires": [
+            [
+                "42f960c8cc2926a7",
+                "b6863d5583e8025e"
+            ]
+        ]
+    },
+    {
+        "id": "e6d3d1cf60136645",
+        "type": "function",
+        "z": "610be1bbceb42075",
+        "name": "function 79",
+        "func": "var out=flow.get(\"outBucket_UC5\")\nvar prefix = flow.get(\"prefix_UC5\")\nmsg.prefix =prefix\nmsg.bucketName=out\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 370,
+        "y": 300,
+        "wires": [
+            [
+                "17d2270ad85c9d69"
+            ]
+        ]
+    },
+    {
+        "id": "b2850769589025f6",
+        "type": "function",
+        "z": "610be1bbceb42075",
+        "name": "Error ",
+        "func": "var error = msg.payload\nif (error != null){\n   msg.payload=error;\n   return msg;\n}\nelse {\n   return null;\n}\n \n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 990,
+        "y": 280,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b6863d5583e8025e",
+        "type": "change",
+        "z": "610be1bbceb42075",
+        "name": "Start Service",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Processing....",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 700,
+        "y": 60,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8c73b4d3484b1167",
+        "type": "change",
+        "z": "610be1bbceb42075",
+        "name": "End Service",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Finished!!",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1210,
+        "y": 260,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8b1cd69cc4852c7e",
+        "type": "minio-config",
+        "name": "MinIO Phytoplankton",
+        "host": "your.minio-host.com",
+        "port": "",
+        "useSsl": true
+    },
+    {
+        "id": "6919e8b380cefdeb",
+        "type": "subflow:610be1bbceb42075",
+        "z": "0a79b7a22704278e",
+        "name": "",
+        "x": 770,
+        "y": 520,
+        "wires": [
+            [
+                "5d42411890fae819"
+            ]
+        ]
+    }
+]

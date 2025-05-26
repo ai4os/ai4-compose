@@ -1,0 +1,537 @@
+[
+    {
+        "id": "e1ab240bf7503ffe",
+        "type": "subflow",
+        "name": "OSCAR Fish Detector Async",
+        "info": "## OBSEA Fish DETECTOR\nThe OBSEA is an underwater observatory that has been acquiring multiparametric\n data since 2009. Over the years, various cameras have been deployed,\n resulting in a vast archive of pictures dating back to 2011. Historically, \n this data has been manually analyzed to extract ecological information \n about the fish community in the area, a process that is both time-consuming \n and repetitive.\n\nIn this application, we employed an AI-based fish detection and classification\n algorithm, leveraging YOLOv8, to automate this process. The model has been\n finetuned to detect and classify fish at the OBSEA underwater observatory. ",
+        "category": "OSCAR",
+        "in": [
+            {
+                "x": 40,
+                "y": 20,
+                "wires": [
+                    {
+                        "id": "0bec109bc08f7801"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 1310,
+                "y": 380,
+                "wires": [
+                    {
+                        "id": "e09b620e81a8b39b",
+                        "port": 0
+                    }
+                ]
+            },
+            {
+                "x": 1190,
+                "y": 320,
+                "wires": [
+                    {
+                        "id": "a0303878fd0ebd01",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "Input_Bucket",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "type": "input",
+                    "opts": {
+                        "types": [
+                            "str"
+                        ]
+                    }
+                }
+            },
+            {
+                "name": "Object_Name",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "type": "input",
+                    "opts": {
+                        "types": [
+                            "str"
+                        ]
+                    }
+                }
+            },
+            {
+                "name": "Output_Bucket",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "type": "input",
+                    "opts": {
+                        "types": [
+                            "str"
+                        ]
+                    }
+                }
+            },
+            {
+                "name": "Prefix",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "type": "input",
+                    "opts": {
+                        "types": [
+                            "str"
+                        ]
+                    }
+                }
+            }
+        ],
+        "meta": {
+            "module": "OSCAR Fish Detector Async",
+            "version": "0.0.1"
+        },
+        "color": "#3FADB5",
+        "inputLabels": [
+            "Image(base64)"
+        ],
+        "outputLabels": [
+            "Image",
+            "Json"
+        ],
+        "icon": "font-awesome/fa-file-image-o",
+        "status": {
+            "x": 1160,
+            "y": 40,
+            "wires": [
+                {
+                    "id": "b4f88166d03267a8",
+                    "port": 0
+                },
+                {
+                    "id": "242a31ed8aa5f7dd",
+                    "port": 0
+                },
+                {
+                    "id": "343d1c774c47d022",
+                    "port": 0
+                }
+            ]
+        }
+    },
+    {
+        "id": "6b4173c7e42b9adb",
+        "type": "objects",
+        "z": "e1ab240bf7503ffe",
+        "objects_name": "",
+        "host": "d4024ec671c405ab",
+        "objects_operation": "putObject",
+        "objects_bucket": "",
+        "objects_object": "",
+        "objects_offset": "",
+        "objects_length": "",
+        "objects_stream": "",
+        "objects_size": "",
+        "objects_metadata": "",
+        "objects_sourceobject": "",
+        "objects_conditions": "",
+        "objects_objectslist": [],
+        "objects_prefix": "",
+        "objects_etag": "",
+        "objects_datetime": "",
+        "x": 530,
+        "y": 80,
+        "wires": [
+            [
+                "fec01b21c56a1bbe"
+            ],
+            [
+                "242a31ed8aa5f7dd"
+            ]
+        ]
+    },
+    {
+        "id": "701f221b5b3a4a3a",
+        "type": "objects",
+        "z": "e1ab240bf7503ffe",
+        "objects_name": "",
+        "host": "d4024ec671c405ab",
+        "objects_operation": "getObject",
+        "objects_bucket": "",
+        "objects_object": "",
+        "objects_offset": "",
+        "objects_length": "",
+        "objects_stream": "",
+        "objects_size": "",
+        "objects_metadata": "",
+        "objects_sourceobject": "",
+        "objects_conditions": "",
+        "objects_objectslist": [],
+        "objects_prefix": "",
+        "objects_etag": "",
+        "objects_datetime": "",
+        "x": 710,
+        "y": 380,
+        "wires": [
+            [
+                "afbcf1a0a783a0a6"
+            ],
+            [
+                "242a31ed8aa5f7dd"
+            ]
+        ]
+    },
+    {
+        "id": "afbcf1a0a783a0a6",
+        "type": "function",
+        "z": "e1ab240bf7503ffe",
+        "name": "function 21",
+        "func": "msg.payload = msg.payload.objectData\nflow.set(\"outBucket_FD\", \"\");\nflow.set(\"prefix_FD\", \"\"); \nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 970,
+        "y": 380,
+        "wires": [
+            [
+                "e09b620e81a8b39b"
+            ]
+        ]
+    },
+    {
+        "id": "e09b620e81a8b39b",
+        "type": "base64",
+        "z": "e1ab240bf7503ffe",
+        "name": "",
+        "action": "str",
+        "property": "payload",
+        "x": 1140,
+        "y": 380,
+        "wires": [
+            [
+                "343d1c774c47d022"
+            ]
+        ]
+    },
+    {
+        "id": "977e4502a7c9f341",
+        "type": "notifications",
+        "z": "e1ab240bf7503ffe",
+        "notifications_name": "",
+        "host": "d4024ec671c405ab",
+        "notifications_operation": "listenBucketNotification",
+        "notifications_bucket": "",
+        "notifications_notificationconfig": "",
+        "notifications_prefix": "",
+        "notifications_suffix": "",
+        "notifications_events": "",
+        "notifications_events_object_created_put": true,
+        "notifications_events_object_created_post": false,
+        "notifications_events_object_created_copy": false,
+        "notifications_events_object_created_complete_multipart_upload": false,
+        "notifications_events_object_removed_delete": false,
+        "notifications_events_object_accessed_get": false,
+        "notifications_events_object_accessed_head": false,
+        "x": 190,
+        "y": 240,
+        "wires": [
+            [
+                "3e1cd7101182b323"
+            ],
+            [
+                "242a31ed8aa5f7dd"
+            ]
+        ]
+    },
+    {
+        "id": "3e1cd7101182b323",
+        "type": "function",
+        "z": "e1ab240bf7503ffe",
+        "name": "function 22",
+        "func": "msg.objectName = msg.payload.listenBucketNotification.s3.object.key;\nvar out = flow.get(\"outBucket_FD\")\n\nif (msg.objectName.endsWith('.json')) {\n    // Acción para archivos .json\n\n    msg.bucketName =out\n    return [msg, null];  // Devuelve a la primera salida\n}\n// Comprobar si el archivo termina en .jpg\nelse {\n    msg.bucketName = out\n    return [null, msg];  // Ninguna salida se activa\n}",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 430,
+        "y": 320,
+        "wires": [
+            [
+                "fab30a22c32c7a27"
+            ],
+            [
+                "701f221b5b3a4a3a"
+            ]
+        ]
+    },
+    {
+        "id": "6086a2f7368a9ead",
+        "type": "comment",
+        "z": "e1ab240bf7503ffe",
+        "name": "Async Fish-Detector",
+        "info": "Async Fish-Detector",
+        "x": 150,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "fab30a22c32c7a27",
+        "type": "objects",
+        "z": "e1ab240bf7503ffe",
+        "objects_name": "",
+        "host": "d4024ec671c405ab",
+        "objects_operation": "getObject",
+        "objects_bucket": "",
+        "objects_object": "",
+        "objects_offset": "",
+        "objects_length": "",
+        "objects_stream": "",
+        "objects_size": "",
+        "objects_metadata": "",
+        "objects_sourceobject": "",
+        "objects_conditions": "",
+        "objects_objectslist": [],
+        "objects_prefix": "",
+        "objects_etag": "",
+        "objects_datetime": "",
+        "x": 670,
+        "y": 320,
+        "wires": [
+            [
+                "0a35fe9d279e55b2"
+            ],
+            [
+                "242a31ed8aa5f7dd"
+            ]
+        ]
+    },
+    {
+        "id": "0a35fe9d279e55b2",
+        "type": "function",
+        "z": "e1ab240bf7503ffe",
+        "name": "function 23",
+        "func": "msg.payload = msg.payload.objectData\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 870,
+        "y": 320,
+        "wires": [
+            [
+                "a0303878fd0ebd01"
+            ]
+        ]
+    },
+    {
+        "id": "a0303878fd0ebd01",
+        "type": "json",
+        "z": "e1ab240bf7503ffe",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": true,
+        "x": 1010,
+        "y": 320,
+        "wires": [
+            [
+                "343d1c774c47d022"
+            ]
+        ]
+    },
+    {
+        "id": "7c0fe23c8828edd8",
+        "type": "function",
+        "z": "e1ab240bf7503ffe",
+        "name": "function 24",
+        "func": "msg.stream = msg.image\nmsg.objectName =msg.object_name\nmsg.bucketName=msg.in_bucket\nflow.set(\"outBucket_FD\", msg.out_bucket); \nflow.set(\"prefix_FD\", msg.prefix); \nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 80,
+        "wires": [
+            [
+                "6b4173c7e42b9adb"
+            ]
+        ]
+    },
+    {
+        "id": "0bec109bc08f7801",
+        "type": "change",
+        "z": "e1ab240bf7503ffe",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "prefix",
+                "pt": "msg",
+                "to": "Prefix",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "out_bucket",
+                "pt": "msg",
+                "to": "Output_Bucket",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "image",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "in_bucket",
+                "pt": "msg",
+                "to": "Input_Bucket",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "object_name",
+                "pt": "msg",
+                "to": "Object_Name",
+                "tot": "env"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 140,
+        "y": 80,
+        "wires": [
+            [
+                "7c0fe23c8828edd8",
+                "b4f88166d03267a8"
+            ]
+        ]
+    },
+    {
+        "id": "fec01b21c56a1bbe",
+        "type": "function",
+        "z": "e1ab240bf7503ffe",
+        "name": "function 25",
+        "func": "var out=flow.get(\"outBucket_FD\")\nvar prefix = flow.get(\"prefix_FD\")\nmsg.prefix =prefix\nmsg.bucketName=out\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 550,
+        "y": 140,
+        "wires": [
+            [
+                "977e4502a7c9f341"
+            ]
+        ]
+    },
+    {
+        "id": "242a31ed8aa5f7dd",
+        "type": "function",
+        "z": "e1ab240bf7503ffe",
+        "name": "Error ",
+        "func": "var error = msg.payload\nif (error != null){\n   msg.payload=error;\n   return msg;\n}\nelse {\n   return null;\n}\n \n;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 950,
+        "y": 140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "343d1c774c47d022",
+        "type": "change",
+        "z": "e1ab240bf7503ffe",
+        "name": "End Service",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Finished!",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1230,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b4f88166d03267a8",
+        "type": "change",
+        "z": "e1ab240bf7503ffe",
+        "name": "Start Service",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Processing....",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 350,
+        "y": 40,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d4024ec671c405ab",
+        "type": "minio-config",
+        "z": "e1ab240bf7503ffe",
+        "name": "MinIO Fish-Detector",
+        "host": "",
+        "port": "",
+        "useSsl": true
+    },
+    {
+        "id": "cc78383991c67a2b",
+        "type": "subflow:e1ab240bf7503ffe",
+        "z": "4218b6a2267210ec",
+        "name": "",
+        "x": 540,
+        "y": 140,
+        "wires": [
+            [
+                "3ca6bbde604c56ac"
+            ],
+            [
+                "75b72baa74997756"
+            ]
+        ]
+    }
+]

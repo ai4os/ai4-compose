@@ -1,0 +1,833 @@
+[
+    {
+        "id": "44c523f3a12c4acf",
+        "type": "subflow",
+        "name": "OSCAR Litter-Assessment Async",
+        "info": "",
+        "category": "OSCAR",
+        "in": [
+            {
+                "x": 140,
+                "y": 160,
+                "wires": [
+                    {
+                        "id": "6f222cf1c532e242"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 1320,
+                "y": 440,
+                "wires": [
+                    {
+                        "id": "ddf7f1ec72a34ce2",
+                        "port": 0
+                    }
+                ]
+            },
+            {
+                "x": 1310,
+                "y": 520,
+                "wires": [
+                    {
+                        "id": "64db48773d9671d8",
+                        "port": 0
+                    }
+                ]
+            },
+            {
+                "x": 1230,
+                "y": 640,
+                "wires": [
+                    {
+                        "id": "0d41a4db94ab291a",
+                        "port": 0
+                    }
+                ]
+            },
+            {
+                "x": 1230,
+                "y": 700,
+                "wires": [
+                    {
+                        "id": "dfa57974c081d493",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "Litter Assessment",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "type": "none"
+                }
+            },
+            {
+                "name": "inputBucket",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "type": "input",
+                    "opts": {
+                        "types": [
+                            "str"
+                        ]
+                    }
+                }
+            },
+            {
+                "name": "objectName",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "type": "input",
+                    "opts": {
+                        "types": [
+                            "str"
+                        ]
+                    }
+                }
+            },
+            {
+                "name": "outputBucket",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "type": "input",
+                    "opts": {
+                        "types": [
+                            "str"
+                        ]
+                    }
+                }
+            },
+            {
+                "name": "Prefix",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "type": "input",
+                    "opts": {
+                        "types": [
+                            "str"
+                        ]
+                    }
+                }
+            }
+        ],
+        "meta": {
+            "version": "0.0.1"
+        },
+        "color": "#3FADB5",
+        "inputLabels": [
+            "Image"
+        ],
+        "outputLabels": [
+            "Quantification",
+            "Detection",
+            "PLD Image",
+            "PLQ Image"
+        ],
+        "icon": "font-awesome/fa-recycle",
+        "status": {
+            "x": 1200,
+            "y": 240,
+            "wires": [
+                {
+                    "id": "98ef4e93805f8fcc",
+                    "port": 0
+                },
+                {
+                    "id": "474ec58c698c4d4f",
+                    "port": 0
+                },
+                {
+                    "id": "e79d3dca686c9cf3",
+                    "port": 0
+                }
+            ]
+        }
+    },
+    {
+        "id": "0d10940f81d1eb93",
+        "type": "book",
+        "z": "44c523f3a12c4acf",
+        "name": "",
+        "raw": false,
+        "x": 630,
+        "y": 520,
+        "wires": [
+            [
+                "ad67104adff771a0"
+            ]
+        ]
+    },
+    {
+        "id": "aad11fce546c7a8f",
+        "type": "sheet",
+        "z": "44c523f3a12c4acf",
+        "name": "",
+        "sheetName": "",
+        "x": 930,
+        "y": 520,
+        "wires": [
+            [
+                "ddf7f1ec72a34ce2"
+            ]
+        ]
+    },
+    {
+        "id": "ad67104adff771a0",
+        "type": "function",
+        "z": "44c523f3a12c4acf",
+        "name": "function 67",
+        "func": "var msg1 = RED.util.cloneMessage(msg);\nmsg.selectSheetName = msg.payload.SheetNames[1]\nmsg1.selectSheetName = msg.payload.SheetNames[0]\nreturn [msg,msg1];",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 770,
+        "y": 520,
+        "wires": [
+            [
+                "aad11fce546c7a8f"
+            ],
+            [
+                "3a786ecdcc6a4927"
+            ]
+        ]
+    },
+    {
+        "id": "997658d6f3bde4d9",
+        "type": "zip",
+        "z": "44c523f3a12c4acf",
+        "name": "",
+        "mode": "decompress",
+        "filename": "",
+        "compressionlevel": 6,
+        "outasstring": false,
+        "x": 580,
+        "y": 460,
+        "wires": [
+            [
+                "1a129d3802284074"
+            ]
+        ]
+    },
+    {
+        "id": "d1c21d0f2d01c87b",
+        "type": "zip",
+        "z": "44c523f3a12c4acf",
+        "name": "",
+        "mode": "decompress",
+        "filename": "",
+        "compressionlevel": 6,
+        "outasstring": false,
+        "x": 640,
+        "y": 640,
+        "wires": [
+            [
+                "5b963213f9e94d41"
+            ]
+        ]
+    },
+    {
+        "id": "5b963213f9e94d41",
+        "type": "function",
+        "z": "44c523f3a12c4acf",
+        "name": "function 68",
+        "func": "msg.payload = msg.payload[1].payload\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 830,
+        "y": 640,
+        "wires": [
+            [
+                "0d41a4db94ab291a"
+            ]
+        ]
+    },
+    {
+        "id": "1a129d3802284074",
+        "type": "function",
+        "z": "44c523f3a12c4acf",
+        "name": "function 69",
+        "func": "msg.payload = msg.payload[0].payload\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 750,
+        "y": 460,
+        "wires": [
+            [
+                "0d10940f81d1eb93"
+            ]
+        ]
+    },
+    {
+        "id": "0d41a4db94ab291a",
+        "type": "base64",
+        "z": "44c523f3a12c4acf",
+        "name": "",
+        "action": "str",
+        "property": "payload",
+        "x": 990,
+        "y": 640,
+        "wires": [
+            [
+                "e79d3dca686c9cf3"
+            ]
+        ]
+    },
+    {
+        "id": "7cfbc9e23dcd4afe",
+        "type": "zip",
+        "z": "44c523f3a12c4acf",
+        "name": "",
+        "mode": "decompress",
+        "filename": "",
+        "compressionlevel": 6,
+        "outasstring": false,
+        "x": 640,
+        "y": 700,
+        "wires": [
+            [
+                "dfae358ae306f98d"
+            ]
+        ]
+    },
+    {
+        "id": "dfae358ae306f98d",
+        "type": "function",
+        "z": "44c523f3a12c4acf",
+        "name": "function 70",
+        "func": "msg.payload = msg.payload[2].payload\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 830,
+        "y": 700,
+        "wires": [
+            [
+                "dfa57974c081d493"
+            ]
+        ]
+    },
+    {
+        "id": "dfa57974c081d493",
+        "type": "base64",
+        "z": "44c523f3a12c4acf",
+        "name": "",
+        "action": "str",
+        "property": "payload",
+        "x": 990,
+        "y": 700,
+        "wires": [
+            [
+                "e79d3dca686c9cf3"
+            ]
+        ]
+    },
+    {
+        "id": "3a786ecdcc6a4927",
+        "type": "sheet",
+        "z": "44c523f3a12c4acf",
+        "name": "",
+        "sheetName": "",
+        "x": 930,
+        "y": 560,
+        "wires": [
+            [
+                "64db48773d9671d8"
+            ]
+        ]
+    },
+    {
+        "id": "a2d1b28f8ee9de5a",
+        "type": "function",
+        "z": "44c523f3a12c4acf",
+        "name": "function 71",
+        "func": "msg.stream = msg.imageUC1\nmsg.objectName = msg.objectNameUC1\nmsg.bucketName = msg.inBucketUC1\n\nflow.set(\"outBucket_UC1\", msg.outBucketUC1);\nflow.set(\"prefix_UC1\", msg.prefixUC1); \n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 550,
+        "y": 240,
+        "wires": [
+            [
+                "5bdfa0a8785b1964"
+            ]
+        ]
+    },
+    {
+        "id": "5bdfa0a8785b1964",
+        "type": "objects",
+        "z": "44c523f3a12c4acf",
+        "objects_name": "",
+        "host": "e7ee45e114f57a7c",
+        "objects_operation": "putObject",
+        "objects_bucket": "",
+        "objects_object": "",
+        "objects_offset": "",
+        "objects_length": "",
+        "objects_stream": "",
+        "objects_size": "",
+        "objects_metadata": "",
+        "objects_sourceobject": "",
+        "objects_conditions": "",
+        "objects_objectslist": [],
+        "objects_prefix": "",
+        "objects_etag": "",
+        "objects_datetime": "",
+        "x": 740,
+        "y": 240,
+        "wires": [
+            [
+                "eb77480844eded0e"
+            ],
+            [
+                "474ec58c698c4d4f"
+            ]
+        ]
+    },
+    {
+        "id": "eec4caae65a4b71c",
+        "type": "notifications",
+        "z": "44c523f3a12c4acf",
+        "notifications_name": "",
+        "host": "e7ee45e114f57a7c",
+        "notifications_operation": "listenBucketNotification",
+        "notifications_bucket": "",
+        "notifications_notificationconfig": "",
+        "notifications_prefix": "",
+        "notifications_suffix": "",
+        "notifications_events": "",
+        "notifications_events_object_created_put": true,
+        "notifications_events_object_created_post": false,
+        "notifications_events_object_created_copy": false,
+        "notifications_events_object_created_complete_multipart_upload": false,
+        "notifications_events_object_removed_delete": false,
+        "notifications_events_object_accessed_get": false,
+        "notifications_events_object_accessed_head": false,
+        "x": 280,
+        "y": 360,
+        "wires": [
+            [
+                "ea5372a88d790cf7"
+            ],
+            [
+                "474ec58c698c4d4f"
+            ]
+        ]
+    },
+    {
+        "id": "ea5372a88d790cf7",
+        "type": "function",
+        "z": "44c523f3a12c4acf",
+        "name": "function 72",
+        "func": "msg.objectName = msg.payload.listenBucketNotification.s3.object.key\nvar out = flow.get(\"outBucket_UC1\")\n\nmsg.bucketName = out\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 590,
+        "y": 320,
+        "wires": [
+            [
+                "5a3d9e768109ac4e"
+            ]
+        ]
+    },
+    {
+        "id": "5a3d9e768109ac4e",
+        "type": "objects",
+        "z": "44c523f3a12c4acf",
+        "objects_name": "",
+        "host": "e7ee45e114f57a7c",
+        "objects_operation": "getObject",
+        "objects_bucket": "",
+        "objects_object": "",
+        "objects_offset": "",
+        "objects_length": "",
+        "objects_stream": "",
+        "objects_size": "",
+        "objects_metadata": "",
+        "objects_sourceobject": "",
+        "objects_conditions": "",
+        "objects_objectslist": [],
+        "objects_prefix": "",
+        "objects_etag": "",
+        "objects_datetime": "",
+        "x": 800,
+        "y": 360,
+        "wires": [
+            [
+                "a796331ae3a2e118"
+            ],
+            [
+                "474ec58c698c4d4f"
+            ]
+        ]
+    },
+    {
+        "id": "a796331ae3a2e118",
+        "type": "function",
+        "z": "44c523f3a12c4acf",
+        "name": "function 73",
+        "func": "msg.payload = msg.payload.objectData\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 440,
+        "wires": [
+            [
+                "997658d6f3bde4d9",
+                "d1c21d0f2d01c87b",
+                "7cfbc9e23dcd4afe"
+            ]
+        ]
+    },
+    {
+        "id": "ddf7f1ec72a34ce2",
+        "type": "sheet-to-json",
+        "z": "44c523f3a12c4acf",
+        "name": "",
+        "raw": "true",
+        "range": "A1:C24",
+        "header": "1",
+        "blankrows": false,
+        "x": 1100,
+        "y": 520,
+        "wires": [
+            [
+                "e79d3dca686c9cf3"
+            ]
+        ]
+    },
+    {
+        "id": "64db48773d9671d8",
+        "type": "sheet-to-json",
+        "z": "44c523f3a12c4acf",
+        "name": "",
+        "raw": "true",
+        "range": "A1:C24",
+        "header": "1",
+        "blankrows": false,
+        "x": 1100,
+        "y": 560,
+        "wires": [
+            [
+                "e79d3dca686c9cf3"
+            ]
+        ]
+    },
+    {
+        "id": "6f222cf1c532e242",
+        "type": "change",
+        "z": "44c523f3a12c4acf",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "prefixUC1",
+                "pt": "msg",
+                "to": "Prefix",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "outBucketUC1",
+                "pt": "msg",
+                "to": "outputBucket",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "imageUC1",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "inBucketUC1",
+                "pt": "msg",
+                "to": "inputBucket",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "objectNameUC1",
+                "pt": "msg",
+                "to": "objectName",
+                "tot": "env"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 390,
+        "y": 140,
+        "wires": [
+            [
+                "a2d1b28f8ee9de5a",
+                "98ef4e93805f8fcc"
+            ]
+        ]
+    },
+    {
+        "id": "eb77480844eded0e",
+        "type": "function",
+        "z": "44c523f3a12c4acf",
+        "name": "function 75",
+        "func": "var out=flow.get(\"outBucket_UC1\")\nvar prefix = flow.get(\"prefix_UC1\")\nmsg.prefix =prefix\nmsg.bucketName=out\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 300,
+        "wires": [
+            [
+                "eec4caae65a4b71c"
+            ]
+        ]
+    },
+    {
+        "id": "98ef4e93805f8fcc",
+        "type": "change",
+        "z": "44c523f3a12c4acf",
+        "name": "Start Service",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Processing....",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 920,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "474ec58c698c4d4f",
+        "type": "function",
+        "z": "44c523f3a12c4acf",
+        "name": "Error ",
+        "func": "var error = msg.payload\nif (error != null){\n   msg.payload=error;\n   return msg;\n}\nelse {\n   return null;\n}\n \n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1010,
+        "y": 300,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e79d3dca686c9cf3",
+        "type": "change",
+        "z": "44c523f3a12c4acf",
+        "name": "End Service",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Finished!!",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1250,
+        "y": 600,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e7ee45e114f57a7c",
+        "type": "minio-config",
+        "name": "MinIO Litter-Assesment",
+        "host": "your.minio-host.com",
+        "port": "",
+        "useSsl": true,
+        "credentials": {}
+    },
+    {
+        "id": "90d7174171ca0325",
+        "type": "subflow:44c523f3a12c4acf",
+        "z": "32e85a8e957e9244",
+        "name": "",
+        "x": 640,
+        "y": 920,
+        "wires": [
+            [
+                "0b7c81d8e02222e7"
+            ],
+            [
+                "7c069b218e2d74d4"
+            ],
+            [
+                "92214488fc621f93"
+            ],
+            [
+                "09d5eda31811c682"
+            ]
+        ]
+    },
+    {
+        "id": "0b157939f646d20a",
+        "type": "inject",
+        "z": "32e85a8e957e9244",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 170,
+        "y": 920,
+        "wires": [
+            [
+                "fa51d5f48a012963"
+            ]
+        ]
+    },
+    {
+        "id": "fa51d5f48a012963",
+        "type": "http request",
+        "z": "32e85a8e957e9244",
+        "name": "",
+        "method": "GET",
+        "ret": "bin",
+        "paytoqs": "ignore",
+        "url": "https://github.com/vicente87/nodos-data/blob/main/08MG025_20210405T161524Z(1).jpg?raw=true",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "credentials": {
+            "user": "",
+            "password": ""
+        },
+        "x": 350,
+        "y": 920,
+        "wires": [
+            [
+                "90d7174171ca0325"
+            ]
+        ]
+    },
+    {
+        "id": "0b7c81d8e02222e7",
+        "type": "debug",
+        "z": "32e85a8e957e9244",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 1080,
+        "y": 860,
+        "wires": []
+    },
+    {
+        "id": "7c069b218e2d74d4",
+        "type": "debug",
+        "z": "32e85a8e957e9244",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 1080,
+        "y": 900,
+        "wires": []
+    },
+    {
+        "id": "92214488fc621f93",
+        "type": "image",
+        "z": "32e85a8e957e9244",
+        "name": "",
+        "width": "300",
+        "data": "payload",
+        "dataType": "msg",
+        "thumbnail": true,
+        "active": true,
+        "pass": true,
+        "outputs": 1,
+        "x": 960,
+        "y": 940,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "09d5eda31811c682",
+        "type": "image",
+        "z": "32e85a8e957e9244",
+        "name": "",
+        "width": "300",
+        "data": "payload",
+        "dataType": "msg",
+        "thumbnail": true,
+        "active": true,
+        "pass": true,
+        "outputs": 1,
+        "x": 700,
+        "y": 1020,
+        "wires": [
+            []
+        ]
+    }
+]

@@ -1,0 +1,671 @@
+[
+    {
+        "id": "c4c843f3e9db07e3",
+        "type": "subflow",
+        "name": "OSCAR Body Pose Async ",
+        "info": "## Body Pose Invocation asynchronous invocation\nThis example uses the pre-trained classification model by DEEP-Hybrid-DataCloud Body Pose Detection and is prepared to be used with asynchronous invocations.",
+        "category": "OSCAR",
+        "in": [
+            {
+                "x": 120,
+                "y": 100,
+                "wires": [
+                    {
+                        "id": "ab1f11621e98178a"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 1170,
+                "y": 320,
+                "wires": [
+                    {
+                        "id": "649195b9e659e65e",
+                        "port": 0
+                    }
+                ]
+            },
+            {
+                "x": 1050,
+                "y": 260,
+                "wires": [
+                    {
+                        "id": "3b7084b2ca94631a",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "inputBucket",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "type": "input",
+                    "opts": {
+                        "types": [
+                            "str"
+                        ]
+                    }
+                }
+            },
+            {
+                "name": "Object",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "type": "input",
+                    "opts": {
+                        "types": [
+                            "str"
+                        ]
+                    }
+                }
+            },
+            {
+                "name": "outputBucket",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "type": "input",
+                    "opts": {
+                        "types": [
+                            "str"
+                        ]
+                    }
+                }
+            },
+            {
+                "name": "Prefix",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "type": "input",
+                    "opts": {
+                        "types": [
+                            "str"
+                        ]
+                    }
+                }
+            }
+        ],
+        "meta": {
+            "module": "OSCAR Body Pose Async",
+            "version": "0.0.2"
+        },
+        "color": "#3FADB5",
+        "inputLabels": [
+            "Image (base64)"
+        ],
+        "outputLabels": [
+            "Image",
+            "Json"
+        ],
+        "icon": "font-awesome/fa-image",
+        "status": {
+            "x": 1360,
+            "y": 60,
+            "wires": [
+                {
+                    "id": "0f5308b63e7e29bd",
+                    "port": 0
+                },
+                {
+                    "id": "fafb0738a46498c5",
+                    "port": 0
+                },
+                {
+                    "id": "3609387d90908be0",
+                    "port": 0
+                }
+            ]
+        }
+    },
+    {
+        "id": "a5df670dc9cfc042",
+        "type": "objects",
+        "z": "c4c843f3e9db07e3",
+        "objects_name": "",
+        "host": "9593268bbbc14921",
+        "objects_operation": "putObject",
+        "objects_bucket": "",
+        "objects_object": "",
+        "objects_offset": "",
+        "objects_length": "",
+        "objects_stream": "",
+        "objects_size": "",
+        "objects_metadata": "",
+        "objects_sourceobject": "",
+        "objects_conditions": "",
+        "objects_objectslist": [],
+        "objects_prefix": "",
+        "objects_etag": "",
+        "objects_datetime": "",
+        "x": 650,
+        "y": 100,
+        "wires": [
+            [
+                "07e5d9b171aa7a2f"
+            ],
+            [
+                "3609387d90908be0"
+            ]
+        ]
+    },
+    {
+        "id": "ca0cd6072e5e1d2d",
+        "type": "function",
+        "z": "c4c843f3e9db07e3",
+        "name": "function 14",
+        "func": "msg.stream = msg.image\nmsg.objectName =msg.object_name\nmsg.bucketName=msg.in_bucket\n\nflow.set(\"out_bucket\", msg.out_bucket);\nflow.set(\"prefix\", msg.prefix); \n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 470,
+        "y": 100,
+        "wires": [
+            [
+                "a5df670dc9cfc042"
+            ]
+        ]
+    },
+    {
+        "id": "3248d750e85e7532",
+        "type": "objects",
+        "z": "c4c843f3e9db07e3",
+        "objects_name": "",
+        "host": "9593268bbbc14921",
+        "objects_operation": "getObject",
+        "objects_bucket": "",
+        "objects_object": "",
+        "objects_offset": "",
+        "objects_length": "",
+        "objects_stream": "",
+        "objects_size": "",
+        "objects_metadata": "",
+        "objects_sourceobject": "",
+        "objects_conditions": "",
+        "objects_objectslist": [],
+        "objects_prefix": "",
+        "objects_etag": "",
+        "objects_datetime": "",
+        "x": 170,
+        "y": 260,
+        "wires": [
+            [
+                "3298edfbe388c058"
+            ],
+            [
+                "3609387d90908be0"
+            ]
+        ]
+    },
+    {
+        "id": "9c2c9c74378863f3",
+        "type": "zip",
+        "z": "c4c843f3e9db07e3",
+        "name": "",
+        "mode": "decompress",
+        "filename": "",
+        "compressionlevel": 6,
+        "outasstring": false,
+        "x": 610,
+        "y": 320,
+        "wires": [
+            [
+                "1b3a10b22f976afa"
+            ]
+        ]
+    },
+    {
+        "id": "3298edfbe388c058",
+        "type": "function",
+        "z": "c4c843f3e9db07e3",
+        "name": "",
+        "func": "msg.payload = msg.payload.objectData\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 380,
+        "y": 320,
+        "wires": [
+            [
+                "9c2c9c74378863f3",
+                "4ce0a7e09d9eedbc"
+            ]
+        ]
+    },
+    {
+        "id": "3b7084b2ca94631a",
+        "type": "function",
+        "z": "c4c843f3e9db07e3",
+        "name": "Load json",
+        "func": "msg.payload = msg.payload[1].payload\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 780,
+        "y": 260,
+        "wires": [
+            [
+                "fafb0738a46498c5"
+            ]
+        ]
+    },
+    {
+        "id": "649195b9e659e65e",
+        "type": "base64",
+        "z": "c4c843f3e9db07e3",
+        "name": "",
+        "action": "str",
+        "property": "payload",
+        "x": 980,
+        "y": 320,
+        "wires": [
+            [
+                "fafb0738a46498c5"
+            ]
+        ]
+    },
+    {
+        "id": "4fc6fa32024421fa",
+        "type": "notifications",
+        "z": "c4c843f3e9db07e3",
+        "notifications_name": "",
+        "host": "9593268bbbc14921",
+        "notifications_operation": "listenBucketNotification",
+        "notifications_bucket": "",
+        "notifications_notificationconfig": "",
+        "notifications_prefix": "",
+        "notifications_suffix": "",
+        "notifications_events": "",
+        "notifications_events_object_created_put": true,
+        "notifications_events_object_created_post": false,
+        "notifications_events_object_created_copy": false,
+        "notifications_events_object_created_complete_multipart_upload": false,
+        "notifications_events_object_removed_delete": false,
+        "notifications_events_object_accessed_get": false,
+        "notifications_events_object_accessed_head": false,
+        "x": 390,
+        "y": 160,
+        "wires": [
+            [
+                "3e67e16005c6f9f7"
+            ],
+            [
+                "3609387d90908be0"
+            ]
+        ]
+    },
+    {
+        "id": "3e67e16005c6f9f7",
+        "type": "function",
+        "z": "c4c843f3e9db07e3",
+        "name": "function 17",
+        "func": "msg.objectName = msg.payload.listenBucketNotification.s3.object.key\nvar out = flow.get(\"out_bucket\")\nmsg.bucketName = out\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 170,
+        "y": 220,
+        "wires": [
+            [
+                "3248d750e85e7532"
+            ]
+        ]
+    },
+    {
+        "id": "1b3a10b22f976afa",
+        "type": "function",
+        "z": "c4c843f3e9db07e3",
+        "name": "load image",
+        "func": "msg.payload = msg.payload[0].payload\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 790,
+        "y": 320,
+        "wires": [
+            [
+                "649195b9e659e65e"
+            ]
+        ]
+    },
+    {
+        "id": "4ce0a7e09d9eedbc",
+        "type": "zip",
+        "z": "c4c843f3e9db07e3",
+        "name": "",
+        "mode": "decompress",
+        "filename": "",
+        "compressionlevel": 6,
+        "outasstring": true,
+        "x": 610,
+        "y": 260,
+        "wires": [
+            [
+                "3b7084b2ca94631a"
+            ]
+        ]
+    },
+    {
+        "id": "ab1f11621e98178a",
+        "type": "change",
+        "z": "c4c843f3e9db07e3",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "prefix",
+                "pt": "msg",
+                "to": "Prefix",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "out_bucket",
+                "pt": "msg",
+                "to": "outputBucket",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "image",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "in_bucket",
+                "pt": "msg",
+                "to": "inputBucket",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "object_name",
+                "pt": "msg",
+                "to": "Object",
+                "tot": "env"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 280,
+        "y": 100,
+        "wires": [
+            [
+                "ca0cd6072e5e1d2d",
+                "0f5308b63e7e29bd"
+            ]
+        ]
+    },
+    {
+        "id": "07e5d9b171aa7a2f",
+        "type": "function",
+        "z": "c4c843f3e9db07e3",
+        "name": "function 19",
+        "func": "var out = flow.get(\"out_bucket\")\nvar prefix = flow.get(\"prefix\")\nmsg.prefix = prefix\nmsg.bucketName = out\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 130,
+        "y": 160,
+        "wires": [
+            [
+                "4fc6fa32024421fa"
+            ]
+        ]
+    },
+    {
+        "id": "0f5308b63e7e29bd",
+        "type": "change",
+        "z": "c4c843f3e9db07e3",
+        "name": "Start Service",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Processing....",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 510,
+        "y": 40,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "fafb0738a46498c5",
+        "type": "change",
+        "z": "c4c843f3e9db07e3",
+        "name": "End Service",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Finished!",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1230,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3609387d90908be0",
+        "type": "function",
+        "z": "c4c843f3e9db07e3",
+        "name": "Error ",
+        "func": "var error = msg.payload\nif (error != null){\n   msg.payload=error;\n   return msg;\n}\nelse {\n   return null;\n}\n \n;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 910,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9593268bbbc14921",
+        "type": "minio-config",
+        "z": "c4c843f3e9db07e3",
+        "name": "MinIO BodyPose",
+        "host": "",
+        "port": "",
+        "useSsl": true
+    },
+    {
+        "id": "55fcf0571cb630f7",
+        "type": "debug",
+        "z": "ac4ecbf50ffcf441",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 880,
+        "y": 780,
+        "wires": []
+    },
+    {
+        "id": "25163098603e22b5",
+        "type": "image",
+        "z": "ac4ecbf50ffcf441",
+        "name": "",
+        "width": 160,
+        "data": "payload",
+        "dataType": "msg",
+        "thumbnail": true,
+        "active": true,
+        "pass": false,
+        "outputs": 0,
+        "x": 880,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "bb519df74e4cdf73",
+        "type": "image",
+        "z": "ac4ecbf50ffcf441",
+        "name": "",
+        "width": 160,
+        "data": "payload",
+        "dataType": "msg",
+        "thumbnail": true,
+        "active": true,
+        "pass": false,
+        "outputs": 0,
+        "x": 540,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "9e5ff1b9c9c47f2d",
+        "type": "http request",
+        "z": "ac4ecbf50ffcf441",
+        "name": "",
+        "method": "GET",
+        "ret": "bin",
+        "paytoqs": "ignore",
+        "url": "https://github.com/grycap/oscar/blob/master/examples/body-pose-detection/images/002.jpg?raw=true",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 270,
+        "y": 560,
+        "wires": [
+            [
+                "bb519df74e4cdf73",
+                "0528911656296cbb"
+            ]
+        ]
+    },
+    {
+        "id": "a49cefca4b4aec38",
+        "type": "inject",
+        "z": "ac4ecbf50ffcf441",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 560,
+        "wires": [
+            [
+                "9e5ff1b9c9c47f2d"
+            ]
+        ]
+    },
+    {
+        "id": "0528911656296cbb",
+        "type": "subflow:c4c843f3e9db07e3",
+        "z": "ac4ecbf50ffcf441",
+        "name": "",
+        "env": [
+            {
+                "name": "Input_Bucket",
+                "value": "body-pose-detection-async",
+                "type": "str"
+            },
+            {
+                "name": "Output_Bucket",
+                "value": "body-pose-detection-async",
+                "type": "str"
+            },
+            {
+                "name": "Object_Name",
+                "value": "input/images_3.jpeg",
+                "type": "str"
+            },
+            {
+                "name": "Input Bucket",
+                "value": "ssssss",
+                "type": "str"
+            },
+            {
+                "name": "Object Name",
+                "value": "456",
+                "type": "str"
+            },
+            {
+                "name": "Output Bucket",
+                "value": "789",
+                "type": "str"
+            },
+            {
+                "name": "Object _Name",
+                "value": "hhh",
+                "type": "str"
+            }
+        ],
+        "x": 550,
+        "y": 540,
+        "wires": [
+            [
+                "25163098603e22b5"
+            ],
+            [
+                "55fcf0571cb630f7"
+            ]
+        ]
+    }
+]

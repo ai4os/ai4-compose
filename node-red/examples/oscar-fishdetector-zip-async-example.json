@@ -1,0 +1,1079 @@
+[
+    {
+        "id": "0a31871f47eb0214",
+        "type": "subflow",
+        "name": "OSCAR Fish Detector ZIP Async",
+        "info": "",
+        "category": "OSCAR",
+        "in": [
+            {
+                "x": 280,
+                "y": 120,
+                "wires": [
+                    {
+                        "id": "092c4db69d3ec653"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 1390,
+                "y": 380,
+                "wires": [
+                    {
+                        "id": "f2d95981ddc6710c",
+                        "port": 0
+                    }
+                ]
+            },
+            {
+                "x": 850,
+                "y": 500,
+                "wires": [
+                    {
+                        "id": "c66cc09de4d51bac",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "Fish Detector ZIP",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "type": "none"
+                }
+            },
+            {
+                "name": "inputBucket",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "type": "input",
+                    "opts": {
+                        "types": [
+                            "str"
+                        ]
+                    }
+                }
+            },
+            {
+                "name": "objectName",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "type": "input",
+                    "opts": {
+                        "types": [
+                            "str"
+                        ]
+                    }
+                }
+            },
+            {
+                "name": "outputBucket",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "type": "input",
+                    "opts": {
+                        "types": [
+                            "str"
+                        ]
+                    }
+                }
+            },
+            {
+                "name": "Prefix",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "type": "input",
+                    "opts": {
+                        "types": [
+                            "str"
+                        ]
+                    }
+                }
+            }
+        ],
+        "meta": {
+            "module": "oscar-fishdetector-zip-async",
+            "version": "0.0.1",
+            "keywords": "OSCAR, UPV, iMagine, Node-RED, AI4EOSC, AI4IOS, GriCAP"
+        },
+        "color": "#3FADB5",
+        "outputLabels": [
+            "JSON",
+            "Image (ubication)"
+        ],
+        "icon": "font-awesome/fa-file-zip-o",
+        "status": {
+            "x": 1220,
+            "y": 80,
+            "wires": [
+                {
+                    "id": "c1822fadb03d5868",
+                    "port": 0
+                },
+                {
+                    "id": "c04b2f3a74ddf1ab",
+                    "port": 0
+                },
+                {
+                    "id": "2319fd4dda1a901f",
+                    "port": 0
+                }
+            ]
+        }
+    },
+    {
+        "id": "092c4db69d3ec653",
+        "type": "change",
+        "z": "0a31871f47eb0214",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "prefixZip",
+                "pt": "msg",
+                "to": "Prefix",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "outBucket",
+                "pt": "msg",
+                "to": "outputBucket",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "zip",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "inBucket",
+                "pt": "msg",
+                "to": "inputBucket",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "objectName",
+                "pt": "msg",
+                "to": "objectName",
+                "tot": "env"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 460,
+        "y": 120,
+        "wires": [
+            [
+                "caf3e7c24691732b",
+                "842d73fcf56d7323",
+                "c04b2f3a74ddf1ab"
+            ]
+        ]
+    },
+    {
+        "id": "c8daf05933e705fa",
+        "type": "zip",
+        "z": "0a31871f47eb0214",
+        "name": "",
+        "mode": "decompress",
+        "filename": "",
+        "compressionlevel": 6,
+        "outasstring": false,
+        "x": 820,
+        "y": 40,
+        "wires": [
+            [
+                "dfb1a3e4fba2be70"
+            ]
+        ]
+    },
+    {
+        "id": "dfb1a3e4fba2be70",
+        "type": "function",
+        "z": "0a31871f47eb0214",
+        "name": "function 39",
+        "func": "var data = msg.payload.length\nflow.set(\"total\",data)\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\nflow.set(\"total\", 0)",
+        "finalize": "",
+        "libs": [],
+        "x": 990,
+        "y": 40,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "caf3e7c24691732b",
+        "type": "function",
+        "z": "0a31871f47eb0214",
+        "name": "function 40",
+        "func": "msg.stream = msg.zip\nmsg.objectName = msg.objectName\nmsg.bucketName = msg.inBucket\n\nflow.set(\"outBucket_ZIP\", msg.outBucket);\nflow.set(\"prefix_ZIP\", msg.prefixZIP); \n\n\nlet archive_images = flow.get(\"myImageZIP\");\nlet archive_json = flow.get(\"myJsonZIP\");\n\n// Verificar si es un array, si no lo es, inicializarlo\nif (!Array.isArray(archive_images)) {\n    archive_images = [{  image: null }]; // Primera entrada\n} \nif (!Array.isArray(archive_json)) {\n    archive_json = [{  name:null, json:null}]; // Primera entrada\n} \n// Guardar el array actualizado en el contexto de flujo\nflow.set(\"myImageZIP\", archive_images);\nflow.set(\"myJsonZIP\", archive_json);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\n flow.set(\"myImageZIP\",\"[]\");\n flow.set(\"myJsonZIP\",\"[]\");\n flow.set(\"json\",\"\")",
+        "finalize": "",
+        "libs": [],
+        "x": 710,
+        "y": 120,
+        "wires": [
+            [
+                "582023ef6d62d7d9"
+            ]
+        ]
+    },
+    {
+        "id": "842d73fcf56d7323",
+        "type": "function",
+        "z": "0a31871f47eb0214",
+        "name": "function 41",
+        "func": "msg.payload = msg.zip\nreturn msg",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n",
+        "finalize": "",
+        "libs": [],
+        "x": 670,
+        "y": 40,
+        "wires": [
+            [
+                "c8daf05933e705fa"
+            ]
+        ]
+    },
+    {
+        "id": "582023ef6d62d7d9",
+        "type": "objects",
+        "z": "0a31871f47eb0214",
+        "objects_name": "",
+        "host": "0a95c91682d6c744",
+        "objects_operation": "putObject",
+        "objects_bucket": "",
+        "objects_object": "",
+        "objects_offset": "",
+        "objects_length": "",
+        "objects_stream": "",
+        "objects_size": "",
+        "objects_metadata": "",
+        "objects_sourceobject": "",
+        "objects_conditions": "",
+        "objects_objectslist": [],
+        "objects_prefix": "",
+        "objects_etag": "",
+        "objects_datetime": "",
+        "x": 910,
+        "y": 120,
+        "wires": [
+            [
+                "3f2acb51d86c0b36"
+            ],
+            [
+                "c1822fadb03d5868"
+            ]
+        ]
+    },
+    {
+        "id": "e1d33086dc18832d",
+        "type": "notifications",
+        "z": "0a31871f47eb0214",
+        "notifications_name": "",
+        "host": "0a95c91682d6c744",
+        "notifications_operation": "listenBucketNotification",
+        "notifications_bucket": "",
+        "notifications_notificationconfig": "",
+        "notifications_prefix": "",
+        "notifications_suffix": "",
+        "notifications_events": "",
+        "notifications_events_object_created_put": true,
+        "notifications_events_object_created_post": false,
+        "notifications_events_object_created_copy": false,
+        "notifications_events_object_created_complete_multipart_upload": false,
+        "notifications_events_object_removed_delete": false,
+        "notifications_events_object_accessed_get": false,
+        "notifications_events_object_accessed_head": false,
+        "x": 370,
+        "y": 200,
+        "wires": [
+            [
+                "57262339a87b9a03"
+            ],
+            [
+                "c1822fadb03d5868"
+            ]
+        ]
+    },
+    {
+        "id": "57262339a87b9a03",
+        "type": "delay",
+        "z": "0a31871f47eb0214",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "4",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "5",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 300,
+        "y": 360,
+        "wires": [
+            [
+                "5bfae418a9731def"
+            ]
+        ]
+    },
+    {
+        "id": "8c622781198ca383",
+        "type": "delay",
+        "z": "0a31871f47eb0214",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "4",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "4",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 640,
+        "y": 300,
+        "wires": [
+            [
+                "cc35c49fdb3fd7eb"
+            ]
+        ]
+    },
+    {
+        "id": "5bfae418a9731def",
+        "type": "function",
+        "z": "0a31871f47eb0214",
+        "name": "function 42",
+        "func": "var text = msg.payload.listenBucketNotification.s3.object.key;\n\nvar out = flow.get(\"outBucket_ZIP\")\nmsg.objectName = text\nmsg.bucketName = out\n\nvar n_jpeg = flow.get(\"n_jpeg\")\nlet archive_images = flow.get(\"myImageZIP\") || [];\n\n\nif (msg.objectName.endsWith('.json')) {\n    // Acción para archivos .json\n    \n    \n    flow.set(\"json\", text)\n  \n    \n    return [msg, null]; \n     // Devuelve a la primera salida\n}\n// Comprobar si el archivo termina en .jpg\nelse {\n    flow.set(\"nameImage\",text)\n    archive_images[n_jpeg] = text ;\n    flow.set(\"n_jpeg\", n_jpeg + 1)\n    flow.set(\"myImageZIP\", archive_images);\n    \n    return [null, msg];  // Ninguna salida se activa\n}",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\nflow.set(\"n_json\",0)\nflow.set(\"n_jpeg\",0)",
+        "finalize": "",
+        "libs": [],
+        "x": 490,
+        "y": 360,
+        "wires": [
+            [
+                "8c622781198ca383"
+            ],
+            [
+                "c66cc09de4d51bac"
+            ]
+        ]
+    },
+    {
+        "id": "c66cc09de4d51bac",
+        "type": "function",
+        "z": "0a31871f47eb0214",
+        "name": "function 43",
+        "func": "var data = msg.payload\nvar total=flow.get(\"total\")\n\n\n\nlet archive_image= flow.get(\"myImageZIP\") || [];\n\nif (archive_image.length==total){\nmsg.payload=archive_image\nmsg.end=\"ready\"\nreturn msg;\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\nflow.set(\"i\", 0)",
+        "finalize": "",
+        "libs": [],
+        "x": 670,
+        "y": 400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f28502a40c25ea97",
+        "type": "function",
+        "z": "0a31871f47eb0214",
+        "name": "function 45",
+        "func": "msg.payload = msg.payload.objectData\n\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1030,
+        "y": 300,
+        "wires": [
+            [
+                "3c0f02d6cf128408"
+            ]
+        ]
+    },
+    {
+        "id": "3c0f02d6cf128408",
+        "type": "json",
+        "z": "0a31871f47eb0214",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": true,
+        "x": 1170,
+        "y": 300,
+        "wires": [
+            [
+                "f2d95981ddc6710c"
+            ]
+        ]
+    },
+    {
+        "id": "cc35c49fdb3fd7eb",
+        "type": "objects",
+        "z": "0a31871f47eb0214",
+        "objects_name": "",
+        "host": "0a95c91682d6c744",
+        "objects_operation": "getObject",
+        "objects_bucket": "",
+        "objects_object": "",
+        "objects_offset": "",
+        "objects_length": "",
+        "objects_stream": "",
+        "objects_size": "",
+        "objects_metadata": "",
+        "objects_sourceobject": "",
+        "objects_conditions": "",
+        "objects_objectslist": [],
+        "objects_prefix": "",
+        "objects_etag": "",
+        "objects_datetime": "",
+        "x": 830,
+        "y": 300,
+        "wires": [
+            [
+                "f28502a40c25ea97"
+            ],
+            [
+                "c1822fadb03d5868"
+            ]
+        ]
+    },
+    {
+        "id": "f2d95981ddc6710c",
+        "type": "function",
+        "z": "0a31871f47eb0214",
+        "name": "function 46",
+        "func": "var data = msg.payload\nvar total = flow.get(\"total\")\nlet archive_json = flow.get(\"myJsonZIP\") || [];\nvar n_json= flow.get(\"n_json\")\nvar name =flow.get(\"json\")\nlet msg1=\"\"\n\n\narchive_json[n_json] = {  name: name,json:data };\n\nflow.set(\"n_json\", n_json + 1)\nflow.set(\"myJsonZIP\", archive_json);\n\n\nif (archive_json.length ==total){\nmsg.payload=archive_json\n\n\nreturn msg}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1230,
+        "y": 360,
+        "wires": [
+            [
+                "2319fd4dda1a901f"
+            ]
+        ]
+    },
+    {
+        "id": "3f2acb51d86c0b36",
+        "type": "function",
+        "z": "0a31871f47eb0214",
+        "name": "function 47",
+        "func": "var out=flow.get(\"outBucket_ZIP\")\nvar prefix = flow.get(\"prefix_ZIP\")\nmsg.prefix =prefix\nmsg.bucketName=out\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 130,
+        "y": 200,
+        "wires": [
+            [
+                "e1d33086dc18832d"
+            ]
+        ]
+    },
+    {
+        "id": "c1822fadb03d5868",
+        "type": "function",
+        "z": "0a31871f47eb0214",
+        "name": "Error ",
+        "func": "var error = msg.payload\nif (error != null){\n   msg.payload=error;\n   return msg;\n}\nelse {\n   return null;\n}\n \n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1030,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c04b2f3a74ddf1ab",
+        "type": "change",
+        "z": "0a31871f47eb0214",
+        "name": "Start Service",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Processing....",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 820,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2319fd4dda1a901f",
+        "type": "change",
+        "z": "0a31871f47eb0214",
+        "name": "End Service",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Finished!",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1269,
+        "y": 193,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "0a95c91682d6c744",
+        "type": "minio-config",
+        "name": "MinIO Fish-Detector-zip",
+        "host": "your.minio-host.com",
+        "port": "",
+        "useSsl": true
+    },
+    {
+        "id": "5322a5e2fe6ad815",
+        "type": "subflow",
+        "name": "Image Group Visualization",
+        "info": "",
+        "category": "Complements",
+        "in": [
+            {
+                "x": 60,
+                "y": 160,
+                "wires": [
+                    {
+                        "id": "7ebc5c798e7f1645"
+                    }
+                ]
+            }
+        ],
+        "out": [],
+        "env": [
+            {
+                "name": "Image Group Visualization",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "type": "none"
+                }
+            },
+            {
+                "name": "Bucket",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "type": "input",
+                    "opts": {
+                        "types": [
+                            "str"
+                        ]
+                    }
+                }
+            }
+        ],
+        "meta": {},
+        "color": "#3FADB5",
+        "icon": "node-red-dashboard/ui_form.png",
+        "status": {
+            "x": 1260,
+            "y": 40,
+            "wires": [
+                {
+                    "id": "c1798027ed1721f7",
+                    "port": 0
+                },
+                {
+                    "id": "50db21b41f499c10",
+                    "port": 0
+                },
+                {
+                    "id": "f0ecdcc23f4b3876",
+                    "port": 0
+                }
+            ]
+        }
+    },
+    {
+        "id": "306f70429ef3919f",
+        "type": "delay",
+        "z": "5322a5e2fe6ad815",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "4",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "4",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 550,
+        "y": 140,
+        "wires": [
+            [
+                "6ddee4dde46ea7bc"
+            ]
+        ]
+    },
+    {
+        "id": "06b4058d72a9cd7a",
+        "type": "function",
+        "z": "5322a5e2fe6ad815",
+        "name": "function 52",
+        "func": "let y1= flow.get(\"y\")\n\nif (y1==0){\n        flow.set(\"imageName\", msg.payload)\n    }\nlet array = flow.get(\"imageName\")\nvar dim=array.length\nif (y1<dim){\nmsg.objectName=array[y1]\nmsg.bucketName=msg.bucket\nflow.set(\"name\", array[y1])\nflow.set(\"y\",y1+1)\n    \nreturn msg\n}  \n    \n\n\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\nflow.set(\"y\",0);",
+        "finalize": "",
+        "libs": [],
+        "x": 510,
+        "y": 220,
+        "wires": [
+            [
+                "306f70429ef3919f"
+            ]
+        ]
+    },
+    {
+        "id": "0297c38bf31e8c66",
+        "type": "function",
+        "z": "5322a5e2fe6ad815",
+        "name": "function 53",
+        "func": "msg.payload = msg.payload.objectData\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 760,
+        "y": 220,
+        "wires": [
+            [
+                "0e7dce38b15d76dc"
+            ]
+        ]
+    },
+    {
+        "id": "6ddee4dde46ea7bc",
+        "type": "objects",
+        "z": "5322a5e2fe6ad815",
+        "objects_name": "",
+        "host": "7c7aa7dd59d57002",
+        "objects_operation": "getObject",
+        "objects_bucket": "",
+        "objects_object": "",
+        "objects_offset": "",
+        "objects_length": "",
+        "objects_stream": "",
+        "objects_size": "",
+        "objects_metadata": "",
+        "objects_sourceobject": "",
+        "objects_conditions": "",
+        "objects_objectslist": [],
+        "objects_prefix": "",
+        "objects_etag": "",
+        "objects_datetime": "",
+        "x": 740,
+        "y": 120,
+        "wires": [
+            [
+                "0297c38bf31e8c66"
+            ],
+            [
+                "c1798027ed1721f7"
+            ]
+        ]
+    },
+    {
+        "id": "a643c272b0afb303",
+        "type": "function",
+        "z": "5322a5e2fe6ad815",
+        "name": "Reset Dashboard",
+        "func": "// Resetear las imágenes almacenadas en el contexto de flujo\nflow.set('images', []);  // Borra el array de imágenes\nreturn msg;  // Pasa el mensaje\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1050,
+        "y": 20,
+        "wires": [
+            [
+                "f9b850f84f2cfdbc"
+            ]
+        ]
+    },
+    {
+        "id": "1f1c61a172ac49e0",
+        "type": "function",
+        "z": "5322a5e2fe6ad815",
+        "name": "function 54",
+        "func": "let images = flow.get('images') || [];  // Si no existe, inicializa el array vacío\n\n// Crea un identificador único para cada imagen (por ejemplo, usando el timestamp)\nlet imageName = flow.get(\"name\");  // Usando la fecha y hora como nombre único\n\n// Agrega la nueva imagen que llega en msg.payload con su nombre identificativo\nimages.push({\n    base64: msg.payload,\n    name: imageName  // Nombre identificativo de la imagen\n});\n\n// Guarda el array actualizado en el contexto de flujo (flow)\nflow.set('images', images);\n\n// Pasa las imágenes al siguiente nodo (ui_template)\nmsg.payload = images;\nmsg.end=\"ready\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1060,
+        "y": 220,
+        "wires": [
+            [
+                "f9b850f84f2cfdbc",
+                "06b4058d72a9cd7a"
+            ]
+        ]
+    },
+    {
+        "id": "f9b850f84f2cfdbc",
+        "type": "ui_template",
+        "z": "5322a5e2fe6ad815",
+        "group": "d6fc9e38f3c6205a",
+        "name": "Images",
+        "order": 1,
+        "width": "14",
+        "height": "12",
+        "format": "<div ng-repeat=\"image in msg.payload\">\n    <div style=\"margin-bottom: 10px;\">\n        <p><strong>{{image.name}}</strong></p> <!-- Mostrar el nombre identificativo -->\n        <img ng-src=\"data:image/png;base64,{{image.base64}}\" width=\"800\" style=\"margin: 10px;\" />\n    </div>\n</div>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 1230,
+        "y": 220,
+        "wires": [
+            [
+                "f0ecdcc23f4b3876"
+            ]
+        ]
+    },
+    {
+        "id": "0e7dce38b15d76dc",
+        "type": "base64",
+        "z": "5322a5e2fe6ad815",
+        "name": "",
+        "action": "str",
+        "property": "payload",
+        "x": 900,
+        "y": 220,
+        "wires": [
+            [
+                "1f1c61a172ac49e0"
+            ]
+        ]
+    },
+    {
+        "id": "7ebc5c798e7f1645",
+        "type": "change",
+        "z": "5322a5e2fe6ad815",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "bucket",
+                "pt": "msg",
+                "to": "Bucket",
+                "tot": "env"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 190,
+        "y": 100,
+        "wires": [
+            [
+                "50db21b41f499c10",
+                "0bd82e53a33c6ace",
+                "a643c272b0afb303"
+            ]
+        ]
+    },
+    {
+        "id": "c1798027ed1721f7",
+        "type": "function",
+        "z": "5322a5e2fe6ad815",
+        "name": "Error ",
+        "func": "var error = msg.payload\nif (error != null){\n   msg.payload=error;\n   return msg;\n}\nelse {\n   return null;\n}\n \n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1010,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "50db21b41f499c10",
+        "type": "change",
+        "z": "5322a5e2fe6ad815",
+        "name": "Start Service",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Processing....",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 780,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "0bd82e53a33c6ace",
+        "type": "function",
+        "z": "5322a5e2fe6ad815",
+        "name": "function 55",
+        "func": "msg.payload=msg.payload\nmsg.end=\"ready\"\nmsg.bucket=msg.bucket\nreturn msg\n\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\nflow.set(\"k\",0);",
+        "finalize": "",
+        "libs": [],
+        "x": 290,
+        "y": 220,
+        "wires": [
+            [
+                "06b4058d72a9cd7a"
+            ]
+        ]
+    },
+    {
+        "id": "f0ecdcc23f4b3876",
+        "type": "change",
+        "z": "5322a5e2fe6ad815",
+        "name": "End Service",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "y",
+                "tot": "env"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1290,
+        "y": 140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "7c7aa7dd59d57002",
+        "type": "minio-config",
+        "z": "5322a5e2fe6ad815",
+        "name": "MinIO IG-Visual",
+        "host": "your.minio-host.com",
+        "port": "",
+        "useSsl": true
+    },
+    {
+        "id": "d6fc9e38f3c6205a",
+        "type": "ui_group",
+        "name": "Images",
+        "tab": "215d16062f6aa65a",
+        "order": 1,
+        "disp": true,
+        "width": 17,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "215d16062f6aa65a",
+        "type": "ui_tab",
+        "name": "Home",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "d8c55e7e18bce81d",
+        "type": "subflow:5322a5e2fe6ad815",
+        "z": "0c8c59be86fe6ac0",
+        "name": "",
+        "x": 940,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "5bfdb85ff692a1c8",
+        "type": "debug",
+        "z": "0c8c59be86fe6ac0",
+        "name": "debug 32",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 960,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "5337f0c290cac0f6",
+        "type": "debug",
+        "z": "0c8c59be86fe6ac0",
+        "name": "debug 31",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 960,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "4c08f6965930c005",
+        "type": "subflow:0a31871f47eb0214",
+        "z": "0c8c59be86fe6ac0",
+        "name": "",
+        "x": 600,
+        "y": 240,
+        "wires": [
+            [
+                "5337f0c290cac0f6"
+            ],
+            [
+                "5bfdb85ff692a1c8",
+                "d8c55e7e18bce81d"
+            ]
+        ]
+    },
+    {
+        "id": "e821c27618c5bcca",
+        "type": "http request",
+        "z": "0c8c59be86fe6ac0",
+        "name": "",
+        "method": "GET",
+        "ret": "bin",
+        "paytoqs": "ignore",
+        "url": "https://github.com/vicente87/nodos-data/raw/refs/heads/main/fish.zip",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 310,
+        "y": 240,
+        "wires": [
+            [
+                "4c08f6965930c005"
+            ]
+        ]
+    },
+    {
+        "id": "158e40ba595e3f8b",
+        "type": "inject",
+        "z": "0c8c59be86fe6ac0",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 140,
+        "y": 240,
+        "wires": [
+            [
+                "e821c27618c5bcca"
+            ]
+        ]
+    }
+]
