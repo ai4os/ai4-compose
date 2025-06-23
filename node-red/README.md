@@ -9,6 +9,17 @@ You can find all the custom OSCAR-related nodes grouped in the following collect
 
 Here’s a brief description of each:
 
+- **OSCAR-bird-sound-async**   
+  A plug-and-play tool for bird sound classification using deep learning. It accepts an audio file (or URL to one) and returns a JSON with the top 5 predicted bird species.  
+  Based on the Xenocanto dataset (~350K samples, 10K species), currently trained on the 73 most common species.  
+  [View in Marketplace](https://marketplace.deep-hybrid-datacloud.eu/modules/deep-oc-birds-audio-classification-tf.html)
+
+- **OSCAR-frame-service-async**  
+  Provides frame extraction and/or manipulation from videos for downstream analysis.  
+
+- **OSCAR-segmentation-data-async**  
+  Performs data segmentation, useful for dividing structured datasets into meaningful components for analysis or further processing.
+
 - **OSCAR-thermal-detector-async**  
   Thermal Bridges on Building Rooftops Detection (TBBRDet): This module adapts object detection and instance segmentation models from the MMDetection Toolbox to work with combined RGB and thermal imagery to identify thermal bridges (weak points) on building rooftops.  
   [View in Marketplace](https://dashboard.cloud.ai4eosc.eu/catalog/modules/thermal-bridges-rooftops-detector) 
