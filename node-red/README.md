@@ -9,6 +9,10 @@ You can find all the custom OSCAR-related nodes grouped in the following collect
 
 Here’s a brief description of each:
 
+- **OSCAR-thermal-detector-async**  
+  Thermal Bridges on Building Rooftops Detection (TBBRDet): This module adapts object detection and instance segmentation models from the MMDetection Toolbox to work with combined RGB and thermal imagery to identify thermal bridges (weak points) on building rooftops.  
+  [View in Marketplace](https://dashboard.cloud.ai4eosc.eu/catalog/modules/thermal-bridges-rooftops-detector) 
+
 - **OSCAR-bodypose-async**  
   Body Pose Detection using DEEP-Hybrid-DataCloud's pre-trained model.  
   [View in Marketplace](https://marketplace.deep-hybrid-datacloud.eu/modules/deep-oc-posenet-tf.html)
