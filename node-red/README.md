@@ -4,7 +4,7 @@
 
 This repository contains a collection of nodes and interaction flows for [Node-RED](https://nodered.org/) specifically designed to interact with OSCAR. It includes example workflows, reusable subflows, and a Dockerfile for deploying a pre-configured Node-RED instance with all necessary dependencies.
 
-## Available Nodes
+## Available Modules
 
 You can find all the custom OSCAR-related nodes grouped in the following collection:  
 👉 [https://flows.nodered.org/collection/vAqHyycWgCq_](https://flows.nodered.org/collection/vAqHyycWgCq_)
@@ -48,9 +48,9 @@ Here’s a brief description of each:
 
 ## Getting Started
 
-To run the subflows (nodes) or workflows (examples) locally, you must install the following Node-RED dependencies:
+To run the modules or workflows (examples) locally, you must install the following Node-RED dependencies:
 
-### OSCAR Subflow dependencies:
+### OSCAR modules dependencies:
 
 ```bash
 npm install node-red-contrib-string
@@ -81,33 +81,15 @@ You will have access to a ready-to-use Node-RED instance with OSCAR integration.
 
 ---
 
-## Dockerfile
-
-This repository includes a `Dockerfile` to build a ready-to-use Node-RED instance with all necessary subflows and dependencies to communicate with OSCAR.
-
-Build it with:
-
-```bash
-docker build -t your_image_name .
-```
-
-By default, the login credentials are:  
-**Username:** `admin`  
-**Password:** `admin`  
-You can modify this in the `settings.js` file. More info:  
-👉 [Securing Node-RED](https://nodered.org/docs/user-guide/runtime/securing-node-red)
-
----
-
 ## Workflows and Examples
 
 Explore the `examples` directory for complete workflows using the Node-RED dashboard to orchestrate services provided by OSCAR. These examples are a great starting point if you're new to the platform.
 
 ---
 
-## Subflows
+## Modules
 
-The `subflows` directory contains reusable components in JSON format. These can be imported directly into Node-RED for testing or as templates to create your own.
+The `modules` directory contains reusable components in JSON format. These can be imported directly into Node-RED.
 
 ---
 
