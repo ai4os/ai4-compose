@@ -1,0 +1,26 @@
+{
+	"name": "node-red-contrib-oscar-thermaldetector-async",
+	"version": "0.2.0",
+	"description": "OSCAR Thermal Detector Async node.",
+	"keywords": [
+		"node-red",
+	        "node-red-contrib",
+		"OSCAR",
+		"UPV",
+		"iMagine",
+		"oscar-thermaldetector-async",
+		"AI4EOSC",
+		"AI4IOS",
+		"GryCAP"
+	],
+	"license": "Apache-2.0",
+	"node-red": {
+		"nodes": {
+			" ": "subflow.js"
+		},
+		"dependencies": []
+	},
+	"dependencies": {
+		"crypto-js": "^4.0.0"
+	}
+}
