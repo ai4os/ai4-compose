@@ -1,0 +1,521 @@
+[
+    {
+        "id": "610be1bbceb42075",
+        "type": "subflow",
+        "name": "OSCAR Thermal-Detector Async",
+        "info": "",
+        "category": "OSCAR",
+        "in": [
+            {
+                "x": 120,
+                "y": 180,
+                "wires": [
+                    {
+                        "id": "cf6bb2f137d8dc7e"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 1310,
+                "y": 340,
+                "wires": [
+                    {
+                        "id": "1f230959ce33fde6",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "Thermal- Detector",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "type": "none"
+                }
+            },
+            {
+                "name": "inputBucket",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "type": "input",
+                    "opts": {
+                        "types": [
+                            "str"
+                        ]
+                    }
+                }
+            },
+            {
+                "name": "objectName",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "type": "input",
+                    "opts": {
+                        "types": [
+                            "str"
+                        ]
+                    }
+                }
+            },
+            {
+                "name": "outputBucket",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "type": "input",
+                    "opts": {
+                        "types": [
+                            "str"
+                        ]
+                    }
+                }
+            },
+            {
+                "name": "Prefix",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "type": "input",
+                    "opts": {
+                        "types": [
+                            "str"
+                        ]
+                    }
+                }
+            }
+        ],
+        "meta": {},
+        "color": "#3FADB5",
+        "inputLabels": [
+            "Image"
+        ],
+        "outputLabels": [
+            "Image "
+        ],
+        "icon": "font-awesome/fa-picture-o",
+        "status": {
+            "x": 1100,
+            "y": 100,
+            "wires": [
+                {
+                    "id": "b6863d5583e8025e",
+                    "port": 0
+                },
+                {
+                    "id": "b2850769589025f6",
+                    "port": 0
+                },
+                {
+                    "id": "8c73b4d3484b1167",
+                    "port": 0
+                }
+            ]
+        }
+    },
+    {
+        "id": "17d2270ad85c9d69",
+        "type": "notifications",
+        "z": "610be1bbceb42075",
+        "notifications_name": "",
+        "host": "8b1cd69cc4852c7e",
+        "notifications_operation": "listenBucketNotification",
+        "notifications_bucket": "",
+        "notifications_notificationconfig": "",
+        "notifications_prefix": "",
+        "notifications_suffix": "",
+        "notifications_events": "",
+        "notifications_events_object_created_put": true,
+        "notifications_events_object_created_post": false,
+        "notifications_events_object_created_copy": false,
+        "notifications_events_object_created_complete_multipart_upload": false,
+        "notifications_events_object_removed_delete": false,
+        "notifications_events_object_accessed_get": false,
+        "notifications_events_object_accessed_head": false,
+        "x": 340,
+        "y": 340,
+        "wires": [
+            [
+                "f1615981a4d26994"
+            ],
+            [
+                "b2850769589025f6"
+            ]
+        ]
+    },
+    {
+        "id": "42f960c8cc2926a7",
+        "type": "function",
+        "z": "610be1bbceb42075",
+        "name": "function 76",
+        "func": "msg.stream = msg.imageUC3\nmsg.objectName = msg.objectNameUC3\nmsg.bucketName = msg.inBucketUC3\n\nflow.set(\"outBucket_UC3\", msg.outBucketUC3);\nflow.set(\"prefix_UC3\", msg.prefixUC3);\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 570,
+        "y": 200,
+        "wires": [
+            [
+                "9edc8ea735dc0436"
+            ]
+        ]
+    },
+    {
+        "id": "9edc8ea735dc0436",
+        "type": "objects",
+        "z": "610be1bbceb42075",
+        "objects_name": "",
+        "host": "8b1cd69cc4852c7e",
+        "objects_operation": "putObject",
+        "objects_bucket": "",
+        "objects_object": "",
+        "objects_offset": "",
+        "objects_length": "",
+        "objects_stream": "",
+        "objects_size": "",
+        "objects_metadata": "",
+        "objects_sourceobject": "",
+        "objects_conditions": "",
+        "objects_objectslist": [],
+        "objects_prefix": "",
+        "objects_etag": "",
+        "objects_datetime": "",
+        "x": 780,
+        "y": 200,
+        "wires": [
+            [
+                "e6d3d1cf60136645"
+            ],
+            [
+                "b2850769589025f6"
+            ]
+        ]
+    },
+    {
+        "id": "f1615981a4d26994",
+        "type": "function",
+        "z": "610be1bbceb42075",
+        "name": "function 77",
+        "func": "msg.objectName = msg.payload.listenBucketNotification.s3.object.key\nvar out = flow.get(\"outBucket_UC3\")\n\nmsg.bucketName = out\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 630,
+        "y": 340,
+        "wires": [
+            [
+                "3ffa70c17612dfa3"
+            ]
+        ]
+    },
+    {
+        "id": "3ffa70c17612dfa3",
+        "type": "objects",
+        "z": "610be1bbceb42075",
+        "objects_name": "",
+        "host": "8b1cd69cc4852c7e",
+        "objects_operation": "getObject",
+        "objects_bucket": "",
+        "objects_object": "",
+        "objects_offset": "",
+        "objects_length": "",
+        "objects_stream": "",
+        "objects_size": "",
+        "objects_metadata": "",
+        "objects_sourceobject": "",
+        "objects_conditions": "",
+        "objects_objectslist": [],
+        "objects_prefix": "",
+        "objects_etag": "",
+        "objects_datetime": "",
+        "x": 840,
+        "y": 340,
+        "wires": [
+            [
+                "55117d6f4082229e"
+            ],
+            [
+                "b2850769589025f6"
+            ]
+        ]
+    },
+    {
+        "id": "55117d6f4082229e",
+        "type": "function",
+        "z": "610be1bbceb42075",
+        "name": "function 78",
+        "func": "var data = msg.payload.objectData\n\n\nmsg.payload = Buffer.from(data, 'base64');\nreturn msg;\n\n\n\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1020,
+        "y": 340,
+        "wires": [
+            [
+                "8c73b4d3484b1167",
+                "1f230959ce33fde6"
+            ]
+        ]
+    },
+    {
+        "id": "cf6bb2f137d8dc7e",
+        "type": "change",
+        "z": "610be1bbceb42075",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "prefixUC3",
+                "pt": "msg",
+                "to": "Prefix",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "outBucketUC3",
+                "pt": "msg",
+                "to": "outputBucket",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "imageUC3",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "inBucketUC3",
+                "pt": "msg",
+                "to": "inputBucket",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "objectNameUC3",
+                "pt": "msg",
+                "to": "objectName",
+                "tot": "env"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 310,
+        "y": 180,
+        "wires": [
+            [
+                "42f960c8cc2926a7",
+                "b6863d5583e8025e"
+            ]
+        ]
+    },
+    {
+        "id": "e6d3d1cf60136645",
+        "type": "function",
+        "z": "610be1bbceb42075",
+        "name": "function 79",
+        "func": "var out=flow.get(\"outBucket_UC3\")\nvar prefix = flow.get(\"prefix_UC3\")\nmsg.prefix =prefix\nmsg.bucketName=out\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 370,
+        "y": 300,
+        "wires": [
+            [
+                "17d2270ad85c9d69"
+            ]
+        ]
+    },
+    {
+        "id": "b2850769589025f6",
+        "type": "function",
+        "z": "610be1bbceb42075",
+        "name": "Error ",
+        "func": "var error = msg.payload\nif (error != null){\n   msg.payload=error;\n   return msg;\n}\nelse {\n   return null;\n}\n \n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 990,
+        "y": 280,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b6863d5583e8025e",
+        "type": "change",
+        "z": "610be1bbceb42075",
+        "name": "Start Service",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Processing....",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 700,
+        "y": 60,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8c73b4d3484b1167",
+        "type": "change",
+        "z": "610be1bbceb42075",
+        "name": "End Service",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Finished!!",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1210,
+        "y": 260,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1f230959ce33fde6",
+        "type": "base64",
+        "z": "610be1bbceb42075",
+        "name": "",
+        "action": "",
+        "property": "payload",
+        "x": 1190,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8b1cd69cc4852c7e",
+        "type": "minio-config",
+        "name": "MinIO Thermal",
+        "host": "",
+        "port": "",
+        "useSsl": true
+    },
+    {
+        "id": "6919e8b380cefdeb",
+        "type": "subflow:610be1bbceb42075",
+        "z": "95d9a45691260812",
+        "name": "",
+        "x": 690,
+        "y": 220,
+        "wires": [
+            [
+                "687798e797d05332"
+            ]
+        ]
+    },
+    {
+        "id": "3c397eae0c038168",
+        "type": "inject",
+        "z": "95d9a45691260812",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 220,
+        "y": 220,
+        "wires": [
+            [
+                "c056e596bdaba92a"
+            ]
+        ]
+    },
+    {
+        "id": "c056e596bdaba92a",
+        "type": "http request",
+        "z": "95d9a45691260812",
+        "name": "",
+        "method": "GET",
+        "ret": "bin",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 390,
+        "y": 220,
+        "wires": [
+            [
+                "6919e8b380cefdeb"
+            ]
+        ]
+    },
+    {
+        "id": "687798e797d05332",
+        "type": "image",
+        "z": "95d9a45691260812",
+        "name": "",
+        "width": "600",
+        "data": "payload",
+        "dataType": "msg",
+        "thumbnail": true,
+        "active": true,
+        "pass": false,
+        "outputs": 0,
+        "x": 970,
+        "y": 220,
+        "wires": []
+    }
+]

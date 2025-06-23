@@ -1,0 +1,537 @@
+{
+	"id": "0c2ab52f3bf625b5",
+	"type": "subflow",
+	"name": "OSCAR Thermal-Detector Async",
+	"info": "",
+	"category": "OSCAR",
+	"in": [
+		{
+			"x": 120,
+			"y": 180,
+			"wires": [
+				{
+					"id": "1f72967d4fae8479"
+				}
+			]
+		}
+	],
+	"out": [
+		{
+			"x": 1330,
+			"y": 340,
+			"wires": [
+				{
+					"id": "cba5161be509dea6",
+					"port": 0
+				}
+			]
+		}
+	],
+	"env": [
+		{
+			"name": "Thermal- Detector",
+			"type": "str",
+			"value": "",
+			"ui": {
+				"type": "none"
+			}
+		},
+		{
+			"name": "MinIOConf",
+			"type": "minio-config",
+			"value": "",
+			"ui": {
+				"type": "conf-types"
+			}
+		},
+		{
+			"name": "inputBucket",
+			"type": "str",
+			"value": "",
+			"ui": {
+				"type": "input",
+				"opts": {
+					"types": [
+						"str"
+					]
+				}
+			}
+		},
+		{
+			"name": "objectName",
+			"type": "str",
+			"value": "",
+			"ui": {
+				"type": "input",
+				"opts": {
+					"types": [
+						"str"
+					]
+				}
+			}
+		},
+		{
+			"name": "outputBucket",
+			"type": "str",
+			"value": "",
+			"ui": {
+				"type": "input",
+				"opts": {
+					"types": [
+						"str"
+					]
+				}
+			}
+		},
+		{
+			"name": "Prefix",
+			"type": "str",
+			"value": "",
+			"ui": {
+				"type": "input",
+				"opts": {
+					"types": [
+						"str"
+					]
+				}
+			}
+		}
+	],
+	"meta": {
+		"module": "node-red-contrib-oscar-thermaldetector-async",
+		"type": " ",
+		"version": "0.1.0",
+		"author": "vicente.rdguezb@gmail.com.com",
+		"desc": "OSCAR Thermal Detector Async node.",
+		"keywords": "Node-RED",
+		"license": "Apache-2.0"
+	},
+	"color": "#3FADB5",
+	"inputLabels": [
+		"Image"
+	],
+	"outputLabels": [
+		"Image "
+	],
+	"icon": "font-awesome/fa-picture-o",
+	"status": {
+		"x": 1280,
+		"y": 120,
+		"wires": [
+			{
+				"id": "9eaab7cc62844d20",
+				"port": 0
+			},
+			{
+				"id": "b33affb2fd3771b2",
+				"port": 0
+			},
+			{
+				"id": "437d458592b5d240",
+				"port": 0
+			}
+		]
+	},
+	"flow": [
+		{
+			"id": "7fdb0cad4e0c2ffb",
+			"type": "notifications",
+			"z": "0c2ab52f3bf625b5",
+			"notifications_name": "",
+			"host": "${MinIOConf}",
+			"notifications_operation": "listenBucketNotification",
+			"notifications_bucket": "",
+			"notifications_notificationconfig": "",
+			"notifications_prefix": "",
+			"notifications_suffix": "",
+			"notifications_events": "",
+			"notifications_events_object_created_put": true,
+			"notifications_events_object_created_post": false,
+			"notifications_events_object_created_copy": false,
+			"notifications_events_object_created_complete_multipart_upload": false,
+			"notifications_events_object_removed_delete": false,
+			"notifications_events_object_accessed_get": false,
+			"notifications_events_object_accessed_head": false,
+			"x": 340,
+			"y": 340,
+			"wires": [
+				[
+					"22f9d635664d0148"
+				],
+				[]
+			]
+		},
+		{
+			"id": "942a5a86de8c7dd1",
+			"type": "function",
+			"z": "0c2ab52f3bf625b5",
+			"name": "function 76",
+			"func": "msg.stream = msg.imageUC3\nmsg.objectName = msg.objectNameUC3\nmsg.bucketName = msg.inBucketUC3\n\nflow.set(\"outBucket_UC3\", msg.outBucketUC3);\nflow.set(\"prefix_UC3\", msg.prefixUC3);\n\nreturn msg;",
+			"outputs": 1,
+			"noerr": 0,
+			"initialize": "",
+			"finalize": "",
+			"libs": [],
+			"x": 580,
+			"y": 180,
+			"wires": [
+				[
+					"f3aec2a06d54bf17"
+				]
+			]
+		},
+		{
+			"id": "f3aec2a06d54bf17",
+			"type": "objects",
+			"z": "0c2ab52f3bf625b5",
+			"objects_name": "",
+			"host": "${MinIOConf}",
+			"objects_operation": "putObject",
+			"objects_bucket": "",
+			"objects_object": "",
+			"objects_offset": "",
+			"objects_length": "",
+			"objects_stream": "",
+			"objects_size": "",
+			"objects_metadata": "",
+			"objects_sourceobject": "",
+			"objects_conditions": "",
+			"objects_objectslist": [],
+			"objects_prefix": "",
+			"objects_etag": "",
+			"objects_datetime": "",
+			"x": 780,
+			"y": 200,
+			"wires": [
+				[
+					"a1f876383e8737b0"
+				],
+				[]
+			]
+		},
+		{
+			"id": "22f9d635664d0148",
+			"type": "function",
+			"z": "0c2ab52f3bf625b5",
+			"name": "function 77",
+			"func": "msg.objectName = msg.payload.listenBucketNotification.s3.object.key\nvar out = flow.get(\"outBucket_UC3\")\n\nmsg.bucketName = out\nreturn msg;",
+			"outputs": 1,
+			"noerr": 0,
+			"initialize": "",
+			"finalize": "",
+			"libs": [],
+			"x": 630,
+			"y": 340,
+			"wires": [
+				[
+					"caa56b0197dad668"
+				]
+			]
+		},
+		{
+			"id": "caa56b0197dad668",
+			"type": "objects",
+			"z": "0c2ab52f3bf625b5",
+			"objects_name": "",
+			"host": "${MinIOConf}",
+			"objects_operation": "getObject",
+			"objects_bucket": "",
+			"objects_object": "",
+			"objects_offset": "",
+			"objects_length": "",
+			"objects_stream": "",
+			"objects_size": "",
+			"objects_metadata": "",
+			"objects_sourceobject": "",
+			"objects_conditions": "",
+			"objects_objectslist": [],
+			"objects_prefix": "",
+			"objects_etag": "",
+			"objects_datetime": "",
+			"x": 840,
+			"y": 340,
+			"wires": [
+				[
+					"7f72cc10303d8a97"
+				],
+				[]
+			]
+		},
+		{
+			"id": "7f72cc10303d8a97",
+			"type": "function",
+			"z": "0c2ab52f3bf625b5",
+			"name": "function 78",
+			"func": "var data = msg.payload.objectData\n\n\nmsg.payload = Buffer.from(data, 'base64');\nreturn msg;\n\n\n\n\nreturn msg;",
+			"outputs": 1,
+			"noerr": 0,
+			"initialize": "",
+			"finalize": "",
+			"libs": [],
+			"x": 1020,
+			"y": 340,
+			"wires": [
+				[
+					"cba5161be509dea6"
+				]
+			]
+		},
+		{
+			"id": "1f72967d4fae8479",
+			"type": "change",
+			"z": "0c2ab52f3bf625b5",
+			"name": "",
+			"rules": [
+				{
+					"t": "set",
+					"p": "prefixUC3",
+					"pt": "msg",
+					"to": "Prefix",
+					"tot": "env"
+				},
+				{
+					"t": "set",
+					"p": "outBucketUC3",
+					"pt": "msg",
+					"to": "outputBucket",
+					"tot": "env"
+				},
+				{
+					"t": "set",
+					"p": "imageUC3",
+					"pt": "msg",
+					"to": "payload",
+					"tot": "msg"
+				},
+				{
+					"t": "set",
+					"p": "inBucketUC3",
+					"pt": "msg",
+					"to": "inputBucket",
+					"tot": "env"
+				},
+				{
+					"t": "set",
+					"p": "objectNameUC3",
+					"pt": "msg",
+					"to": "objectName",
+					"tot": "env"
+				}
+			],
+			"action": "",
+			"property": "",
+			"from": "",
+			"to": "",
+			"reg": false,
+			"x": 310,
+			"y": 180,
+			"wires": [
+				[
+					"942a5a86de8c7dd1",
+					"9eaab7cc62844d20"
+				]
+			]
+		},
+		{
+			"id": "a1f876383e8737b0",
+			"type": "function",
+			"z": "0c2ab52f3bf625b5",
+			"name": "function 79",
+			"func": "var out=flow.get(\"outBucket_UC3\")\nvar prefix = flow.get(\"prefix_UC3\")\nmsg.prefix =prefix\nmsg.bucketName=out\nreturn msg;",
+			"outputs": 1,
+			"noerr": 0,
+			"initialize": "",
+			"finalize": "",
+			"libs": [],
+			"x": 370,
+			"y": 300,
+			"wires": [
+				[
+					"7fdb0cad4e0c2ffb"
+				]
+			]
+		},
+		{
+			"id": "cba5161be509dea6",
+			"type": "base64",
+			"z": "0c2ab52f3bf625b5",
+			"name": "",
+			"action": "",
+			"property": "payload",
+			"x": 1190,
+			"y": 340,
+			"wires": [
+				[
+					"437d458592b5d240"
+				]
+			]
+		},
+		{
+			"id": "9eaab7cc62844d20",
+			"type": "change",
+			"z": "0c2ab52f3bf625b5",
+			"name": "Start Service",
+			"rules": [
+				{
+					"t": "delete",
+					"p": "payload",
+					"pt": "msg"
+				},
+				{
+					"t": "set",
+					"p": "payload.text",
+					"pt": "msg",
+					"to": "Processing....",
+					"tot": "str"
+				},
+				{
+					"t": "set",
+					"p": "payload.shape",
+					"pt": "msg",
+					"to": "dot",
+					"tot": "str"
+				},
+				{
+					"t": "set",
+					"p": "payload.fill",
+					"pt": "msg",
+					"to": "green",
+					"tot": "str"
+				}
+			],
+			"action": "",
+			"property": "",
+			"from": "",
+			"to": "",
+			"reg": false,
+			"x": 730,
+			"y": 100,
+			"wires": [
+				[]
+			]
+		},
+		{
+			"id": "266310cb760dcf5a",
+			"type": "catch",
+			"z": "0c2ab52f3bf625b5",
+			"name": "",
+			"scope": null,
+			"uncaught": false,
+			"x": 810,
+			"y": 40,
+			"wires": [
+				[
+					"b33affb2fd3771b2"
+				]
+			]
+		},
+		{
+			"id": "b33affb2fd3771b2",
+			"type": "change",
+			"z": "0c2ab52f3bf625b5",
+			"name": "Error Service",
+			"rules": [
+				{
+					"t": "delete",
+					"p": "payload",
+					"pt": "msg"
+				},
+				{
+					"t": "set",
+					"p": "payload.text",
+					"pt": "msg",
+					"to": "error.message",
+					"tot": "msg"
+				},
+				{
+					"t": "set",
+					"p": "payload.shape",
+					"pt": "msg",
+					"to": "dot",
+					"tot": "str"
+				},
+				{
+					"t": "set",
+					"p": "payload.fill",
+					"pt": "msg",
+					"to": "red",
+					"tot": "str"
+				}
+			],
+			"action": "",
+			"property": "",
+			"from": "",
+			"to": "",
+			"reg": false,
+			"x": 970,
+			"y": 60,
+			"wires": [
+				[]
+			]
+		},
+		{
+			"id": "437d458592b5d240",
+			"type": "change",
+			"z": "0c2ab52f3bf625b5",
+			"name": "End Service",
+			"rules": [
+				{
+					"t": "delete",
+					"p": "payload",
+					"pt": "msg"
+				},
+				{
+					"t": "set",
+					"p": "payload.text",
+					"pt": "msg",
+					"to": "Finished!",
+					"tot": "str"
+				},
+				{
+					"t": "set",
+					"p": "payload.shape",
+					"pt": "msg",
+					"to": "dot",
+					"tot": "str"
+				},
+				{
+					"t": "set",
+					"p": "payload.fill",
+					"pt": "msg",
+					"to": "blue",
+					"tot": "str"
+				}
+			],
+			"action": "",
+			"property": "",
+			"from": "",
+			"to": "",
+			"reg": false,
+			"x": 1050,
+			"y": 180,
+			"wires": [
+				[]
+			]
+		},
+		{
+			"id": "01e320a3e7e2eb7a",
+			"type": "subflow:0c2ab52f3bf625b5",
+			"z": "522c1d1d7d9f8cd5",
+			"name": "",
+			"env": [
+				{
+					"name": "MinIOConf",
+					"value": "9904f9969df6a7e2",
+					"type": "conf-type"
+				}
+			],
+			"x": 790,
+			"y": 200,
+			"wires": [
+				[
+					"206353135378667e"
+				]
+			]
+		}
+	]
+}
