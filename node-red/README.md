@@ -6,8 +6,8 @@ This repository contains a collection of nodes and interaction flows for [Node-R
 
 ## Available Modules
 
-You can find all the custom OSCAR-related nodes grouped in the following collection:  
-👉 [https://flows.nodered.org/collection/vAqHyycWgCq_](https://flows.nodered.org/collection/vAqHyycWgCq_)
+You can find all the custom OSCAR-related nodes grouped in the following Node-RED Library collection:  
+👉 [https://flows.nodered.org/collection/pTY6eq8gA0Q5](https://flows.nodered.org/collection/pTY6eq8gA0Q5)
 
 Here’s a brief description of each:
 
