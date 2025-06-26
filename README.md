@@ -16,7 +16,7 @@ In Elyra, AI4Compose presents a series of notebooks utilising OSCAR's functional
 
 ## Node-RED Integration
 
-For Node-RED, AI4Compose introduces new modules based on subflows. These subflows efficiently employ standard Node-RED nodes to make requests to OSCAR services. Users can effortlessly interact with these modules in a graphical environment through a "drag and drop" interface, enabling them to compose complex workflows with ease. You can also visit the list of published nodes and subflows in the [Node-RED Library](https://flows.nodered.org/collection/vAqHyycWgCq_).
+For Node-RED, AI4Compose introduces new modules based on subflows. These subflows efficiently employ standard Node-RED nodes to make requests to OSCAR services. Users can effortlessly interact with these modules in a graphical environment through a "drag and drop" interface, enabling them to compose complex workflows with ease. You can also visit the list of published nodes and subflows in the [Node-RED Library](https://flows.nodered.org/collection/pTY6eq8gA0Q5).
 
 In both platforms, AI4Compose stands as a testament to the innovative fusion of AI orchestration and visual programming, offering users an accessible and powerful toolset for developing sophisticated AI-powered applications.
 
