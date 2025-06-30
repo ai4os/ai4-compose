@@ -7,14 +7,14 @@ This repository contains a collection of nodes and interaction flows for [Node-R
 ## Available Modules
 
 You can find all the custom OSCAR-related nodes grouped in the following Node-RED Library collection:  
-👉 [https://flows.nodered.org/collection/pTY6eq8gA0Q5](https://flows.nodered.org/collection/pTY6eq8gA0Q5)
+👉 [https://flows.nodered.org/collection/4pW6ET9DMHs0](https://flows.nodered.org/collection/4pW6ET9DMHs0)
 
 Here’s a brief description of each:
 
 - **OSCAR-bird-sound-async**   
   A plug-and-play tool for bird sound classification using deep learning. It accepts an audio file (or URL to one) and returns a JSON with the top 5 predicted bird species.  
   Based on the Xenocanto dataset (~350K samples, 10K species), currently trained on the 73 most common species.  
-  [View in Marketplace](https://marketplace.deep-hybrid-datacloud.eu/modules/deep-oc-birds-audio-classification-tf.html)
+  [View in AI4EOSC Catalog](https://dashboard.cloud.ai4eosc.eu/catalog/modules/birds-audio-classification)
 
 - **OSCAR-frame-service-async**  
   Provides frame extraction and/or manipulation from videos for downstream analysis.  
@@ -24,34 +24,34 @@ Here’s a brief description of each:
 
 - **OSCAR-thermal-detector-async**  
   Thermal Bridges on Building Rooftops Detection (TBBRDet): This module adapts object detection and instance segmentation models from the MMDetection Toolbox to work with combined RGB and thermal imagery to identify thermal bridges (weak points) on building rooftops.  
-  [View in Marketplace](https://dashboard.cloud.ai4eosc.eu/catalog/modules/thermal-bridges-rooftops-detector) 
+  [View in AI4EOSC Catalog](https://dashboard.cloud.ai4eosc.eu/catalog/modules/thermal-bridges-rooftops-detector) 
 
 - **OSCAR-bodypose-async**  
   Body Pose Detection using DEEP-Hybrid-DataCloud's pre-trained model.  
-  [View in Marketplace](https://marketplace.deep-hybrid-datacloud.eu/modules/deep-oc-posenet-tf.html)
+  [View in AI4EOSC Catalog](https://dashboard.cloud.ai4eosc.eu/catalog/modules/DEEP-OC-posenet-tf)
 
 - **OSCAR-fish-detector-async**  
   Fish detection and classification based on YOLOv8, provided by OBSEA.  
-  [View in Marketplace](https://dashboard.cloud.ai4eosc.eu/catalog/modules/obsea-fish-detection)
+  [View in AI4EOSC Catalog](https://dashboard.cloud.ai4eosc.eu/catalog/modules/obsea-fish-detection)
 
 - **OSCAR-fish-detector-zip-async**  
   Same as fish-detector-async, but allows uploading multiple compressed images in a zip file.
 
 - **OSCAR-litter-assessment-async**  
   Detects and quantifies plastic waste on water surfaces using a deep learning model.  
-  [View in Marketplace](https://marketplace.deep-hybrid-datacloud.eu/modules/uc-cleluschko-deep-oc-litter-assessment-service.html)
+  [View in AI4EOSC Catalog](https://dashboard.cloud.ai4eosc.eu/catalog/modules/litter-assessment)
 
 - **OSCAR-phytonplankton-classifier-async**  
   Classifies phytoplankton species using a model provided by VLIZ.  
-  [View in Marketplace](https://marketplace.deep-hybrid-datacloud.eu/modules/deep-oc-phytoplankton-classification-tf.html)
+  [View in AI4EOSC Catalog](https://dashboard.cloud.ai4eosc.eu/catalog/modules/phyto-plankton-classification)
 
 - **OSCAR-yolo**  
   Real-time object detection using the YOLOv8 model.  
-  [View in Marketplace](https://marketplace.deep-hybrid-datacloud.eu/modules/deep-oc-yolov8-api.html)
+  [View in AI4EOSC Catalog](https://dashboard.cloud.ai4eosc.eu/catalog/modules/ai4os-yolov8-torch)
 
 - **OSCAR-plants-classification**  
   Classifies plant species using a synchronous pre-trained model.  
-  [View in Marketplace](https://marketplace.deep-hybrid-datacloud.eu/modules/deep-oc-plants-classification-tf.html)
+  [View in AI4EOSC Catalog](https://dashboard.cloud.ai4eosc.eu/catalog/modules/plants-classification)
 
 - **OSCAR-grayify**  
   Converts images to grayscale using ImageMagick.
