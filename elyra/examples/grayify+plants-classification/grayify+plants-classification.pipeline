@@ -40,7 +40,7 @@
             "label": "OSCAR Grayify",
             "ui_data": {
               "label": "OSCAR Grayify",
-              "image": "/user/634476eccf0d890dd6d909761baf374852cf50a20474ee2feade49549996d01f@egi.eu/static/elyra/notebook.svg",
+              "image": "/static/elyra/notebook.svg",
               "x_pos": 346,
               "y_pos": 121.00001525878906,
               "description": "Run notebook file"
@@ -114,7 +114,7 @@
             "label": "OSCAR Plants Classification",
             "ui_data": {
               "label": "OSCAR Plants Classification",
-              "image": "/user/634476eccf0d890dd6d909761baf374852cf50a20474ee2feade49549996d01f@egi.eu/static/elyra/notebook.svg",
+              "image": "/static/elyra/notebook.svg",
               "x_pos": 565,
               "y_pos": 122.00001525878906,
               "description": "Run notebook file"
@@ -183,7 +183,7 @@
             "label": "Get EGI Token",
             "ui_data": {
               "label": "Get EGI Token",
-              "image": "/user/634476eccf0d890dd6d909761baf374852cf50a20474ee2feade49549996d01f@egi.eu/static/elyra/python.svg",
+              "image": "/static/elyra/python.svg",
               "x_pos": 115.00001525878906,
               "y_pos": 121,
               "description": "Run Python script"

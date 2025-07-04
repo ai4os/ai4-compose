@@ -39,7 +39,7 @@
             "label": "OSCAR Grayify",
             "ui_data": {
               "label": "OSCAR Grayify",
-              "image": "/user/634476eccf0d890dd6d909761baf374852cf50a20474ee2feade49549996d01f@egi.eu/static/elyra/notebook.svg",
+              "image": "/static/elyra/notebook.svg",
               "x_pos": 402.99999237060547,
               "y_pos": 223.99999237060547,
               "description": "Run notebook file"
@@ -112,7 +112,7 @@
             "label": "Get Egi Token",
             "ui_data": {
               "label": "Get Egi Token",
-              "image": "/user/634476eccf0d890dd6d909761baf374852cf50a20474ee2feade49549996d01f@egi.eu/static/elyra/python.svg",
+              "image": "/static/elyra/python.svg",
               "x_pos": 140.99999237060547,
               "y_pos": 188.99999237060547,
               "description": "Run Python script"

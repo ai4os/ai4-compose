@@ -43,7 +43,7 @@
             "label": "OSCAR YOLOv8",
             "ui_data": {
               "label": "OSCAR YOLOv8",
-              "image": "/user/634476eccf0d890dd6d909761baf374852cf50a20474ee2feade49549996d01f@egi.eu/static/elyra/notebook.svg",
+              "image": "/static/elyra/notebook.svg",
               "x_pos": 387,
               "y_pos": 165,
               "description": "Run notebook file"
@@ -112,7 +112,7 @@
             "label": "Create client",
             "ui_data": {
               "label": "Create client",
-              "image": "/user/634476eccf0d890dd6d909761baf374852cf50a20474ee2feade49549996d01f@egi.eu/static/elyra/python.svg",
+              "image": "/static/elyra/python.svg",
               "x_pos": 160,
               "y_pos": 119,
               "description": "Run Python script"
