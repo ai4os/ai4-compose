@@ -44,8 +44,8 @@
             "ui_data": {
               "label": "OSCAR YOLOv8",
               "image": "/user/634476eccf0d890dd6d909761baf374852cf50a20474ee2feade49549996d01f@egi.eu/static/elyra/notebook.svg",
-              "x_pos": 290,
-              "y_pos": 50,
+              "x_pos": 387,
+              "y_pos": 165,
               "description": "Run notebook file"
             }
           },
@@ -113,8 +113,8 @@
             "ui_data": {
               "label": "Create client",
               "image": "/user/634476eccf0d890dd6d909761baf374852cf50a20474ee2feade49549996d01f@egi.eu/static/elyra/python.svg",
-              "x_pos": 50,
-              "y_pos": 50,
+              "x_pos": 160,
+              "y_pos": 119,
               "description": "Run Python script"
             }
           },
@@ -150,11 +150,40 @@
       ],
       "app_data": {
         "ui_data": {
-          "comments": []
+          "comments": [
+            {
+              "id": "93614760-cf27-4a2a-9667-4e41114c570a",
+              "x_pos": 151.99999237060547,
+              "y_pos": 27.00000762939453,
+              "width": 175,
+              "height": 58,
+              "content": "This node is used to obtain and save the EGI token as a file.",
+              "associated_id_refs": [
+                {
+                  "id": "6df44086-067e-4994-b0f5-2d6ed899ab63",
+                  "node_ref": "209d4cb9-b5c3-4376-9398-3f7e0e86f8ba"
+                }
+              ]
+            },
+            {
+              "id": "9458d376-ebd4-4a6b-9f5a-1a1e0a2500a6",
+              "x_pos": 379.00001525878906,
+              "y_pos": 52.00000762939453,
+              "width": 175,
+              "height": 72,
+              "content": "This node is used to deploy the YOLO service.",
+              "associated_id_refs": [
+                {
+                  "id": "a126c8f5-b20e-4533-a8d4-719a250f22af",
+                  "node_ref": "15757c5d-b0ca-4145-a218-8b8fe6cfdb82"
+                }
+              ]
+            }
+          ]
         },
         "version": 8,
         "properties": {
-          "name": "tutorial",
+          "name": "yolov8",
           "runtime": "Generic",
           "pipeline_defaults": {
             "mounted_volumes": [],

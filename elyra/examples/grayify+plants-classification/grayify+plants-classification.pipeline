@@ -9,7 +9,7 @@
       "id": "primary",
       "nodes": [
         {
-          "id": "b14ac0e1-b006-4422-b754-d082930df99e",
+          "id": "a9cff171-6da4-4036-b447-436689eecc17",
           "type": "execution_node",
           "op": "execute-notebook-node",
           "app_data": {
@@ -34,14 +34,15 @@
               "kubernetes_shared_mem_size": {},
               "kubernetes_tolerations": [],
               "mounted_volumes": [],
-              "filename": "invoke_service_grayify-v3.ipynb"
+              "filename": "invoke_service_grayify-v3.ipynb",
+              "runtime_image": "continuumio/anaconda3@sha256:a2816acd3acda208d92e0bf6c11eb41fda9009ea20f24e123dbf84bb4bd4c4b8"
             },
             "label": "OSCAR Grayify",
             "ui_data": {
               "label": "OSCAR Grayify",
               "image": "/user/634476eccf0d890dd6d909761baf374852cf50a20474ee2feade49549996d01f@egi.eu/static/elyra/notebook.svg",
-              "x_pos": 402.99999237060547,
-              "y_pos": 223.99999237060547,
+              "x_pos": 346,
+              "y_pos": 121.00001525878906,
               "description": "Run notebook file"
             }
           },
@@ -59,8 +60,8 @@
               },
               "links": [
                 {
-                  "id": "41c9c642-af52-4662-8cb2-8b179cc7c36b",
-                  "node_id_ref": "a54dcf7f-1926-4657-8bc8-f68a126a19db",
+                  "id": "b97ebda6-8f6b-4bea-95bf-78514f4c0576",
+                  "node_id_ref": "98261700-b0b9-4975-bf6a-7a5d9c82394b",
                   "port_id_ref": "outPort"
                 }
               ]
@@ -82,7 +83,81 @@
           ]
         },
         {
-          "id": "a54dcf7f-1926-4657-8bc8-f68a126a19db",
+          "id": "13007e0e-eb00-479c-a0d7-562bf2e1c70a",
+          "type": "execution_node",
+          "op": "execute-notebook-node",
+          "app_data": {
+            "component_parameters": {
+              "dependencies": [],
+              "include_subdirectories": false,
+              "outputs": [],
+              "env_vars": [
+                {
+                  "env_var": "SERVICE_NAME"
+                },
+                {
+                  "env_var": "INPUT_DIR"
+                },
+                {
+                  "env_var": "OUTPUT_DIR"
+                }
+              ],
+              "kubernetes_pod_annotations": [],
+              "kubernetes_pod_labels": [],
+              "kubernetes_secrets": [],
+              "kubernetes_shared_mem_size": {},
+              "kubernetes_tolerations": [],
+              "mounted_volumes": [],
+              "filename": "invoke_service_plant-classification-v3.ipynb",
+              "runtime_image": "continuumio/anaconda3@sha256:a2816acd3acda208d92e0bf6c11eb41fda9009ea20f24e123dbf84bb4bd4c4b8"
+            },
+            "label": "OSCAR Plants Classification",
+            "ui_data": {
+              "label": "OSCAR Plants Classification",
+              "image": "/user/634476eccf0d890dd6d909761baf374852cf50a20474ee2feade49549996d01f@egi.eu/static/elyra/notebook.svg",
+              "x_pos": 565,
+              "y_pos": 122.00001525878906,
+              "description": "Run notebook file"
+            }
+          },
+          "inputs": [
+            {
+              "id": "inPort",
+              "app_data": {
+                "ui_data": {
+                  "cardinality": {
+                    "min": 0,
+                    "max": -1
+                  },
+                  "label": "Input Port"
+                }
+              },
+              "links": [
+                {
+                  "id": "df2428c9-4300-4bc9-94af-d6e9735b4822",
+                  "node_id_ref": "a9cff171-6da4-4036-b447-436689eecc17",
+                  "port_id_ref": "outPort"
+                }
+              ]
+            }
+          ],
+          "outputs": [
+            {
+              "id": "outPort",
+              "app_data": {
+                "ui_data": {
+                  "cardinality": {
+                    "min": 0,
+                    "max": -1
+                  },
+                  "label": "Output Port"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "98261700-b0b9-4975-bf6a-7a5d9c82394b",
           "type": "execution_node",
           "op": "execute-python-node",
           "app_data": {
@@ -92,13 +167,8 @@
               "outputs": [],
               "env_vars": [
                 {
-                  "env_var": "OSCAR_ENDPOINT"
-                },
-                {
-                  "env_var": "OSCAR_CLUSTER_ID"
-                },
-                {
-                  "env_var": "TOKEN_FILE_PATH"
+                  "env_var": "OSCAR_ENDPOINT",
+                  "value": "https://inference.cloud.ai4eosc.eu"
                 }
               ],
               "kubernetes_pod_annotations": [],
@@ -107,14 +177,15 @@
               "kubernetes_shared_mem_size": {},
               "kubernetes_tolerations": [],
               "mounted_volumes": [],
-              "filename": "setup_client.py"
+              "filename": "../cowsay/setup_client.py",
+              "runtime_image": "continuumio/anaconda3@sha256:a2816acd3acda208d92e0bf6c11eb41fda9009ea20f24e123dbf84bb4bd4c4b8"
             },
-            "label": "Get Egi Token",
+            "label": "Get EGI Token",
             "ui_data": {
-              "label": "Get Egi Token",
+              "label": "Get EGI Token",
               "image": "/user/634476eccf0d890dd6d909761baf374852cf50a20474ee2feade49549996d01f@egi.eu/static/elyra/python.svg",
-              "x_pos": 140.99999237060547,
-              "y_pos": 188.99999237060547,
+              "x_pos": 115.00001525878906,
+              "y_pos": 121,
               "description": "Run Python script"
             }
           },
@@ -152,44 +223,44 @@
         "ui_data": {
           "comments": [
             {
-              "id": "e74b2c8f-58f8-45ee-9acd-b23f56f3980e",
-              "x_pos": 402.60001373291016,
-              "y_pos": 286.99999237060547,
+              "id": "525afbfb-1fd2-44eb-ad8a-83334829a3cc",
+              "x_pos": 63,
+              "y_pos": 38,
               "width": 175,
-              "height": 81,
-              "content": "This node also converts the base64 format to an image and displays it in the notebook.",
-              "associated_id_refs": [
-                {
-                  "id": "1b832285-8d07-4781-8774-09282ddc60b2",
-                  "node_ref": "b14ac0e1-b006-4422-b754-d082930df99e"
-                }
-              ]
-            },
-            {
-              "id": "efeb8379-982d-41fd-9f7b-af64bd1313a5",
-              "x_pos": 394.59998321533203,
-              "y_pos": 135.0000159740448,
-              "width": 175,
-              "height": 61,
-              "content": "This node is used to deploy the Grayify service.",
-              "associated_id_refs": [
-                {
-                  "id": "5bfd724f-b529-4647-a72d-70d67b13d620",
-                  "node_ref": "b14ac0e1-b006-4422-b754-d082930df99e"
-                }
-              ]
-            },
-            {
-              "id": "363414e5-b1ad-4f09-81b1-ded0e6ad769a",
-              "x_pos": 131.59996795654297,
-              "y_pos": 104,
-              "width": 175,
-              "height": 62.000003814697266,
+              "height": 58,
               "content": "This node is used to obtain and save the EGI token as a file.",
               "associated_id_refs": [
                 {
-                  "id": "8ab689a1-135c-43a9-8684-9d1c396148ff",
-                  "node_ref": "a54dcf7f-1926-4657-8bc8-f68a126a19db"
+                  "id": "89e3ea1a-f7b5-49b0-9a09-1750f90cdcc7",
+                  "node_ref": "98261700-b0b9-4975-bf6a-7a5d9c82394b"
+                }
+              ]
+            },
+            {
+              "id": "fd9b7460-7d53-4291-b00e-d479ade297a9",
+              "x_pos": 348.99998474121094,
+              "y_pos": 204.99999237060547,
+              "width": 175,
+              "height": 58,
+              "content": "This node is used to deploy the Grayify service.",
+              "associated_id_refs": [
+                {
+                  "id": "78b1a8a3-cac7-493f-ab18-4bf9eef37d22",
+                  "node_ref": "a9cff171-6da4-4036-b447-436689eecc17"
+                }
+              ]
+            },
+            {
+              "id": "2fd4d91c-52b9-40ac-b264-1e4bef165da2",
+              "x_pos": 576.9999465942383,
+              "y_pos": 52.00000762939453,
+              "width": 175,
+              "height": 58,
+              "content": "This node is used to deploy the Plants Classification service.",
+              "associated_id_refs": [
+                {
+                  "id": "bc2b3f0c-2d20-4f1d-ac01-fdd38053ce3a",
+                  "node_ref": "13007e0e-eb00-479c-a0d7-562bf2e1c70a"
                 }
               ]
             }
@@ -197,7 +268,7 @@
         },
         "version": 8,
         "properties": {
-          "name": "grayify",
+          "name": "grayify+plants-classification",
           "runtime": "Generic",
           "pipeline_defaults": {
             "mounted_volumes": [],
@@ -206,8 +277,7 @@
             "kubernetes_tolerations": [],
             "kubernetes_shared_mem_size": {},
             "env_vars": [],
-            "kubernetes_secrets": [],
-            "runtime_image": "continuumio/anaconda3@sha256:a2816acd3acda208d92e0bf6c11eb41fda9009ea20f24e123dbf84bb4bd4c4b8"
+            "kubernetes_secrets": []
           }
         }
       },
