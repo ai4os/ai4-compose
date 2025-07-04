@@ -9,80 +9,7 @@
       "id": "primary",
       "nodes": [
         {
-          "id": "b14ac0e1-b006-4422-b754-d082930df99e",
-          "type": "execution_node",
-          "op": "execute-notebook-node",
-          "app_data": {
-            "component_parameters": {
-              "dependencies": [],
-              "include_subdirectories": false,
-              "outputs": [],
-              "env_vars": [
-                {
-                  "env_var": "SERVICE_NAME"
-                },
-                {
-                  "env_var": "INPUT_DIR"
-                },
-                {
-                  "env_var": "OUTPUT_DIR"
-                }
-              ],
-              "kubernetes_pod_annotations": [],
-              "kubernetes_pod_labels": [],
-              "kubernetes_secrets": [],
-              "kubernetes_shared_mem_size": {},
-              "kubernetes_tolerations": [],
-              "mounted_volumes": [],
-              "filename": "invoke_service_grayify-v3.ipynb"
-            },
-            "label": "OSCAR Grayify",
-            "ui_data": {
-              "label": "OSCAR Grayify",
-              "image": "/static/elyra/notebook.svg",
-              "x_pos": 402.99999237060547,
-              "y_pos": 223.99999237060547,
-              "description": "Run notebook file"
-            }
-          },
-          "inputs": [
-            {
-              "id": "inPort",
-              "app_data": {
-                "ui_data": {
-                  "cardinality": {
-                    "min": 0,
-                    "max": -1
-                  },
-                  "label": "Input Port"
-                }
-              },
-              "links": [
-                {
-                  "id": "41c9c642-af52-4662-8cb2-8b179cc7c36b",
-                  "node_id_ref": "a54dcf7f-1926-4657-8bc8-f68a126a19db",
-                  "port_id_ref": "outPort"
-                }
-              ]
-            }
-          ],
-          "outputs": [
-            {
-              "id": "outPort",
-              "app_data": {
-                "ui_data": {
-                  "cardinality": {
-                    "min": 0,
-                    "max": -1
-                  },
-                  "label": "Output Port"
-                }
-              }
-            }
-          ]
-        },
-        {
-          "id": "a54dcf7f-1926-4657-8bc8-f68a126a19db",
+          "id": "24867025-4b90-4187-8dd9-120a80c734f7",
           "type": "execution_node",
           "op": "execute-python-node",
           "app_data": {
@@ -92,13 +19,8 @@
               "outputs": [],
               "env_vars": [
                 {
-                  "env_var": "OSCAR_ENDPOINT"
-                },
-                {
-                  "env_var": "OSCAR_CLUSTER_ID"
-                },
-                {
-                  "env_var": "TOKEN_FILE_PATH"
+                  "env_var": "OSCAR_ENDPOINT",
+                  "value": "https://inference.cloud.ai4eosc.eu"
                 }
               ],
               "kubernetes_pod_annotations": [],
@@ -107,14 +29,15 @@
               "kubernetes_shared_mem_size": {},
               "kubernetes_tolerations": [],
               "mounted_volumes": [],
-              "filename": "setup_client.py"
+              "filename": "setup_client.py",
+              "runtime_image": "continuumio/anaconda3@sha256:a2816acd3acda208d92e0bf6c11eb41fda9009ea20f24e123dbf84bb4bd4c4b8"
             },
-            "label": "Get Egi Token",
+            "label": "Get EGI Token",
             "ui_data": {
-              "label": "Get Egi Token",
+              "label": "Get EGI Token",
               "image": "/static/elyra/python.svg",
-              "x_pos": 140.99999237060547,
-              "y_pos": 188.99999237060547,
+              "x_pos": 185,
+              "y_pos": 142,
               "description": "Run Python script"
             }
           },
@@ -146,50 +69,109 @@
               }
             }
           ]
+        },
+        {
+          "id": "d82bc050-b17e-4db9-90f1-c8a0c9bcd875",
+          "type": "execution_node",
+          "op": "execute-notebook-node",
+          "app_data": {
+            "component_parameters": {
+              "dependencies": [],
+              "include_subdirectories": false,
+              "outputs": [],
+              "env_vars": [
+                {
+                  "env_var": "SERVICE_NAME",
+                  "value": "cowsay"
+                },
+                {
+                  "env_var": "TEXT_INPUT",
+                  "value": "Hello world!"
+                }
+              ],
+              "kubernetes_pod_annotations": [],
+              "kubernetes_pod_labels": [],
+              "kubernetes_secrets": [],
+              "kubernetes_shared_mem_size": {},
+              "kubernetes_tolerations": [],
+              "mounted_volumes": [],
+              "filename": "invoke_service_cowsay.ipynb",
+              "runtime_image": "continuumio/anaconda3@sha256:a2816acd3acda208d92e0bf6c11eb41fda9009ea20f24e123dbf84bb4bd4c4b8"
+            },
+            "label": "OSCAR Cowsay",
+            "ui_data": {
+              "label": "OSCAR Cowsay",
+              "image": "/static/elyra/notebook.svg",
+              "x_pos": 548,
+              "y_pos": 212,
+              "description": "Run notebook file"
+            }
+          },
+          "inputs": [
+            {
+              "id": "inPort",
+              "app_data": {
+                "ui_data": {
+                  "cardinality": {
+                    "min": 0,
+                    "max": -1
+                  },
+                  "label": "Input Port"
+                }
+              },
+              "links": [
+                {
+                  "id": "47c16547-3274-46a6-91bc-2ea4d7f30cac",
+                  "node_id_ref": "24867025-4b90-4187-8dd9-120a80c734f7",
+                  "port_id_ref": "outPort"
+                }
+              ]
+            }
+          ],
+          "outputs": [
+            {
+              "id": "outPort",
+              "app_data": {
+                "ui_data": {
+                  "cardinality": {
+                    "min": 0,
+                    "max": -1
+                  },
+                  "label": "Output Port"
+                }
+              }
+            }
+          ]
         }
       ],
       "app_data": {
         "ui_data": {
           "comments": [
             {
-              "id": "e74b2c8f-58f8-45ee-9acd-b23f56f3980e",
-              "x_pos": 402.60001373291016,
-              "y_pos": 286.99999237060547,
-              "width": 175,
-              "height": 81,
-              "content": "This node also converts the base64 format to an image and displays it in the notebook.",
-              "associated_id_refs": [
-                {
-                  "id": "1b832285-8d07-4781-8774-09282ddc60b2",
-                  "node_ref": "b14ac0e1-b006-4422-b754-d082930df99e"
-                }
-              ]
-            },
-            {
-              "id": "efeb8379-982d-41fd-9f7b-af64bd1313a5",
-              "x_pos": 394.59998321533203,
-              "y_pos": 135.0000159740448,
-              "width": 175,
-              "height": 61,
-              "content": "This node is used to deploy the Grayify service.",
-              "associated_id_refs": [
-                {
-                  "id": "5bfd724f-b529-4647-a72d-70d67b13d620",
-                  "node_ref": "b14ac0e1-b006-4422-b754-d082930df99e"
-                }
-              ]
-            },
-            {
-              "id": "363414e5-b1ad-4f09-81b1-ded0e6ad769a",
-              "x_pos": 131.59996795654297,
+              "id": "3c2d74ce-f6f7-4c87-b921-0733199b58c3",
+              "x_pos": 542.9999542236328,
               "y_pos": 104,
               "width": 175,
-              "height": 62.000003814697266,
+              "height": 58,
+              "content": "This node is used to deploy the Cowsay toy service.",
+              "associated_id_refs": [
+                {
+                  "id": "aad50580-2884-438a-b8a0-bc8b81418069",
+                  "node_ref": "d82bc050-b17e-4db9-90f1-c8a0c9bcd875"
+                }
+              ]
+            },
+            {
+              "id": "9a362fe4-adce-464a-8155-536a0a53cf67",
+              "x_pos": 181.99998474121094,
+              "y_pos": 49,
+              "width": 175,
+              "height": 58,
               "content": "This node is used to obtain and save the EGI token as a file.",
               "associated_id_refs": [
                 {
-                  "id": "8ab689a1-135c-43a9-8684-9d1c396148ff",
-                  "node_ref": "a54dcf7f-1926-4657-8bc8-f68a126a19db"
+                  "id": "4f4ac8c8-a17d-489b-9125-5b6ca06d3ca3",
+                  "node_ref": "24867025-4b90-4187-8dd9-120a80c734f7"
                 }
               ]
             }
@@ -197,7 +179,7 @@
         },
         "version": 8,
         "properties": {
-          "name": "grayify",
+          "name": "cowsay",
           "runtime": "Generic",
           "pipeline_defaults": {
             "mounted_volumes": [],
@@ -206,8 +188,7 @@
             "kubernetes_tolerations": [],
             "kubernetes_shared_mem_size": {},
             "env_vars": [],
-            "kubernetes_secrets": [],
-            "runtime_image": "continuumio/anaconda3@sha256:a2816acd3acda208d92e0bf6c11eb41fda9009ea20f24e123dbf84bb4bd4c4b8"
+            "kubernetes_secrets": []
           }
         }
       },
